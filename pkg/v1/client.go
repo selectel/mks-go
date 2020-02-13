@@ -12,6 +12,10 @@ import (
 )
 
 const (
+	ResourceURLCluster = "clusters"
+)
+
+const (
 	// appName represents an application name.
 	appName = "mks-go"
 
