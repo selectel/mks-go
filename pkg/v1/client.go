@@ -123,7 +123,7 @@ func (client *ServiceClient) DoRequest(ctx context.Context, method, path string,
 	}
 
 	// Check status code and populate custom error body with extended error message if it's possible.
-	if response.StatusCode >= 400 && response.StatusCode <= 599 {
+	if response.StatusCode >= http.StatusBadRequest {
 		err = responseResult.extractErr()
 	}
 	if err != nil {
@@ -168,14 +168,12 @@ type ErrGeneric struct {
 // ExtractResult allows to provide an object into which ResponseResult body will be extracted.
 func (result *ResponseResult) ExtractResult(to interface{}) error {
 	body, err := ioutil.ReadAll(result.Body)
-	defer result.Body.Close()
 	if err != nil {
 		return err
 	}
+	defer result.Body.Close()
 
-	err = json.Unmarshal(body, to)
-
-	return err
+	return json.Unmarshal(body, to)
 }
 
 // extractErr populates an error message and error structure in the ResponseResult body.
@@ -186,7 +184,7 @@ func (result *ResponseResult) extractErr() error {
 		return err
 	}
 
-	if result.StatusCode == 404 {
+	if result.StatusCode == http.StatusNotFound {
 		err = json.Unmarshal(body, &result.ErrNotFound)
 	} else {
 		err = json.Unmarshal(body, &result.ErrGeneric)

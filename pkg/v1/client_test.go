@@ -65,7 +65,7 @@ func TestDoGetRequest(t *testing.T) {
 	if response.Body == nil {
 		t.Fatal("response body is empty")
 	}
-	if response.StatusCode != 200 {
+	if response.StatusCode != http.StatusOK {
 		t.Fatalf("got %d response status, want 200", response.StatusCode)
 	}
 }
@@ -112,7 +112,7 @@ func TestDoPostRequest(t *testing.T) {
 	if response.Body == nil {
 		t.Fatal("response body is empty")
 	}
-	if response.StatusCode != 200 {
+	if response.StatusCode != http.StatusOK {
 		t.Fatalf("got %d response status, want 200", response.StatusCode)
 	}
 }
@@ -122,7 +122,7 @@ func TestDoErrNotFoundRequest(t *testing.T) {
 	defer testEnv.TearDownTestEnv()
 	testEnv.Mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "application/json")
-		w.WriteHeader(404)
+		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprint(w, `{"error":{"id":"9fb12d6e-0da2-4db1-a076-414059cfb448","message":"Cluster not found"}}`)
 
 		if r.Method != http.MethodGet {
@@ -146,7 +146,7 @@ func TestDoErrNotFoundRequest(t *testing.T) {
 	if response.Body == nil {
 		t.Fatal("response body is empty")
 	}
-	if response.StatusCode != 404 {
+	if response.StatusCode != http.StatusNotFound {
 		t.Fatalf("got %d response status, want 404", response.StatusCode)
 	}
 
@@ -164,7 +164,7 @@ func TestDoErrGenericRequest(t *testing.T) {
 	defer testEnv.TearDownTestEnv()
 	testEnv.Mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "application/json")
-		w.WriteHeader(400)
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprint(w, `{"error":{"message":"cluster_id value is invalid"}}`)
 
 		if r.Method != http.MethodGet {
@@ -188,7 +188,7 @@ func TestDoErrGenericRequest(t *testing.T) {
 	if response.Body == nil {
 		t.Fatal("response body is empty")
 	}
-	if response.StatusCode != 400 {
+	if response.StatusCode != http.StatusBadRequest {
 		t.Fatalf("got %d response status, want 400", response.StatusCode)
 	}
 
