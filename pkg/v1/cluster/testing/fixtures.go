@@ -51,6 +51,7 @@ var testGetClusterResponse = &cluster.View{
 	MaintenanceWindowStart: "01:00:00",
 	MaintenanceWindowEnd:   "03:00:00",
 	MaintenanceLastStart:   clusterResponseTimestamp,
+	EnableAutorepair:       true,
 }
 
 // testGetClusterInvalidResponseRaw represents a raw invalid response with a single cluster.

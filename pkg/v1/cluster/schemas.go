@@ -54,4 +54,8 @@ type View struct {
 
 	// MaintenanceLastStart is the timestamp in UTC timezone of the last cluster maintenance start.
 	MaintenanceLastStart time.Time `json:"maintenance_last_start"`
+
+	// EnableAutorepair reflects if worker nodes are allowed to be reinstalled automatically
+	// in case of their unavailability or unhealthiness.
+	EnableAutorepair bool `json:"enable_autorepair"`
 }
