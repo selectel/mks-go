@@ -179,10 +179,10 @@ func (result *ResponseResult) ExtractResult(to interface{}) error {
 // extractErr populates an error message and error structure in the ResponseResult body.
 func (result *ResponseResult) extractErr() error {
 	body, err := ioutil.ReadAll(result.Body)
-	defer result.Body.Close()
 	if err != nil {
 		return err
 	}
+	defer result.Body.Close()
 
 	if result.StatusCode == http.StatusNotFound {
 		err = json.Unmarshal(body, &result.ErrNotFound)
