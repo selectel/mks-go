@@ -9,5 +9,15 @@ Example of getting a single cluster referenced by its id
     log.Fatal(err)
   }
   fmt.Printf("%+v\n", mksCluster)
+
+Example of getting all clusters
+
+  mksClusters, _, err := cluster.List(ctx, mksClient)
+  if err != nil {
+    log.Fatal(err)
+  }
+  for _, mksCluster := range mksClusters {
+    fmt.Printf("%+v\n", mksCluster)
+  }
 */
 package cluster
