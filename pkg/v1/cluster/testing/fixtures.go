@@ -33,8 +33,8 @@ const testGetClusterResponseRaw = `
 
 var clusterResponseTimestamp, _ = time.Parse(time.RFC3339, "2020-02-13T09:18:32.05753Z")
 
-// testGetClusterResponse represents an unmarshalled TestGetClusterResponseRaw.
-var testGetClusterResponse = &cluster.View{
+// expectedGetClusterResponse represents an unmarshalled testGetClusterResponseRaw.
+var expectedGetClusterResponse = &cluster.View{
 	ID:                     "dbe7559b-55d8-4f65-9230-6a22b985ff73",
 	CreatedAt:              clusterResponseTimestamp,
 	UpdatedAt:              clusterResponseTimestamp,

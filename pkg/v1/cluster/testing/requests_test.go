@@ -35,12 +35,10 @@ func TestGetCluster(t *testing.T) {
 	id := "dbe7559b-55d8-4f65-9230-6a22b985ff73"
 
 	actual, httpResponse, err := cluster.Get(ctx, testClient, id)
+
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	expected := testGetClusterResponse
-
 	if !endpointCalled {
 		t.Fatal("endpoint wasn't called")
 	}
@@ -51,8 +49,8 @@ func TestGetCluster(t *testing.T) {
 		t.Fatalf("expected %d status in the HTTP response, but got %d",
 			http.StatusOK, httpResponse.StatusCode)
 	}
-	if !reflect.DeepEqual(expected, actual) {
-		t.Fatalf("expected %#v, but got %#v", expected, actual)
+	if !reflect.DeepEqual(expectedGetClusterResponse, actual) {
+		t.Fatalf("expected %#v, but got %#v", expectedGetClusterResponse, actual)
 	}
 }
 
