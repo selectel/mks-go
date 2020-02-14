@@ -8,10 +8,10 @@ type View struct {
 	ID string `json:"id"`
 
 	// CreatedAt is the timestamp in UTC timezone of when the cluster has been created.
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt *time.Time `json:"created_at"`
 
 	// UpdatedAt is the timestamp in UTC timezone of when the cluster has been updated.
-	UpdatedAt time.Time `json:"updated_at"`
+	UpdatedAt *time.Time `json:"updated_at"`
 
 	// Name represents the name of the cluster.
 	Name string `json:"name"`
@@ -42,7 +42,7 @@ type View struct {
 
 	// PKITreeUpdatedAt represents the timestamp in UTC timezone of when the PKI-tree of the cluster
 	// has been updated.
-	PKITreeUpdatedAt time.Time `json:"pki_tree_updated_at"`
+	PKITreeUpdatedAt *time.Time `json:"pki_tree_updated_at"`
 
 	// MaintenanceWindowStart represents UTC time in "hh:mm:ss" format of when the cluster will start its
 	// maintenance tasks.
@@ -53,7 +53,7 @@ type View struct {
 	MaintenanceWindowEnd string `json:"maintenance_window_end"`
 
 	// MaintenanceLastStart is the timestamp in UTC timezone of the last cluster maintenance start.
-	MaintenanceLastStart time.Time `json:"maintenance_last_start"`
+	MaintenanceLastStart *time.Time `json:"maintenance_last_start"`
 
 	// EnableAutorepair reflects if worker nodes are allowed to be reinstalled automatically
 	// in case of their unavailability or unhealthiness.
