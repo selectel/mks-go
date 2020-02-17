@@ -46,7 +46,7 @@ Example of creating a new cluster
 
 Example of deleting a single cluster
 
-  _, err = cluster.Delete(ctx, mksClient, id)
+  _, err := cluster.Delete(ctx, mksClient, id)
   if err != nil {
     log.Fatal(err)
   }
