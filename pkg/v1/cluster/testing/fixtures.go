@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/selectel/mks-go/pkg/v1/cluster"
+	"github.com/selectel/mks-go/pkg/v1/nodegroup"
 )
 
 // testGetClusterResponseRaw represents a raw response from the Get request.
@@ -100,8 +101,95 @@ var expectedListClustersResponse = []*cluster.View{
 	},
 }
 
-// testListClustersInvalidResponseRaw represents a raw invalid response with several clusters.
-const testListClustersInvalidResponseRaw = `
+// testCreateClusterOptsRaw represents marshalled options for the Create request.
+const testCreateClusterOptsRaw = `
+{
+    "cluster": {
+        "name": "test-cluster-0",
+        "kube_version": "1.15.7",
+        "region": "ru-1",
+        "nodegroups": [
+            {
+                "count": 1,
+                "cpus": 1,
+                "ram_mb": 2048,
+                "volume_gb": 10,
+                "volume_type": "fast.ru-1b",
+                "keypair_name": "ssh-key",
+                "availability_zone": "ru-1b"
+            }
+        ]
+    }
+}
+`
+
+// nolint
+// testCreateClusterOpts represents options for the Create request.
+var testCreateClusterOpts = &cluster.CreateOpts{
+	Name:        "test-cluster-0",
+	KubeVersion: "1.15.7",
+	Region:      "ru-1",
+	Nodegroups: []*nodegroup.CreateOpts{
+		{
+			Count:            1,
+			CPUs:             1,
+			RAMMB:            2048,
+			VolumeGB:         10,
+			VolumeType:       "fast.ru-1b",
+			KeypairName:      "ssh-key",
+			AvailabilityZone: "ru-1b",
+		},
+	},
+}
+
+// testCreateClusterResponseRaw represents a raw response from the Create request.
+const testCreateClusterResponseRaw = `
+{
+    "cluster": {
+        "additional_software": null,
+        "created_at": "2020-02-13T09:18:32.05753Z",
+        "enable_autorepair": true,
+        "id": "1f4dfa6a-0468-45e0-be13-74c6481820f5",
+        "kube_api_ip": "",
+        "kube_version": "1.15.7",
+        "maintenance_last_start": "2020-02-13T09:18:32.05753Z",
+        "maintenance_window_end": "03:00:00",
+        "maintenance_window_start": "01:00:00",
+        "name": "test-cluster-0",
+        "network_id": "",
+        "pki_tree_updated_at": null,
+        "project_id": "69744a03bebe4fd0a77e5a4c882e3059",
+        "region": "ru-1",
+        "status": "PENDING_CREATE",
+        "subnet_id": "",
+        "updated_at": null
+    }
+}
+`
+
+// expectedCreateClusterResponse represents an unmarshalled testCreateClusterResponseRaw.
+var expectedCreateClusterResponse = &cluster.View{
+	ID:                     "1f4dfa6a-0468-45e0-be13-74c6481820f5",
+	CreatedAt:              &clusterResponseTimestamp,
+	UpdatedAt:              nil,
+	Name:                   "test-cluster-0",
+	Status:                 "PENDING_CREATE",
+	ProjectID:              "69744a03bebe4fd0a77e5a4c882e3059",
+	NetworkID:              "",
+	SubnetID:               "",
+	KubeAPIIP:              "",
+	KubeVersion:            "1.15.7",
+	Region:                 "ru-1",
+	AdditionalSoftware:     nil,
+	PKITreeUpdatedAt:       nil,
+	MaintenanceWindowStart: "01:00:00",
+	MaintenanceWindowEnd:   "03:00:00",
+	MaintenanceLastStart:   &clusterResponseTimestamp,
+	EnableAutorepair:       true,
+}
+
+// testManyClustersInvalidResponseRaw represents a raw invalid response with several clusters.
+const testManyClustersInvalidResponseRaw = `
 {
     "clusters": [
         {
@@ -111,8 +199,8 @@ const testListClustersInvalidResponseRaw = `
 }
 `
 
-// testGetClusterInvalidResponseRaw represents a raw invalid response with a single cluster.
-const testGetClusterInvalidResponseRaw = `
+// testSingleClusterInvalidResponseRaw represents a raw invalid response with a single cluster.
+const testSingleClusterInvalidResponseRaw = `
 {
     "cluster": {
         "id": "dbe7559b-55d8-4f65-9230-6a22b985ff74",
