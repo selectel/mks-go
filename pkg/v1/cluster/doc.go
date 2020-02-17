@@ -43,5 +43,12 @@ Example of creating a new cluster
     log.Fatal(err)
   }
   fmt.Printf("%+v\n", mksCluster)
+
+Example of deleting a single cluster
+
+  _, err = cluster.Delete(ctx, mksClient, id)
+  if err != nil {
+    log.Fatal(err)
+  }
 */
 package cluster

@@ -88,3 +88,17 @@ func Create(ctx context.Context, client *v1.ServiceClient, opts *CreateOpts) (*V
 
 	return result.Cluster, responseResult, nil
 }
+
+// Delete deletes a single cluster by its id.
+func Delete(ctx context.Context, client *v1.ServiceClient, id string) (*v1.ResponseResult, error) {
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, id}, "/")
+	responseResult, err := client.DoRequest(ctx, http.MethodDelete, url, nil)
+	if err != nil {
+		return nil, err
+	}
+	if responseResult.Err != nil {
+		err = responseResult.Err
+	}
+
+	return responseResult, err
+}
