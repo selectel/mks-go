@@ -196,3 +196,41 @@ func TestDoErrGenericRequest(t *testing.T) {
 		t.Fatalf("got %s error message, want 'cluster_id value is invalid'", response.ErrGeneric.Error.Message)
 	}
 }
+
+func TestDoErrNoContentRequest(t *testing.T) {
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+	testEnv.Mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadGateway)
+		fmt.Fprint(w, "") // write no content in the response body.
+
+		if r.Method != http.MethodGet {
+			t.Errorf("got %s method, want GET", r.Method)
+		}
+	})
+
+	endpoint := testEnv.Server.URL + "/"
+	client := &ServiceClient{
+		HTTPClient: &http.Client{},
+		Endpoint:   endpoint,
+		TokenID:    "token",
+		UserAgent:  "agent",
+	}
+
+	ctx := context.Background()
+	response, err := client.DoRequest(ctx, http.MethodGet, endpoint, nil)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if response.Body == nil {
+		t.Fatal("response body is empty")
+	}
+	if response.StatusCode != http.StatusBadGateway {
+		t.Fatalf("got %d response status, want 502", response.StatusCode)
+	}
+
+	if response.Err.Error() != "mks-go: got the 502 status code from the server" {
+		t.Fatalf("got %s error message, want 'mks-go: got the 502 status code from the server'", response.Err.Error())
+	}
+}

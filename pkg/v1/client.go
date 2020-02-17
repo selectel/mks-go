@@ -188,6 +188,10 @@ func (result *ResponseResult) extractErr() error {
 	}
 	defer result.Body.Close()
 
+	if len(body) == 0 {
+		result.Err = fmt.Errorf("mks-go: got the %d status code from the server", result.StatusCode)
+		return nil
+	}
 	if result.StatusCode == http.StatusNotFound {
 		err = json.Unmarshal(body, &result.ErrNotFound)
 	} else {
