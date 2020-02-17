@@ -19,5 +19,29 @@ Example of getting all clusters
   for _, mksCluster := range mksClusters {
     fmt.Printf("%+v\n", mksCluster)
   }
+
+Example of creating a new cluster
+
+  createOpts := &cluster.CreateOpts{
+    Name:        "test-cluster-0",
+    KubeVersion: "1.15.7",
+    Region:      "ru-1",
+    Nodegroups: []*nodegroup.CreateOpts{
+      {
+        Count:            1,
+        CPUs:             1,
+        RAMMB:            2048,
+        VolumeGB:         10,
+        VolumeType:       "fast.ru-1b",
+        KeypairName:      "ssh-key",
+        AvailabilityZone: "ru-1b",
+      },
+    },
+  }
+  mksCluster, _, err := cluster.Create(ctx, mksClient, createOpts)
+  if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Printf("%+v\n", mksCluster)
 */
 package cluster

@@ -1,8 +1,11 @@
 package testutils
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
+	"reflect"
 	"testing"
 )
 
@@ -42,6 +45,43 @@ func HandleReqWithoutBody(t *testing.T, opts *HandleReqOpts) {
 
 		if r.Method != opts.Method {
 			t.Fatalf("expected %s method but got %s", opts.Method, r.Method)
+		}
+
+		*opts.CallFlag = true
+	})
+}
+
+// HandleReqWithBody provides the HTTP endpoint to test requests with body.
+func HandleReqWithBody(t *testing.T, opts *HandleReqOpts) {
+	opts.Mux.HandleFunc(opts.URL, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != opts.Method {
+			t.Fatalf("expected %s method but got %s", opts.Method, r.Method)
+		}
+
+		b, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Errorf("unable to read the request body: %v", err)
+		}
+		defer r.Body.Close()
+
+		var actualRequest interface{}
+		err = json.Unmarshal(b, &actualRequest)
+		if err != nil {
+			t.Errorf("unable to unmarshal the request body: %v", err)
+		}
+
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(opts.Status)
+		fmt.Fprint(w, opts.RawResponse)
+
+		var expectedRequest interface{}
+		err = json.Unmarshal([]byte(opts.RawRequest), &expectedRequest)
+		if err != nil {
+			t.Errorf("unable to unmarshal expected raw request: %v", err)
+		}
+
+		if !reflect.DeepEqual(expectedRequest, actualRequest) {
+			t.Fatalf("expected %#v request, but got %#v", expectedRequest, actualRequest)
 		}
 
 		*opts.CallFlag = true

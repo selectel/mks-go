@@ -1,7 +1,9 @@
 package cluster
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"net/http"
 	"strings"
 
@@ -52,4 +54,37 @@ func List(ctx context.Context, client *v1.ServiceClient) ([]*View, *v1.ResponseR
 	}
 
 	return result.Clusters, responseResult, nil
+}
+
+// Create requests a creation of a new cluster.
+func Create(ctx context.Context, client *v1.ServiceClient, opts *CreateOpts) (*View, *v1.ResponseResult, error) {
+	createClusterOpts := struct {
+		Cluster *CreateOpts `json:"cluster"`
+	}{
+		Cluster: opts,
+	}
+	requestBody, err := json.Marshal(createClusterOpts)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster}, "/")
+	responseResult, err := client.DoRequest(ctx, http.MethodPost, url, bytes.NewReader(requestBody))
+	if err != nil {
+		return nil, nil, err
+	}
+	if responseResult.Err != nil {
+		return nil, responseResult, responseResult.Err
+	}
+
+	// Extract cluster from the response body.
+	var result struct {
+		Cluster *View `json:"cluster"`
+	}
+	err = responseResult.ExtractResult(&result)
+	if err != nil {
+		return nil, responseResult, err
+	}
+
+	return result.Cluster, responseResult, nil
 }
