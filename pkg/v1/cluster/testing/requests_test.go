@@ -679,3 +679,106 @@ func TestGetKubeconfigTimeoutError(t *testing.T) {
 		t.Fatal("expected error from the GetKubeconfig method")
 	}
 }
+
+func TestRotateCerts(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:      testEnv.Mux,
+		URL:      "/v1/clusters/dbe1259c-55d8-4f65-9230-6a22b985ff73/rotate-certs",
+		Method:   http.MethodPost,
+		Status:   http.StatusNoContent,
+		CallFlag: &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "dbe1259c-55d8-4f65-9230-6a22b985ff73"
+
+	httpResponse, err := cluster.RotateCerts(ctx, testClient, id)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the RotateCerts method")
+	}
+	if httpResponse.StatusCode != http.StatusNoContent {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusNoContent, httpResponse.StatusCode)
+	}
+}
+
+func TestRotateCertsHTTPError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/dbe7761d-55d8-4f65-9230-6a22b985ff73/rotate-certs",
+		RawResponse: testErrGenericResponseRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusBadGateway,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "dbe7761d-55d8-4f65-9230-6a22b985ff73"
+
+	httpResponse, err := cluster.RotateCerts(ctx, testClient, id)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the RotateCerts method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the RotateCerts method")
+	}
+	if httpResponse.StatusCode != http.StatusBadGateway {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusBadGateway, httpResponse.StatusCode)
+	}
+}
+
+func TestRotateCertsTimeoutError(t *testing.T) {
+	testEnv := testutils.SetupTestEnv()
+	testEnv.Server.Close()
+	defer testEnv.TearDownTestEnv()
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "dbe1159e-55d8-4f65-9780-6a22b985ff73"
+
+	httpResponse, err := cluster.RotateCerts(ctx, testClient, id)
+
+	if httpResponse != nil {
+		t.Fatal("expected no HTTP response from the RotateCerts method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the RotateCerts method")
+	}
+}
