@@ -10,7 +10,7 @@ import (
 	v1 "github.com/selectel/mks-go/pkg/v1"
 )
 
-// Get returns a single Cluster by its id.
+// Get returns a single cluster by its id.
 func Get(ctx context.Context, client *v1.ServiceClient, id string) (*View, *v1.ResponseResult, error) {
 	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, id}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodGet, url, nil)
@@ -101,4 +101,24 @@ func Delete(ctx context.Context, client *v1.ServiceClient, id string) (*v1.Respo
 	}
 
 	return responseResult, err
+}
+
+// GetKubeconfig returns a kubeconfig by cluster id.
+func GetKubeconfig(ctx context.Context, client *v1.ServiceClient, id string) ([]byte, *v1.ResponseResult, error) {
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, id, v1.ResourceURLKubeconfig}, "/")
+	responseResult, err := client.DoRequest(ctx, http.MethodGet, url, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+	if responseResult.Err != nil {
+		return nil, responseResult, responseResult.Err
+	}
+
+	// Extract kubeconfig from the response body.
+	kubeconfig, err := responseResult.ExtractRaw()
+	if err != nil {
+		return nil, responseResult, err
+	}
+
+	return kubeconfig, responseResult, nil
 }

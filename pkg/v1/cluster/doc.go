@@ -50,5 +50,13 @@ Example of deleting a single cluster
   if err != nil {
     log.Fatal(err)
   }
+
+Example of getting a kubeconfig referenced by cluster id
+
+  kubeconfig, _, err := cluster.GetKubeconfig(ctx, mksClient, id)
+  if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Print(string(kubeconfig))
 */
 package cluster

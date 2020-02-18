@@ -12,7 +12,8 @@ import (
 )
 
 const (
-	ResourceURLCluster = "clusters"
+	ResourceURLCluster    = "clusters"
+	ResourceURLKubeconfig = "kubeconfig"
 )
 
 const (
@@ -178,6 +179,17 @@ func (result *ResponseResult) ExtractResult(to interface{}) error {
 	defer result.Body.Close()
 
 	return json.Unmarshal(body, to)
+}
+
+// ExtractRaw extracts ResponseResult body into the slice of bytes without unmarshalling.
+func (result *ResponseResult) ExtractRaw() ([]byte, error) {
+	bytes, err := ioutil.ReadAll(result.Body)
+	if err != nil {
+		return nil, err
+	}
+	defer result.Body.Close()
+
+	return bytes, nil
 }
 
 // extractErr populates an error message and error structure in the ResponseResult body.
