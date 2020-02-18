@@ -58,5 +58,12 @@ Example of getting a kubeconfig referenced by cluster id
     log.Fatal(err)
   }
   fmt.Print(string(kubeconfig))
+
+Example of rotating certificates by cluster id
+
+  _, err := cluster.RotateCerts(ctx, mksClient, id)
+  if err != nil {
+    log.Fatal(err)
+  }
 */
 package cluster

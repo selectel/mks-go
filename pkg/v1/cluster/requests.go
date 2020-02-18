@@ -122,3 +122,17 @@ func GetKubeconfig(ctx context.Context, client *v1.ServiceClient, id string) ([]
 
 	return kubeconfig, responseResult, nil
 }
+
+// RotateCerts requests a rotation of cluster certificates by cluster id.
+func RotateCerts(ctx context.Context, client *v1.ServiceClient, id string) (*v1.ResponseResult, error) {
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, id, v1.ResourceURLRotateCerts}, "/")
+	responseResult, err := client.DoRequest(ctx, http.MethodPost, url, nil)
+	if err != nil {
+		return nil, err
+	}
+	if responseResult.Err != nil {
+		err = responseResult.Err
+	}
+
+	return responseResult, err
+}
