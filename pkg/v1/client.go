@@ -13,6 +13,7 @@ import (
 
 const (
 	ResourceURLCluster     = "clusters"
+	ResourceURLKubeversion = "kubeversions"
 	ResourceURLKubeconfig  = "kubeconfig"
 	ResourceURLRotateCerts = "rotate-certs"
 )
