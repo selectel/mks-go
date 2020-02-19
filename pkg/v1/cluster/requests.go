@@ -11,8 +11,8 @@ import (
 )
 
 // Get returns a single cluster by its id.
-func Get(ctx context.Context, client *v1.ServiceClient, id string) (*View, *v1.ResponseResult, error) {
-	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, id}, "/")
+func Get(ctx context.Context, client *v1.ServiceClient, clusterID string) (*View, *v1.ResponseResult, error) {
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, nil, err
@@ -90,8 +90,8 @@ func Create(ctx context.Context, client *v1.ServiceClient, opts *CreateOpts) (*V
 }
 
 // Delete deletes a single cluster by its id.
-func Delete(ctx context.Context, client *v1.ServiceClient, id string) (*v1.ResponseResult, error) {
-	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, id}, "/")
+func Delete(ctx context.Context, client *v1.ServiceClient, clusterID string) (*v1.ResponseResult, error) {
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodDelete, url, nil)
 	if err != nil {
 		return nil, err
@@ -104,8 +104,8 @@ func Delete(ctx context.Context, client *v1.ServiceClient, id string) (*v1.Respo
 }
 
 // GetKubeconfig returns a kubeconfig by cluster id.
-func GetKubeconfig(ctx context.Context, client *v1.ServiceClient, id string) ([]byte, *v1.ResponseResult, error) {
-	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, id, v1.ResourceURLKubeconfig}, "/")
+func GetKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterID string) ([]byte, *v1.ResponseResult, error) {
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID, v1.ResourceURLKubeconfig}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, nil, err
@@ -124,8 +124,8 @@ func GetKubeconfig(ctx context.Context, client *v1.ServiceClient, id string) ([]
 }
 
 // RotateCerts requests a rotation of cluster certificates by cluster id.
-func RotateCerts(ctx context.Context, client *v1.ServiceClient, id string) (*v1.ResponseResult, error) {
-	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, id, v1.ResourceURLRotateCerts}, "/")
+func RotateCerts(ctx context.Context, client *v1.ServiceClient, clusterID string) (*v1.ResponseResult, error) {
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID, v1.ResourceURLRotateCerts}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodPost, url, nil)
 	if err != nil {
 		return nil, err
