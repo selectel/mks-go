@@ -32,6 +32,45 @@ var expectedGetTaskResponse = &task.View{
 	Type:      "CREATE_CLUSTER",
 }
 
+// testListTasksResponseRaw represents a raw response from the List method.
+const testListTasksResponseRaw = `
+{
+    "tasks": [
+        {
+            "cluster_id": "d2e16a48-a9c5-4449-9b71-81f21fc872db",
+            "id": "2f8fb93c-cf9e-4289-a78c-34393ac75f92",
+            "started_at": "2020-02-19T11:43:02.868387Z",
+            "status": "DONE",
+            "type": "CREATE_CLUSTER",
+            "updated_at": "2020-02-19T11:43:02.868387Z"
+        }
+    ]
+}
+`
+
+// expectedListTasksResponse represents an unmarshalled testListTasksResponseRaw.
+var expectedListTasksResponse = []*task.View{
+	{
+		ID:        "2f8fb93c-cf9e-4289-a78c-34393ac75f92",
+		StartedAt: &taskResponseTimestamp,
+		UpdatedAt: &taskResponseTimestamp,
+		ClusterID: "d2e16a48-a9c5-4449-9b71-81f21fc872db",
+		Status:    "DONE",
+		Type:      "CREATE_CLUSTER",
+	},
+}
+
+// testManyTasksInvalidResponse represents a raw invalid response with several tasks.
+const testManyTasksInvalidResponse = `
+{
+    "tasks": [
+        {
+            "id": "2f8fb93c-cf9e-4289-a78c-34393ac75f92",
+        }
+    ]
+}
+`
+
 // testSingleTaskInvalidResponse represents a raw invalid response with a single task.
 const testSingleTaskInvalidResponseRaw = `
 {

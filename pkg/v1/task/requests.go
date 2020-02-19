@@ -30,3 +30,26 @@ func Get(ctx context.Context, client *v1.ServiceClient, clusterID, taskID string
 
 	return result.Task, responseResult, err
 }
+
+// List gets a list of all cluster tasks.
+func List(ctx context.Context, client *v1.ServiceClient, clusterID string) ([]*View, *v1.ResponseResult, error) {
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID, v1.ResourceURLTask}, "/")
+	responseResult, err := client.DoRequest(ctx, http.MethodGet, url, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+	if responseResult.Err != nil {
+		return nil, responseResult, responseResult.Err
+	}
+
+	// Extract tasks from the response body.
+	var result struct {
+		Tasks []*View `json:"tasks"`
+	}
+	err = responseResult.ExtractResult(&result)
+	if err != nil {
+		return nil, responseResult, err
+	}
+
+	return result.Tasks, responseResult, err
+}

@@ -166,3 +166,155 @@ func TestGetClusterUnmarshallError(t *testing.T) {
 		t.Fatal("expected error from the Get method")
 	}
 }
+
+func TestListTasks(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/d2e16a48-a9c5-4449-9b71-81f21fc872db/tasks",
+		RawResponse: testListTasksResponseRaw,
+		Method:      http.MethodGet,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "d2e16a48-a9c5-4449-9b71-81f21fc872db"
+
+	actual, httpResponse, err := task.List(ctx, testClient, clusterID)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the List method")
+	}
+	if httpResponse.StatusCode != http.StatusOK {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusOK, httpResponse.StatusCode)
+	}
+	if !reflect.DeepEqual(expectedListTasksResponse, actual) {
+		t.Fatalf("expected %#v, but got %#v", expectedListTasksResponse, actual)
+	}
+}
+
+func TestListTasksHTTPError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/d4e16a48-a9c5-4449-9b71-81f21fc872db/tasks",
+		RawResponse: testErrGenericResponseRaw,
+		Method:      http.MethodGet,
+		Status:      http.StatusBadGateway,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "d4e16a48-a9c5-4449-9b71-81f21fc872db"
+
+	actual, httpResponse, err := task.List(ctx, testClient, clusterID)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if actual != nil {
+		t.Fatal("expected no tasks from the List method")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the List method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the List method")
+	}
+	if httpResponse.StatusCode != http.StatusBadGateway {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusBadGateway, httpResponse.StatusCode)
+	}
+}
+
+func TestListTasksTimeoutError(t *testing.T) {
+	testEnv := testutils.SetupTestEnv()
+	testEnv.Server.Close()
+	defer testEnv.TearDownTestEnv()
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "d4416a48-a9c5-4449-9b71-81f21fc872db"
+
+	actual, httpResponse, err := task.List(ctx, testClient, clusterID)
+
+	if actual != nil {
+		t.Fatal("expected no tasks from the List method")
+	}
+	if httpResponse != nil {
+		t.Fatal("expected no HTTP response from the List method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the List method")
+	}
+}
+
+func TestListTasksUnmarshallError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/d2e16b48-a9c5-4440-8b71-71f21fc872db/tasks",
+		RawResponse: testManyTasksInvalidResponse,
+		Method:      http.MethodGet,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "d2e16b48-a9c5-4440-8b71-71f21fc872db"
+
+	actual, httpResponse, err := task.List(ctx, testClient, clusterID)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if actual != nil {
+		t.Fatal("expected no tasks from the List method")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the List method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the List method")
+	}
+}
