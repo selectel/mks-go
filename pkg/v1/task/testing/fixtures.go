@@ -28,8 +28,8 @@ var expectedGetTaskResponse = &task.View{
 	StartedAt: &taskResponseTimestamp,
 	UpdatedAt: &taskResponseTimestamp,
 	ClusterID: "d2e16a48-a9c5-4449-8b71-71f21fc872db",
-	Status:    "DONE",
-	Type:      "CREATE_CLUSTER",
+	Status:    task.StatusDone,
+	Type:      task.TypeCreateCluster,
 }
 
 // testListTasksResponseRaw represents a raw response from the List method.
@@ -48,6 +48,32 @@ const testListTasksResponseRaw = `
 }
 `
 
+// testGetTaskUnknownStatusAndTypeResponseRaw represents a raw response from the Get request
+// with unknown status and type.
+const testGetTaskUnknownStatusAndTypeResponseRaw = `
+{
+    "task": {
+        "cluster_id": "d2e16a48-a9c5-4449-8b71-71f21fc872dc",
+        "id": "2f6fb93c-cf0d-4289-a78c-34393ac75f92",
+        "started_at": "2020-02-19T11:43:02.868387Z",
+        "status": "FAKE_STATUS",
+        "type": "FAKE_TYPE",
+        "updated_at": "2020-02-19T11:43:02.868387Z"
+    }
+}
+`
+
+// expectedGetTaskUnknownStatusAndTypeResponse represents an unmarshalled
+// testGetTaskUnknownStatusAndTypeResponseRaw.
+var expectedGetTaskUnknownStatusAndTypeResponse = &task.View{
+	ID:        "2f6fb93c-cf0d-4289-a78c-34393ac75f92",
+	StartedAt: &taskResponseTimestamp,
+	UpdatedAt: &taskResponseTimestamp,
+	ClusterID: "d2e16a48-a9c5-4449-8b71-71f21fc872dc",
+	Status:    task.StatusUnknown,
+	Type:      task.TypeUnknown,
+}
+
 // expectedListTasksResponse represents an unmarshalled testListTasksResponseRaw.
 var expectedListTasksResponse = []*task.View{
 	{
@@ -55,8 +81,38 @@ var expectedListTasksResponse = []*task.View{
 		StartedAt: &taskResponseTimestamp,
 		UpdatedAt: &taskResponseTimestamp,
 		ClusterID: "d2e16a48-a9c5-4449-9b71-81f21fc872db",
-		Status:    "DONE",
-		Type:      "CREATE_CLUSTER",
+		Status:    task.StatusDone,
+		Type:      task.TypeCreateCluster,
+	},
+}
+
+// testListTasksUnknownStatusAndTypeResponseRaw represents a raw response from the List method
+// with unknown status and type.
+const testListTasksUnknownStatusAndTypeResponseRaw = `
+{
+    "tasks": [
+        {
+            "cluster_id": "d1e16a48-a9c5-4449-9b71-81f21fc872cb",
+            "id": "2f9fb93c-cf9e-3289-a78c-34393ac75f92",
+            "started_at": "2020-02-19T11:43:02.868387Z",
+            "status": "FAKE_STATUS",
+            "type": "FAKE_TYPE",
+            "updated_at": "2020-02-19T11:43:02.868387Z"
+        }
+    ]
+}
+`
+
+// expectedListTasksUnknownStatusAndTypeResponse represents an unmarshalled
+// testListTasksUnknownStatusAndTypeResponseRaw.
+var expectedListTasksUnknownStatusAndTypeResponse = []*task.View{
+	{
+		ID:        "2f9fb93c-cf9e-3289-a78c-34393ac75f92",
+		StartedAt: &taskResponseTimestamp,
+		UpdatedAt: &taskResponseTimestamp,
+		ClusterID: "d1e16a48-a9c5-4449-9b71-81f21fc872cb",
+		Status:    task.StatusUnknown,
+		Type:      task.TypeUnknown,
 	},
 }
 
