@@ -8,5 +8,15 @@ Example of getting a single cluster task referenced by its id
     log.Fatal(err)
   }
   fmt.Printf("%+v\n", clusterTask)
+
+Example of getting all cluster tasks
+
+  clusterTasks, _, err := task.List(ctx, mksClient, clusterID)
+  if err != nil {
+    log.Fatal(err)
+  }
+  for _, clusterTask := range clusterTasks {
+    fmt.Printf("%+v\n", clusterTask)
+  }
 */
 package task
