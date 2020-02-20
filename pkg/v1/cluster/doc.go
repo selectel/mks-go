@@ -4,7 +4,7 @@ through the MKS V1 API.
 
 Example of getting a single cluster referenced by its id
 
-  mksCluster, _, err := cluster.Get(ctx, mksClient, id)
+  mksCluster, _, err := cluster.Get(ctx, mksClient, clusterID)
   if err != nil {
     log.Fatal(err)
   }
@@ -46,14 +46,14 @@ Example of creating a new cluster
 
 Example of deleting a single cluster
 
-  _, err := cluster.Delete(ctx, mksClient, id)
+  _, err := cluster.Delete(ctx, mksClient, clusterID)
   if err != nil {
     log.Fatal(err)
   }
 
 Example of getting a kubeconfig referenced by cluster id
 
-  kubeconfig, _, err := cluster.GetKubeconfig(ctx, mksClient, id)
+  kubeconfig, _, err := cluster.GetKubeconfig(ctx, mksClient, clusterID)
   if err != nil {
     log.Fatal(err)
   }
@@ -61,7 +61,7 @@ Example of getting a kubeconfig referenced by cluster id
 
 Example of rotating certificates by cluster id
 
-  _, err := cluster.RotateCerts(ctx, mksClient, id)
+  _, err := cluster.RotateCerts(ctx, mksClient, clusterID)
   if err != nil {
     log.Fatal(err)
   }
