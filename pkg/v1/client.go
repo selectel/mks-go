@@ -17,6 +17,7 @@ const (
 	ResourceURLKubeconfig  = "kubeconfig"
 	ResourceURLRotateCerts = "rotate-certs"
 	ResourceURLTask        = "tasks"
+	ResourceURLNodegroup   = "nodegroups"
 )
 
 const (
