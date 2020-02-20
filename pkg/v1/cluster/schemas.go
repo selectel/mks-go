@@ -1,6 +1,27 @@
 package cluster
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
+
+// Status represents custom type for various cluster statuses.
+type Status string
+
+const (
+	StatusActive                     Status = "ACTIVE"
+	StatusPendingCreate              Status = "PENDING_CREATE"
+	StatusPendingUpdate              Status = "PENDING_UPDATE"
+	StatusPendingUpgrade             Status = "PENDING_UPGRADE"
+	StatusPendingRotateCerts         Status = "PENDING_ROTATE_CERTS"
+	StatusPendingDelete              Status = "PENDING_DELETE"
+	StatusPendingResize              Status = "PENDING_RESIZE"
+	StatusPendingNodeReinstall       Status = "PENDING_NODE_REINSTALL"
+	StatusPendingUpgradePatchVersion Status = "PENDING_UPGRADE_PATCH_VERSION"
+	StatusMaintenance                Status = "MAINTENANCE"
+	StatusError                      Status = "ERROR"
+	StatusUnknown                    Status = "UNKNOWN"
+)
 
 // View represents an unmarshalled cluster body from an API response.
 type View struct {
@@ -17,7 +38,7 @@ type View struct {
 	Name string `json:"name"`
 
 	// Status represents current status of the cluster.
-	Status string `json:"status"`
+	Status Status `json:"-"`
 
 	// ProjectID contains reference to the project of the cluster.
 	ProjectID string `json:"project_id"`
@@ -58,4 +79,48 @@ type View struct {
 	// EnableAutorepair reflects if worker nodes are allowed to be reinstalled automatically
 	// in case of their unavailability or unhealthiness.
 	EnableAutorepair bool `json:"enable_autorepair"`
+}
+
+func (result *View) UnmarshalJSON(b []byte) error {
+	type tmp View
+	var s struct {
+		tmp
+		Status Status `json:"status"`
+	}
+	err := json.Unmarshal(b, &s)
+	if err != nil {
+		return err
+	}
+
+	*result = View(s.tmp)
+
+	// Check cluster status.
+	switch s.Status {
+	case StatusActive:
+		result.Status = StatusActive
+	case StatusPendingCreate:
+		result.Status = StatusPendingCreate
+	case StatusPendingUpdate:
+		result.Status = StatusPendingUpdate
+	case StatusPendingUpgrade:
+		result.Status = StatusPendingUpgrade
+	case StatusPendingRotateCerts:
+		result.Status = StatusPendingRotateCerts
+	case StatusPendingDelete:
+		result.Status = StatusPendingDelete
+	case StatusPendingResize:
+		result.Status = StatusPendingResize
+	case StatusPendingNodeReinstall:
+		result.Status = StatusPendingNodeReinstall
+	case StatusPendingUpgradePatchVersion:
+		result.Status = StatusPendingUpgradePatchVersion
+	case StatusMaintenance:
+		result.Status = StatusMaintenance
+	case StatusError:
+		result.Status = StatusError
+	default:
+		result.Status = StatusUnknown
+	}
+
+	return err
 }
