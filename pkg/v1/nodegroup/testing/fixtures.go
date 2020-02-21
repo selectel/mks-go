@@ -60,6 +60,72 @@ var expectedGetNodegroupResponse = &nodegroup.View{
 	},
 }
 
+// testListNodegroupsResponseRaw represents a raw response from the List method.
+const testListNodegroupsResponseRaw = `
+{
+    "nodegroups": [
+        {
+            "availability_zone": "ru-1a",
+            "cluster_id": "79265515-3700-49fa-af0e-7f547bce788a",
+            "created_at": "2020-02-19T15:41:45.948646Z",
+            "flavor_id": "99b62670-9d78-43fd-8f55-d184a4800f8d",
+            "id": "a376745a-fbcb-413d-b418-169d059d79ce",
+            "local_volume": false,
+            "nodes": [
+                {
+                    "created_at": "2020-02-19T15:41:45.948646Z",
+                    "hostname": "test-cluster-node-eegp9",
+                    "id": "39e5dd4d-5e23-4a00-8173-974bf844f21b",
+                    "ip": "198.51.100.11",
+                    "nodegroup_id": "a376745a-fbcb-413d-b418-169d059d79ce",
+                    "updated_at": "2020-02-19T15:41:45.948646Z"
+                }
+            ],
+            "updated_at": "2020-02-19T15:41:45.948646Z",
+            "volume_gb": 10,
+            "volume_type": "basic.ru-1a"
+        }
+    ]
+}
+`
+
+// nolint
+// expectedListNodegroupsResponse represents an unmarshalled testListNodegroupsResponseRaw.
+var expectedListNodegroupsResponse = []*nodegroup.View{
+	{
+		ID:               "a376745a-fbcb-413d-b418-169d059d79ce",
+		CreatedAt:        &nodegroupResponseTimestamp,
+		UpdatedAt:        &nodegroupResponseTimestamp,
+		ClusterID:        "79265515-3700-49fa-af0e-7f547bce788a",
+		FlavorID:         "99b62670-9d78-43fd-8f55-d184a4800f8d",
+		VolumeGB:         10,
+		VolumeType:       "basic.ru-1a",
+		LocalVolume:      false,
+		AvailabilityZone: "ru-1a",
+		Nodes: []*node.View{
+			{
+				ID:          "39e5dd4d-5e23-4a00-8173-974bf844f21b",
+				CreatedAt:   &nodegroupResponseTimestamp,
+				UpdatedAt:   &nodegroupResponseTimestamp,
+				Hostname:    "test-cluster-node-eegp9",
+				IP:          "198.51.100.11",
+				NodegroupID: "a376745a-fbcb-413d-b418-169d059d79ce",
+			},
+		},
+	},
+}
+
+// testManyNodegroupsInvalidResponseRaw represents a raw invalid response with several nodegroups.
+const testManyNodegroupsInvalidResponseRaw = `
+{
+    "nodegroups": [
+        {
+            "id": "a376745a-fbcb-413d-b418-169d059d79ce",
+        }
+    ]
+}
+`
+
 // testSingleNodegroupInvalidResponseRaw represents a raw invalid response with a single nodegroup.
 const testSingleNodegroupInvalidResponseRaw = `
 {

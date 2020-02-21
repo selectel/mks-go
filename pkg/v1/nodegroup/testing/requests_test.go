@@ -166,3 +166,155 @@ func TestGetNodegroupUnmarshallError(t *testing.T) {
 		t.Fatal("expected error from the Get method")
 	}
 }
+
+func TestListNodegroups(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/79265515-3700-49fa-af0e-7f547bce788a/nodegroups",
+		RawResponse: testListNodegroupsResponseRaw,
+		Method:      http.MethodGet,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "79265515-3700-49fa-af0e-7f547bce788a"
+
+	actual, httpResponse, err := nodegroup.List(ctx, testClient, clusterID)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the List method")
+	}
+	if httpResponse.StatusCode != http.StatusOK {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusOK, httpResponse.StatusCode)
+	}
+	if !reflect.DeepEqual(expectedListNodegroupsResponse, actual) {
+		t.Fatalf("expected %#v, but got %#v", expectedListNodegroupsResponse, actual)
+	}
+}
+
+func TestListNodegroupsHTTPError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/89265515-3700-49fa-af0e-7f547bce788a/nodegroups",
+		RawResponse: testErrGenericResponseRaw,
+		Method:      http.MethodGet,
+		Status:      http.StatusBadGateway,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "89265515-3700-49fa-af0e-7f547bce788a"
+
+	actual, httpResponse, err := nodegroup.List(ctx, testClient, clusterID)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if actual != nil {
+		t.Fatal("expected no nodegroup from the List method")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the List method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the List method")
+	}
+	if httpResponse.StatusCode != http.StatusBadGateway {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusBadGateway, httpResponse.StatusCode)
+	}
+}
+
+func TestListNodegroupsTimeoutError(t *testing.T) {
+	testEnv := testutils.SetupTestEnv()
+	testEnv.Server.Close()
+	defer testEnv.TearDownTestEnv()
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "89265515-3700-49fa-af0e-7f547bce788b"
+
+	actual, httpResponse, err := nodegroup.List(ctx, testClient, clusterID)
+
+	if actual != nil {
+		t.Fatal("expected no nodegroup from the List method")
+	}
+	if httpResponse != nil {
+		t.Fatal("expected no HTTP response from the List method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the List method")
+	}
+}
+
+func TestListClustersUnmarshallError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/d1265515-3700-49fa-af0e-7f547bce788a/nodegroups",
+		RawResponse: testManyNodegroupsInvalidResponseRaw,
+		Method:      http.MethodGet,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "d1265515-3700-49fa-af0e-7f547bce788a"
+
+	actual, httpResponse, err := nodegroup.List(ctx, testClient, clusterID)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if actual != nil {
+		t.Fatal("expected no nodegroup from the List method")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the List method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the List method")
+	}
+}
