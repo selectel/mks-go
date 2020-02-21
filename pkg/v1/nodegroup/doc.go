@@ -9,5 +9,15 @@ Example of getting a single cluster nodegroup referenced by its id
     log.Fatal(err)
   }
   fmt.Printf("%+v\n", clusterNodegroup)
+
+Example of getting all cluster nodegroups
+
+  clusterNodegroups, _, err := nodegroup.List(ctx, mksClient, clusterID)
+  if err != nil {
+    log.Fatal(err)
+  }
+  for _, clusterNodegroup := range clusterNodegroups {
+    fmt.Printf("%+v\n", clusterNodegroup)
+  }
 */
 package nodegroup
