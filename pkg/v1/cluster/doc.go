@@ -32,9 +32,9 @@ Example of creating a new cluster
         CPUs:             1,
         RAMMB:            2048,
         VolumeGB:         10,
-        VolumeType:       "fast.ru-1b",
+        VolumeType:       "fast.ru-3a",
         KeypairName:      "ssh-key",
-        AvailabilityZone: "ru-1b",
+        AvailabilityZone: "ru-3a",
       },
     },
   }
