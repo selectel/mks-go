@@ -19,5 +19,21 @@ Example of getting all cluster nodegroups
   for _, clusterNodegroup := range clusterNodegroups {
     fmt.Printf("%+v\n", clusterNodegroup)
   }
+
+Example of creating a new cluster nodegroup
+
+  createOpts := &nodegroup.CreateOpts{
+    Count:            1,
+    CPUs:             1,
+    RAMMB:            2048,
+    VolumeGB:         10,
+    VolumeType:       "fast.ru-3a",
+    KeypairName:      "ssh-key",
+    AvailabilityZone: "ru-3a",
+  }
+  _, err := nodegroup.Create(ctx, mksClient, clusterID, createOpts)
+  if err != nil {
+    log.Fatal(err)
+  }
 */
 package nodegroup

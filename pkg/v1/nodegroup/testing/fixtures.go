@@ -115,6 +115,33 @@ var expectedListNodegroupsResponse = []*nodegroup.View{
 	},
 }
 
+// testCreateNodegroupOptsRaw represents marshalled options for the Create request.
+const testCreateNodegroupOptsRaw = `
+{
+    "nodegroup": {
+        "count": 1,
+        "cpus": 1,
+        "ram_mb": 2048,
+        "volume_gb": 10,
+        "volume_type": "fast.ru-1b",
+        "keypair_name": "ssh-key",
+        "availability_zone": "ru-1b"
+    }
+}
+`
+
+// nolint
+// testCreateNodegroupOpts represents options for the Create request.
+var testCreateNodegroupOpts = &nodegroup.CreateOpts{
+	Count:            1,
+	CPUs:             1,
+	RAMMB:            2048,
+	VolumeGB:         10,
+	VolumeType:       "fast.ru-1b",
+	KeypairName:      "ssh-key",
+	AvailabilityZone: "ru-1b",
+}
+
 // testManyNodegroupsInvalidResponseRaw represents a raw invalid response with several nodegroups.
 const testManyNodegroupsInvalidResponseRaw = `
 {

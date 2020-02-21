@@ -318,3 +318,108 @@ func TestListClustersUnmarshallError(t *testing.T) {
 		t.Fatal("expected error from the List method")
 	}
 }
+
+func TestCreateNodegroup(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithBody(t, &testutils.HandleReqOpts{
+		Mux:        testEnv.Mux,
+		URL:        "/v1/clusters/d1465515-3700-49fa-af0e-7f547bce788a/nodegroups",
+		RawRequest: testCreateNodegroupOptsRaw,
+		Method:     http.MethodPost,
+		Status:     http.StatusNoContent,
+		CallFlag:   &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "d1465515-3700-49fa-af0e-7f547bce788a"
+
+	httpResponse, err := nodegroup.Create(ctx, testClient, clusterID, testCreateNodegroupOpts)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Create method")
+	}
+	if httpResponse.StatusCode != http.StatusNoContent {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusNoContent, httpResponse.StatusCode)
+	}
+}
+
+func TestCreateNodegroupHTTPError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/d1565515-3700-49fa-af0e-7f547bce788a/nodegroups",
+		RawResponse: testErrGenericResponseRaw,
+		RawRequest:  testCreateNodegroupOptsRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusBadGateway,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "d1565515-3700-49fa-af0e-7f547bce788a"
+
+	httpResponse, err := nodegroup.Create(ctx, testClient, clusterID, testCreateNodegroupOpts)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Create method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the Create method")
+	}
+	if httpResponse.StatusCode != http.StatusBadGateway {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusBadGateway, httpResponse.StatusCode)
+	}
+}
+
+func TestCreateNodegroupTimeoutError(t *testing.T) {
+	testEnv := testutils.SetupTestEnv()
+	testEnv.Server.Close()
+	defer testEnv.TearDownTestEnv()
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "d1c65515-3700-49fa-af0e-7f547bce788a"
+
+	httpResponse, err := nodegroup.Create(ctx, testClient, clusterID, testCreateNodegroupOpts)
+
+	if httpResponse != nil {
+		t.Fatal("expected no HTTP response from the Create method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the Create method")
+	}
+}

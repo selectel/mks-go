@@ -1,7 +1,9 @@
 package nodegroup
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"net/http"
 	"strings"
 
@@ -52,4 +54,28 @@ func List(ctx context.Context, client *v1.ServiceClient, clusterID string) ([]*V
 	}
 
 	return result.Nodegroups, responseResult, err
+}
+
+// Create requests a creation of a new cluster nodegroup.
+func Create(ctx context.Context, client *v1.ServiceClient, clusterID string, opts *CreateOpts) (*v1.ResponseResult, error) {
+	createNodegroupOpts := struct {
+		Nodegroup *CreateOpts `json:"nodegroup"`
+	}{
+		Nodegroup: opts,
+	}
+	requestBody, err := json.Marshal(createNodegroupOpts)
+	if err != nil {
+		return nil, err
+	}
+
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID, v1.ResourceURLNodegroup}, "/")
+	responseResult, err := client.DoRequest(ctx, http.MethodPost, url, bytes.NewReader(requestBody))
+	if err != nil {
+		return nil, err
+	}
+	if responseResult.Err != nil {
+		err = responseResult.Err
+	}
+
+	return responseResult, err
 }
