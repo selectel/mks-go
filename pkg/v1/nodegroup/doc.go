@@ -35,5 +35,12 @@ Example of creating a new cluster nodegroup
   if err != nil {
     log.Fatal(err)
   }
+
+Example of deleting a single cluster nodegroup
+
+  _, err := nodegroup.Delete(ctx, mksClient, clusterID, nodegroupID)
+  if err != nil {
+    log.Fatal(err)
+  }
 */
 package nodegroup
