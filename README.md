@@ -141,8 +141,8 @@ func main() {
 	}
 
 	// Print cluster tasks.
-	for _, newClusterTask := range tasks {
-		fmt.Printf("Cluster task: %+v\n", newClusterTask)
+	for _, t := range tasks {
+		fmt.Printf("Cluster task: %+v\n", t)
 	}
 }
 ```
