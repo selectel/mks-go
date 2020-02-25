@@ -529,3 +529,111 @@ func TestDeleteNodegroupTimeoutError(t *testing.T) {
 		t.Fatal("expected error from the Delete method")
 	}
 }
+
+func TestResizeNodegroup(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithBody(t, &testutils.HandleReqOpts{
+		Mux:        testEnv.Mux,
+		URL:        "/v1/clusters/e172551c-3700-49fa-af0e-7f547bce788a/nodegroups/c476d45a-0bcc-e13d-b418-180d059d79cd/resize",
+		RawRequest: testResizeNodegroupOptsRaw,
+		Method:     http.MethodPost,
+		Status:     http.StatusNoContent,
+		CallFlag:   &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "e172551c-3700-49fa-af0e-7f547bce788a"
+	nodegroupID := "c476d45a-0bcc-e13d-b418-180d059d79cd"
+
+	httpResponse, err := nodegroup.Resize(ctx, testClient, clusterID, nodegroupID, testResizeNodegroupOpts)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Resize method")
+	}
+	if httpResponse.StatusCode != http.StatusNoContent {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusNoContent, httpResponse.StatusCode)
+	}
+}
+
+func TestResizeNodegroupHTTPError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/e17d551c-3700-49fa-af0e-7f547bce788a/nodegroups/c476b45a-0bcc-e13d-b418-180d059d79cd/resize",
+		RawResponse: testErrGenericResponseRaw,
+		RawRequest:  testResizeNodegroupOptsRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusBadGateway,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "e17d551c-3700-49fa-af0e-7f547bce788a"
+	nodegroupID := "c476b45a-0bcc-e13d-b418-180d059d79cd"
+
+	httpResponse, err := nodegroup.Resize(ctx, testClient, clusterID, nodegroupID, testResizeNodegroupOpts)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Resize method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the Resize method")
+	}
+	if httpResponse.StatusCode != http.StatusBadGateway {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusBadGateway, httpResponse.StatusCode)
+	}
+}
+
+func TestResizeNodegroupTimeoutError(t *testing.T) {
+	testEnv := testutils.SetupTestEnv()
+	testEnv.Server.Close()
+	defer testEnv.TearDownTestEnv()
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "e17d651c-3700-49fa-af0e-7f547bce788a"
+	nodegroupID := "c476b75a-0bcc-e13d-b418-180d059d79cd"
+
+	httpResponse, err := nodegroup.Resize(ctx, testClient, clusterID, nodegroupID, testResizeNodegroupOpts)
+
+	if httpResponse != nil {
+		t.Fatal("expected no HTTP response from the Resize method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the Resize method")
+	}
+}

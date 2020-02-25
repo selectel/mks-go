@@ -142,6 +142,21 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 	AvailabilityZone: "ru-1b",
 }
 
+// testResizeNodegroupOptsRaw represents marshalled options for the Resize request.
+const testResizeNodegroupOptsRaw = `
+{
+    "nodegroup": {
+        "desired": 1
+    }
+}
+`
+
+// nolint
+// testResizeNodegroupOpts represents options for the Resize request.
+var testResizeNodegroupOpts = &nodegroup.ResizeOpts{
+	Desired: 1,
+}
+
 // testManyNodegroupsInvalidResponseRaw represents a raw invalid response with several nodegroups.
 const testManyNodegroupsInvalidResponseRaw = `
 {

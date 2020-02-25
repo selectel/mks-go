@@ -42,5 +42,15 @@ Example of deleting a single cluster nodegroup
   if err != nil {
     log.Fatal(err)
   }
+
+Example of resizing a single cluster nodegroup
+
+  resizeOpts := &nodegroup.ResizeOpts{
+    Desired: 1,
+  }
+  _, err := nodegroup.Resize(ctx, mksClient, clusterID, nodegroupID, resizeOpts)
+  if err != nil {
+    log.Fatal(err)
+  }
 */
 package nodegroup

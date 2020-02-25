@@ -93,3 +93,27 @@ func Delete(ctx context.Context, client *v1.ServiceClient, clusterID, nodegroupI
 
 	return responseResult, err
 }
+
+// Resize requests a resize of a cluster nodegroup by its id.
+func Resize(ctx context.Context, client *v1.ServiceClient, clusterID, nodegroupID string, opts *ResizeOpts) (*v1.ResponseResult, error) {
+	resizeNodegroupOpts := struct {
+		Nodegroup *ResizeOpts `json:"nodegroup"`
+	}{
+		Nodegroup: opts,
+	}
+	requestBody, err := json.Marshal(resizeNodegroupOpts)
+	if err != nil {
+		return nil, err
+	}
+
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID, v1.ResourceURLNodegroup, nodegroupID, v1.ResourceURLResize}, "/")
+	responseResult, err := client.DoRequest(ctx, http.MethodPost, url, bytes.NewReader(requestBody))
+	if err != nil {
+		return nil, err
+	}
+	if responseResult.Err != nil {
+		err = responseResult.Err
+	}
+
+	return responseResult, err
+}
