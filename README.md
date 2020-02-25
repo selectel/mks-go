@@ -40,4 +40,95 @@ To work with the Selectel Managed Kubernetes Service API you first need to:
 
 ### Usage example
 
-In progress.
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+
+	v1 "github.com/selectel/mks-go/pkg/v1"
+	"github.com/selectel/mks-go/pkg/v1/cluster"
+	"github.com/selectel/mks-go/pkg/v1/kubeversion"
+	"github.com/selectel/mks-go/pkg/v1/nodegroup"
+	"github.com/selectel/mks-go/pkg/v1/task"
+)
+
+func main() {
+	// Token to work with Selectel Cloud project.
+	token := "gAAAAABeVNzu-..."
+
+	// MKS endpoint to work with.
+	endpoint := "https://ru-3.mks.selcloud.ru/v1"
+
+	// Initialize the MKS V1 client.
+	mksClient := v1.NewMKSClientV1(token, endpoint)
+
+	// Prepare empty context.
+	ctx := context.Background()
+
+	// Get supported Kubernetes versions.
+	kubeVersions, _, err := kubeversion.List(ctx, mksClient)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if len(kubeVersions) == 0 {
+		log.Fatal("There are no available Kubernetes versions")
+	}
+
+	// Use the first version in list.
+	kubeVersion := kubeVersions[0]
+
+	// Nodegroup with nodes based on network volumes for root partition.
+	firstNodegroup := &nodegroup.CreateOpts{
+		Count:            3,
+		CPUs:             1,
+		RAMMB:            2048,
+		VolumeGB:         50,
+		VolumeType:       "fast.ru-3a",
+		AvailabilityZone: "ru-3a",
+	}
+
+	// Nodegroup with nodes based on local volumes for root partition.
+	secondNodegroup := &nodegroup.CreateOpts{
+		Count:            2,
+		CPUs:             2,
+		RAMMB:            4096,
+		VolumeGB:         20,
+		LocalVolume:      true,
+		AvailabilityZone: "ru-3a",
+	}
+
+	// Build final options for a new cluster.
+	createOpts := &cluster.CreateOpts{
+		Name:        "test-cluster",
+		KubeVersion: kubeVersion.Version,
+		Region:      "ru-3",
+		Nodegroups: []*nodegroup.CreateOpts{
+			firstNodegroup,
+			secondNodegroup,
+		},
+	}
+
+	// Create a cluster.
+	newCluster, _, err := cluster.Create(ctx, mksClient, createOpts)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Print cluster fields.
+	fmt.Printf("Created cluster: %+v\n", newCluster)
+
+	// Get cluster tasks.
+	tasks, _, err := task.List(ctx, mksClient, newCluster.ID)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Print cluster tasks.
+	for _, newClusterTask := range tasks {
+		fmt.Printf("Cluster task: %+v\n", newClusterTask)
+	}
+}
+```
