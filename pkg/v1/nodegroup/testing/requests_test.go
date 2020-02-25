@@ -423,3 +423,109 @@ func TestCreateNodegroupTimeoutError(t *testing.T) {
 		t.Fatal("expected error from the Create method")
 	}
 }
+
+func TestDeleteNodegroup(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:      testEnv.Mux,
+		URL:      "/v1/clusters/c1d7559c-55d8-4f65-9230-6a22b985ff93/nodegroups/b376745a-fbcb-413d-b418-180d059d79cd",
+		Method:   http.MethodDelete,
+		Status:   http.StatusNoContent,
+		CallFlag: &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "c1d7559c-55d8-4f65-9230-6a22b985ff93"
+	nodegroupID := "b376745a-fbcb-413d-b418-180d059d79cd"
+
+	httpResponse, err := nodegroup.Delete(ctx, testClient, clusterID, nodegroupID)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Delete method")
+	}
+	if httpResponse.StatusCode != http.StatusNoContent {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusNoContent, httpResponse.StatusCode)
+	}
+}
+
+func TestDeleteNodegroupHTTPError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/c1d7559c-55d8-7f65-9230-6a22b985ff93/nodegroups/b376745a-0bcb-413d-b418-180d059d79cd",
+		RawResponse: testErrGenericResponseRaw,
+		Method:      http.MethodDelete,
+		Status:      http.StatusBadGateway,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "c1d7559c-55d8-7f65-9230-6a22b985ff93"
+	nodegroupID := "b376745a-0bcb-413d-b418-180d059d79cd"
+
+	httpResponse, err := nodegroup.Delete(ctx, testClient, clusterID, nodegroupID)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Delete method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the Delete method")
+	}
+	if httpResponse.StatusCode != http.StatusBadGateway {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusBadGateway, httpResponse.StatusCode)
+	}
+}
+
+func TestDeleteNodegroupTimeoutError(t *testing.T) {
+	testEnv := testutils.SetupTestEnv()
+	testEnv.Server.Close()
+	defer testEnv.TearDownTestEnv()
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "c1e7559c-55d8-7f65-9230-6a22b985ff93"
+	nodegroupID := "b376845a-0bcb-413d-b418-180d059d79cd"
+
+	httpResponse, err := nodegroup.Delete(ctx, testClient, clusterID, nodegroupID)
+
+	if httpResponse != nil {
+		t.Fatal("expected no HTTP response from the Delete method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the Delete method")
+	}
+}
