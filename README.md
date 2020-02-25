@@ -38,6 +38,20 @@ To work with the Selectel Managed Kubernetes Service API you first need to:
 * Create a project in Selectel Cloud Platform [projects](https://my.selectel.ru/vpc/projects).
 * Retrieve a token for your project via API or [go-selvpcclient](https://github.com/selectel/go-selvpcclient).
 
+### Endpoints
+
+Selectel Managed Kubernetes Service currently has the following API endpoints:
+
+| URL                             | Region |
+|---------------------------------|--------|
+| https://ru-1.mks.selcloud.ru/v1 | ru-1   |
+| https://ru-2.mks.selcloud.ru/v1 | ru-2   |
+| https://ru-3.mks.selcloud.ru/v1 | ru-3   |
+| https://ru-7.mks.selcloud.ru/v1 | ru-7   |
+| https://ru-8.mks.selcloud.ru/v1 | ru-8   |
+
+You can also retrieve all available API endpoints from the Identity catalog.
+
 ### Usage example
 
 ```go
