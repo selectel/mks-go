@@ -37,3 +37,9 @@ type CreateOpts struct {
 	// AvailabilityZone should contain the valid zone in the selected region of the created cluster.
 	AvailabilityZone string `json:"availability_zone,omitempty"`
 }
+
+// ResizeOpts represents options for the nodegroup Resize request.
+type ResizeOpts struct {
+	// Desired represents desired amount of nodes for this nodegroup.
+	Desired int `json:"desired"`
+}

@@ -18,6 +18,7 @@ const (
 	ResourceURLRotateCerts = "rotate-certs"
 	ResourceURLTask        = "tasks"
 	ResourceURLNodegroup   = "nodegroups"
+	ResourceURLResize      = "resize"
 )
 
 const (
