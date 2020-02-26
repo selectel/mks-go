@@ -19,6 +19,7 @@ const (
 	ResourceURLTask        = "tasks"
 	ResourceURLNodegroup   = "nodegroups"
 	ResourceURLResize      = "resize"
+	ResourceURLReinstall   = "reinstall"
 )
 
 const (

@@ -9,5 +9,12 @@ Example of getting a single node of a cluster nodegroup by its id
     log.Fatal(err)
   }
   fmt.Printf("%+v\n", singleNode)
+
+Example of reinstalling a single node of a cluster nodegroup by its id
+
+  _, err := node.Reinstall(ctx, mksClient, clusterID, nodegroupID, nodeID)
+  if err != nil {
+    log.Fatal(err)
+  }
 */
 package node

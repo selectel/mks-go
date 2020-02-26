@@ -170,3 +170,112 @@ func TestGetNodeUnmarshallError(t *testing.T) {
 		t.Fatal("expected error from the Get method")
 	}
 }
+
+func TestReinstallNode(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:      testEnv.Mux,
+		URL:      "/v1/clusters/792de51c-54b9-49fa-af0e-7f547bce788a/nodegroups/e195b65d-442a-4423-aaf7-5654789b8a9d/c1800f8c-547d-48a7-98ed-3075254b8d4a/reinstall",
+		Method:   http.MethodPost,
+		Status:   http.StatusNoContent,
+		CallFlag: &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "792de51c-54b9-49fa-af0e-7f547bce788a"
+	nodegroupID := "e195b65d-442a-4423-aaf7-5654789b8a9d"
+	nodeID := "c1800f8c-547d-48a7-98ed-3075254b8d4a"
+
+	httpResponse, err := node.Reinstall(ctx, testClient, clusterID, nodegroupID, nodeID)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Reinstall method")
+	}
+	if httpResponse.StatusCode != http.StatusNoContent {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusNoContent, httpResponse.StatusCode)
+	}
+}
+
+func TestReinstallNodeHTTPError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/792de71c-3700-49fa-bc4e-7f547bce788a/nodegroups/f174b68d-442a-4423-aaf7-5654789b8a9d/203ce18c-547d-48a7-98ed-3075254b8d4a/reinstall",
+		RawResponse: testErrGenericResponseRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusBadGateway,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "792de71c-3700-49fa-bc4e-7f547bce788a"
+	nodegroupID := "f174b68d-442a-4423-aaf7-5654789b8a9d"
+	nodeID := "203ce18c-547d-48a7-98ed-3075254b8d4a"
+
+	httpResponse, err := node.Reinstall(ctx, testClient, clusterID, nodegroupID, nodeID)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Reinstall method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the Reinstall method")
+	}
+	if httpResponse.StatusCode != http.StatusBadGateway {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusBadGateway, httpResponse.StatusCode)
+	}
+}
+
+func TestReinstallNodeTimeoutError(t *testing.T) {
+	testEnv := testutils.SetupTestEnv()
+	testEnv.Server.Close()
+	defer testEnv.TearDownTestEnv()
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	clusterID := "78ed321c-3700-49fa-af0e-7f547bce788a"
+	nodegroupID := "f174b55d-442a-41e3-aaf7-5b54789b8a9d"
+	nodeID := "1cdc0f8c-327d-48a7-98ed-3075254b8d4a"
+
+	httpResponse, err := node.Reinstall(ctx, testClient, clusterID, nodegroupID, nodeID)
+
+	if httpResponse != nil {
+		t.Fatal("expected no HTTP response from the Reinstall method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the Reinstall method")
+	}
+}
