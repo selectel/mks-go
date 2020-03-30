@@ -136,3 +136,17 @@ func RotateCerts(ctx context.Context, client *v1.ServiceClient, clusterID string
 
 	return responseResult, err
 }
+
+// UpgradePatchVersion requests a Kubernetes patch version upgrade by cluster id.
+func UpgradePatchVersion(ctx context.Context, client *v1.ServiceClient, clusterID string) (*v1.ResponseResult, error) {
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID, v1.ResourceURLUpgradePatchVersion}, "/")
+	responseResult, err := client.DoRequest(ctx, http.MethodPost, url, nil)
+	if err != nil {
+		return nil, err
+	}
+	if responseResult.Err != nil {
+		err = responseResult.Err
+	}
+
+	return responseResult, err
+}

@@ -868,3 +868,106 @@ func TestRotateCertsTimeoutError(t *testing.T) {
 		t.Fatal("expected error from the RotateCerts method")
 	}
 }
+
+func TestUpgradePatchVersion(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:      testEnv.Mux,
+		URL:      "/v1/clusters/fc1d8841-d8dc-4981-a97f-4cb251e3a8aa/upgrade-patch-version",
+		Method:   http.MethodPost,
+		Status:   http.StatusNoContent,
+		CallFlag: &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "fc1d8841-d8dc-4981-a97f-4cb251e3a8aa"
+
+	httpResponse, err := cluster.UpgradePatchVersion(ctx, testClient, id)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the UpgradePatchVersion method")
+	}
+	if httpResponse.StatusCode != http.StatusNoContent {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusNoContent, httpResponse.StatusCode)
+	}
+}
+
+func TestUpgradePatchVersionHTTPError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/6025be99-ee53-4a9f-8589-e43801b8f778/upgrade-patch-version",
+		RawResponse: testErrGenericResponseRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusBadGateway,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "6025be99-ee53-4a9f-8589-e43801b8f778"
+
+	httpResponse, err := cluster.UpgradePatchVersion(ctx, testClient, id)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the UpgradePatchVersion method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the UpgradePatchVersion method")
+	}
+	if httpResponse.StatusCode != http.StatusBadGateway {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusBadGateway, httpResponse.StatusCode)
+	}
+}
+
+func TestUpgradePatchVersionTimeoutError(t *testing.T) {
+	testEnv := testutils.SetupTestEnv()
+	testEnv.Server.Close()
+	defer testEnv.TearDownTestEnv()
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "6af18629-f069-4bf1-888d-2476ab2bddff"
+
+	httpResponse, err := cluster.UpgradePatchVersion(ctx, testClient, id)
+
+	if httpResponse != nil {
+		t.Fatal("expected no HTTP response from the UpgradePatchVersion method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the UpgradePatchVersion method")
+	}
+}

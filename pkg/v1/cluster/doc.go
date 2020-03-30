@@ -65,5 +65,12 @@ Example of rotating certificates by cluster id
   if err != nil {
     log.Fatal(err)
   }
+
+Example of upgrading Kubernetes patch version by cluster id
+
+  _, err := cluster.UpgradePatchVersion(ctx, mksClient, clusterID)
+  if err != nil {
+    log.Fatal(err)
+  }
 */
 package cluster

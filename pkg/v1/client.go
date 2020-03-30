@@ -12,14 +12,15 @@ import (
 )
 
 const (
-	ResourceURLCluster     = "clusters"
-	ResourceURLKubeversion = "kubeversions"
-	ResourceURLKubeconfig  = "kubeconfig"
-	ResourceURLRotateCerts = "rotate-certs"
-	ResourceURLTask        = "tasks"
-	ResourceURLNodegroup   = "nodegroups"
-	ResourceURLResize      = "resize"
-	ResourceURLReinstall   = "reinstall"
+	ResourceURLCluster             = "clusters"
+	ResourceURLKubeversion         = "kubeversions"
+	ResourceURLKubeconfig          = "kubeconfig"
+	ResourceURLRotateCerts         = "rotate-certs"
+	ResourceURLUpgradePatchVersion = "upgrade-patch-version"
+	ResourceURLTask                = "tasks"
+	ResourceURLNodegroup           = "nodegroups"
+	ResourceURLResize              = "resize"
+	ResourceURLReinstall           = "reinstall"
 )
 
 const (
