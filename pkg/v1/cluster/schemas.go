@@ -80,7 +80,7 @@ type View struct {
 	// in case of their unavailability or unhealthiness.
 	EnableAutorepair bool `json:"enable_autorepair"`
 
-	// EnablePatchVersionAutoUpgrade specifies if Kubernetes version of the cluster is allowed to be upgraded
+	// EnablePatchVersionAutoUpgrade specifies if Kubernetes patch version of the cluster is allowed to be upgraded
 	// automatically.
 	EnablePatchVersionAutoUpgrade bool `json:"enable_patch_version_auto_upgrade"`
 }
