@@ -44,6 +44,17 @@ Example of creating a new cluster
   }
   fmt.Printf("%+v\n", mksCluster)
 
+Example of updating an existing cluster
+
+  updateOpts := &cluster.UpdateOpts{
+    MaintenanceWindowStart: "07:00:00",
+  }
+  mksCluster, _, err := cluster.Update(ctx, mksClient, clusterID, updateOpts)
+  if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Printf("%+v\n", mksCluster)
+
 Example of deleting a single cluster
 
   _, err := cluster.Delete(ctx, mksClient, clusterID)

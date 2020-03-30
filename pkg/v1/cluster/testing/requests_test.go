@@ -548,6 +548,161 @@ func TestCreateClusterUnmarshallError(t *testing.T) {
 	}
 }
 
+func TestUpdateCluster(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/57b244b4-a49e-4067-a837-e0024a3a8aed",
+		RawResponse: testGetClusterResponseRaw,
+		RawRequest:  testUpdateClusterOptsRaw,
+		Method:      http.MethodPut,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "57b244b4-a49e-4067-a837-e0024a3a8aed"
+
+	actual, httpResponse, err := cluster.Update(ctx, testClient, id, testUpdateClusterOpts)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Update method")
+	}
+	if httpResponse.StatusCode != http.StatusOK {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusOK, httpResponse.StatusCode)
+	}
+	if !reflect.DeepEqual(expectedGetClusterResponse, actual) {
+		t.Fatalf("expected %#v, but got %#v", expectedGetClusterResponse, actual)
+	}
+}
+
+func TestUpdateClusterHTTPError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/9b1352c2-5c79-4ff0-abf8-3a6d57c35487",
+		RawResponse: testErrGenericResponseRaw,
+		RawRequest:  testUpdateClusterOptsRaw,
+		Method:      http.MethodPut,
+		Status:      http.StatusBadGateway,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "9b1352c2-5c79-4ff0-abf8-3a6d57c35487"
+
+	actual, httpResponse, err := cluster.Update(ctx, testClient, id, testUpdateClusterOpts)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if actual != nil {
+		t.Fatal("expected no cluster from the Update method")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Update method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the Update method")
+	}
+	if httpResponse.StatusCode != http.StatusBadGateway {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusBadGateway, httpResponse.StatusCode)
+	}
+}
+
+func TestUpdateClusterTimeoutError(t *testing.T) {
+	testEnv := testutils.SetupTestEnv()
+	testEnv.Server.Close()
+	defer testEnv.TearDownTestEnv()
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "b91ae78a-e72c-4d38-8d2c-594f9cf1f0e1"
+
+	actual, httpResponse, err := cluster.Update(ctx, testClient, id, testUpdateClusterOpts)
+
+	if actual != nil {
+		t.Fatal("expected no cluster from the Update method")
+	}
+	if httpResponse != nil {
+		t.Fatal("expected no HTTP response from the Update method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the Update method")
+	}
+}
+
+func TestUpdateClusterUnmarshallError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/72139577-463c-4e7d-9048-d9496041016c",
+		RawResponse: testSingleClusterInvalidResponseRaw,
+		RawRequest:  testUpdateClusterOptsRaw,
+		Method:      http.MethodPut,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "72139577-463c-4e7d-9048-d9496041016c"
+
+	actual, httpResponse, err := cluster.Update(ctx, testClient, id, testUpdateClusterOpts)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if actual != nil {
+		t.Fatal("expected no cluster from the Update method")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Update method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the Create method")
+	}
+}
+
 func TestDeleteCluster(t *testing.T) {
 	endpointCalled := false
 	testEnv := testutils.SetupTestEnv()
