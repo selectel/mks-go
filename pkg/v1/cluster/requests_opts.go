@@ -38,4 +38,8 @@ type CreateOpts struct {
 	// EnableAutorepair reflects if worker nodes are allowed to be reinstalled automatically
 	// in case of their unavailability or unhealthiness. Enabled by default.
 	EnableAutorepair *bool `json:"enable_autorepair,omitempty"`
+
+	// EnablePatchVersionAutoUpgrade specifies if Kubernetes patch version of the cluster is allowed to be upgraded
+	// automatically. Enabled by default.
+	EnablePatchVersionAutoUpgrade *bool `json:"enable_patch_version_auto_upgrade,omitempty"`
 }

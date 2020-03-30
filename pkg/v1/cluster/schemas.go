@@ -79,6 +79,10 @@ type View struct {
 	// EnableAutorepair reflects if worker nodes are allowed to be reinstalled automatically
 	// in case of their unavailability or unhealthiness.
 	EnableAutorepair bool `json:"enable_autorepair"`
+
+	// EnablePatchVersionAutoUpgrade specifies if Kubernetes patch version of the cluster is allowed to be upgraded
+	// automatically.
+	EnablePatchVersionAutoUpgrade bool `json:"enable_patch_version_auto_upgrade"`
 }
 
 func (result *View) UnmarshalJSON(b []byte) error {
