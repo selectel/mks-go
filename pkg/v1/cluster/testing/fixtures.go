@@ -777,3 +777,21 @@ users:
     client-certificate-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=
     client-key-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=
 `
+
+// testUpdateClusterOptsRaw represents marshalled options variant A for the Update request.
+const testUpdateClusterOptsRaw = `
+{
+    "cluster": {
+        "maintenance_window_start": "07:00:00",
+        "enable_autorepair": true,
+        "enable_patch_version_auto_upgrade": false
+    }
+}
+`
+
+// testUpdateClusterOpts represents options for the Update request.
+var testUpdateClusterOpts = &cluster.UpdateOpts{
+	MaintenanceWindowStart:        "07:00:00",
+	EnableAutorepair:              testutils.BoolToPtr(true),
+	EnablePatchVersionAutoUpgrade: testutils.BoolToPtr(false),
+}

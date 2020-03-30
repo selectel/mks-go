@@ -43,3 +43,18 @@ type CreateOpts struct {
 	// automatically. Enabled by default.
 	EnablePatchVersionAutoUpgrade *bool `json:"enable_patch_version_auto_upgrade,omitempty"`
 }
+
+// UpdateOpts represents options for the cluster Update request.
+type UpdateOpts struct {
+	// MaintenanceWindowStart represents UTC time of when the cluster will start its maintenance tasks.
+	// It should be in hh:mm:ss format if provided.
+	MaintenanceWindowStart string `json:"maintenance_window_start,omitempty"`
+
+	// EnableAutorepair reflects if worker nodes are allowed to be reinstalled automatically
+	// in case of their unavailability or unhealthiness. Enabled by default.
+	EnableAutorepair *bool `json:"enable_autorepair,omitempty"`
+
+	// EnablePatchVersionAutoUpgrade specifies if Kubernetes patch version of the cluster is allowed to be upgraded
+	// automatically. Enabled by default.
+	EnablePatchVersionAutoUpgrade *bool `json:"enable_patch_version_auto_upgrade,omitempty"`
+}

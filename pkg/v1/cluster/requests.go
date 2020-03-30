@@ -89,6 +89,39 @@ func Create(ctx context.Context, client *v1.ServiceClient, opts *CreateOpts) (*V
 	return result.Cluster, responseResult, nil
 }
 
+// Update requests an update of an existing cluster.
+func Update(ctx context.Context, client *v1.ServiceClient, clusterID string, opts *UpdateOpts) (*View, *v1.ResponseResult, error) {
+	updateClusterOpts := struct {
+		Cluster *UpdateOpts `json:"cluster"`
+	}{
+		Cluster: opts,
+	}
+	requestBody, err := json.Marshal(updateClusterOpts)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID}, "/")
+	responseResult, err := client.DoRequest(ctx, http.MethodPut, url, bytes.NewReader(requestBody))
+	if err != nil {
+		return nil, nil, err
+	}
+	if responseResult.Err != nil {
+		return nil, responseResult, responseResult.Err
+	}
+
+	// Extract cluster from the response body.
+	var result struct {
+		Cluster *View `json:"cluster"`
+	}
+	err = responseResult.ExtractResult(&result)
+	if err != nil {
+		return nil, responseResult, err
+	}
+
+	return result.Cluster, responseResult, nil
+}
+
 // Delete deletes a single cluster by its id.
 func Delete(ctx context.Context, client *v1.ServiceClient, clusterID string) (*v1.ResponseResult, error) {
 	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID}, "/")
