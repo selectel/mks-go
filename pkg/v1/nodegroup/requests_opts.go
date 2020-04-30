@@ -36,6 +36,10 @@ type CreateOpts struct {
 
 	// AvailabilityZone should contain the valid zone in the selected region of the created cluster.
 	AvailabilityZone string `json:"availability_zone,omitempty"`
+
+	// Labels represents an object containing a set of Kubernetes labels that will be applied
+	// for each node in the group. The keys must be user-defined.
+	Labels map[string]string `json:"labels"`
 }
 
 // ResizeOpts represents options for the nodegroup Resize request.

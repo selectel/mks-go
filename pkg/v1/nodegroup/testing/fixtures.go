@@ -29,7 +29,10 @@ const testGetNodegroupResponseRaw = `
         ],
         "updated_at": "2020-02-19T15:41:45.948646Z",
         "volume_gb": 10,
-        "volume_type": "basic.ru-1a"
+        "volume_type": "basic.ru-1a",
+        "labels": {
+           "test-label-key": "test-label-value"
+        }
     }
 }
 `
@@ -58,6 +61,9 @@ var expectedGetNodegroupResponse = &nodegroup.View{
 			NodegroupID: "a376745a-fbcb-413d-b418-169d059d79ce",
 		},
 	},
+	Labels: map[string]string{
+		"test-label-key": "test-label-value",
+	},
 }
 
 // testListNodegroupsResponseRaw represents a raw response from the List method.
@@ -83,7 +89,10 @@ const testListNodegroupsResponseRaw = `
             ],
             "updated_at": "2020-02-19T15:41:45.948646Z",
             "volume_gb": 10,
-            "volume_type": "basic.ru-1a"
+            "volume_type": "basic.ru-1a",
+            "labels": {
+              "test-label-key": "test-label-value"
+            }
         }
     ]
 }
@@ -112,6 +121,9 @@ var expectedListNodegroupsResponse = []*nodegroup.View{
 				NodegroupID: "a376745a-fbcb-413d-b418-169d059d79ce",
 			},
 		},
+		Labels: map[string]string{
+			"test-label-key": "test-label-value",
+		},
 	},
 }
 
@@ -125,7 +137,10 @@ const testCreateNodegroupOptsRaw = `
         "volume_gb": 10,
         "volume_type": "fast.ru-1b",
         "keypair_name": "ssh-key",
-        "availability_zone": "ru-1b"
+        "availability_zone": "ru-1b",
+        "labels": {
+          "test-label-key": "test-label-value"
+        }
     }
 }
 `
@@ -140,6 +155,9 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 	VolumeType:       "fast.ru-1b",
 	KeypairName:      "ssh-key",
 	AvailabilityZone: "ru-1b",
+	Labels: map[string]string{
+		"test-label-key": "test-label-value",
+	},
 }
 
 // testResizeNodegroupOptsRaw represents marshalled options for the Resize request.
