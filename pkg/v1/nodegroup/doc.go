@@ -57,5 +57,19 @@ Example of resizing a single cluster nodegroup
   if err != nil {
     log.Fatal(err)
   }
+
+Example of updating nodegroup labels
+
+  updateOpts := &nodegroup.UpdateOpts{
+    Labels: map[string]string{
+      "label-key0": "label-value0",
+      "label-key1": "label-value1",
+      "label-key2": "label-value2",
+    },
+  }
+  _, err := nodegroup.Update(ctx, mksClient, clusterID, nodegroupID, updateOpts)
+  if err != nil {
+    log.Fatal(err)
+  }
 */
 package nodegroup
