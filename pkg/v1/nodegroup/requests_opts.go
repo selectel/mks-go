@@ -47,3 +47,10 @@ type ResizeOpts struct {
 	// Desired represents desired amount of nodes for this nodegroup.
 	Desired int `json:"desired"`
 }
+
+// UpdateOpts represents options for the nodegroup Update request.
+type UpdateOpts struct {
+	// Labels represents an object containing a set of Kubernetes labels that will be applied
+	// for each node in the group. The keys must be user-defined.
+	Labels map[string]string `json:"labels"`
+}

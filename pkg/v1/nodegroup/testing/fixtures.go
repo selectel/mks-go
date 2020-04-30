@@ -160,6 +160,25 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 	},
 }
 
+// testUpdateNodegroupOptsRaw represents marshalled options for the Update request.
+const testUpdateNodegroupOptsRaw = `
+{
+    "nodegroup": {
+        "labels": {
+          "test-label-key": "test-label-value"
+        }
+    }
+}
+`
+
+// nolint
+// testCreateNodegroupOpts represents options for the Update request.
+var testUpdateNodegroupOpts = &nodegroup.UpdateOpts{
+	Labels: map[string]string{
+		"test-label-key": "test-label-value",
+	},
+}
+
 // testResizeNodegroupOptsRaw represents marshalled options for the Resize request.
 const testResizeNodegroupOptsRaw = `
 {
