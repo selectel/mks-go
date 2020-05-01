@@ -6,9 +6,9 @@ Prior to create a PR please create an issue that will describe a problem.
 
 ## Project structure
 
-Every API part is implemented in it's separate package.
+Every API part should be implemented in its separate package.
 
-Any package that implements methods to work with a needed API uses the
+Any package which implements methods to work with API uses the
 following structure:
 
 ```
