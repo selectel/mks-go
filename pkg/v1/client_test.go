@@ -234,3 +234,41 @@ func TestDoErrNoContentRequest(t *testing.T) {
 		t.Fatalf("got %s error message, want 'mks-go: got the 502 status code from the server'", response.Err.Error())
 	}
 }
+
+func TestDoErrRequestUnmarshalError(t *testing.T) {
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+	testEnv.Mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, "{") // write invalid json in the response body.
+
+		if r.Method != http.MethodGet {
+			t.Errorf("got %s method, want GET", r.Method)
+		}
+	})
+
+	endpoint := testEnv.Server.URL + "/"
+	client := &ServiceClient{
+		HTTPClient: &http.Client{},
+		Endpoint:   endpoint,
+		TokenID:    "token",
+		UserAgent:  "agent",
+	}
+
+	ctx := context.Background()
+	response, err := client.DoRequest(ctx, http.MethodGet, endpoint, nil)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if response.Body == nil {
+		t.Fatal("response body is empty")
+	}
+	if response.StatusCode != http.StatusInternalServerError {
+		t.Fatalf("got %d response status, want 500", response.StatusCode)
+	}
+
+	if response.Err.Error() != "mks-go: got the 500 status code from the server" {
+		t.Fatalf("got %s error message, want 'mks-go: got the 500 status code from the server'", response.Err.Error())
+	}
+}
