@@ -517,7 +517,10 @@ const testCreateClusterOptsRaw = `
                 "volume_gb": 10,
                 "volume_type": "fast.ru-1b",
                 "keypair_name": "ssh-key",
-                "availability_zone": "ru-1b"
+                "availability_zone": "ru-1b",
+                "labels": {
+                  "test-label-key": "test-label-value"
+                }
             }
         ]
     }
@@ -539,6 +542,9 @@ var testCreateClusterOpts = &cluster.CreateOpts{
 			VolumeType:       "fast.ru-1b",
 			KeypairName:      "ssh-key",
 			AvailabilityZone: "ru-1b",
+			Labels: map[string]string{
+				"test-label-key": "test-label-value",
+			},
 		},
 	},
 }
@@ -609,7 +615,10 @@ const testCreateClusterEnableBoolsOptsRaw = `
                 "volume_gb": 10,
                 "volume_type": "fast.ru-1b",
                 "keypair_name": "ssh-key",
-                "availability_zone": "ru-1b"
+                "availability_zone": "ru-1b",
+                "labels": {
+                  "test-label-key": "test-label-value"
+                }
             }
         ]
     }
@@ -633,6 +642,9 @@ var testCreateClusterEnableBoolsOpts = &cluster.CreateOpts{
 			VolumeType:       "fast.ru-1b",
 			KeypairName:      "ssh-key",
 			AvailabilityZone: "ru-1b",
+			Labels: map[string]string{
+				"test-label-key": "test-label-value",
+			},
 		},
 	},
 }
@@ -655,7 +667,10 @@ const testCreateClusterDisableBoolsOptsRaw = `
                 "volume_gb": 10,
                 "volume_type": "fast.ru-1b",
                 "keypair_name": "ssh-key",
-                "availability_zone": "ru-1b"
+                "availability_zone": "ru-1b",
+                "labels": {
+                  "test-label-key": "test-label-value"
+                }
             }
         ]
     }
@@ -679,6 +694,9 @@ var testCreateClusterDisableBoolsOpts = &cluster.CreateOpts{
 			VolumeType:       "fast.ru-1b",
 			KeypairName:      "ssh-key",
 			AvailabilityZone: "ru-1b",
+			Labels: map[string]string{
+				"test-label-key": "test-label-value",
+			},
 		},
 	},
 }
