@@ -26,6 +26,7 @@ const (
 	TypeNodeReinstall         Type = "NODE_REINSTALL"    // Task to reinstall a single node.
 	TypeClusterResize         Type = "CLUSTER_RESIZE"    // Task to change amount of node-groups in a cluster.
 	TypeUpgradePatchVersion   Type = "UPGRADE_PATCH_VERSION"
+	TypeUpgradeMinorVersion   Type = "UPGRADE_MINOR_VERSION"
 	TypeUpdateNodegroupLabels Type = "UPDATE_NODEGROUP_LABELS"
 	TypeUnknown               Type = "UNKNOWN"
 )
@@ -93,6 +94,8 @@ func (result *View) UnmarshalJSON(b []byte) error {
 		result.Type = TypeClusterResize
 	case TypeUpgradePatchVersion:
 		result.Type = TypeUpgradePatchVersion
+	case TypeUpgradeMinorVersion:
+		result.Type = TypeUpgradeMinorVersion
 	case TypeUpdateNodegroupLabels:
 		result.Type = TypeUpdateNodegroupLabels
 	default:
