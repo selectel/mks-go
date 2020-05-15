@@ -88,5 +88,13 @@ Example of upgrading Kubernetes patch version by cluster id
   if err != nil {
     log.Fatal(err)
   }
+
+Example of upgrading Kubernetes minor version by cluster id
+
+  mksCluster, _, err := cluster.UpgradeMinorVersion(ctx, mksClient, clusterID)
+  if err != nil {
+    log.Fatal(err)
+  }
+  fmt.Printf("%+v\n", mksCluster)
 */
 package cluster

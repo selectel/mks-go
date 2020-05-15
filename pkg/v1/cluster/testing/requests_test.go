@@ -1126,3 +1126,155 @@ func TestUpgradePatchVersionTimeoutError(t *testing.T) {
 		t.Fatal("expected error from the UpgradePatchVersion method")
 	}
 }
+
+func TestUpgradeMinorVersion(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/dbe7559b-55d8-4f65-9230-6a22b985ff16/upgrade-minor-version",
+		RawResponse: testGetClusterResponseRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "dbe7559b-55d8-4f65-9230-6a22b985ff16"
+
+	actual, httpResponse, err := cluster.UpgradeMinorVersion(ctx, testClient, id)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the UpgradeMinorVersion method")
+	}
+	if httpResponse.StatusCode != http.StatusOK {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusOK, httpResponse.StatusCode)
+	}
+	if !reflect.DeepEqual(expectedGetClusterResponse, actual) {
+		t.Fatalf("expected %#v, but got %#v", expectedGetClusterResponse, actual)
+	}
+}
+
+func TestUpgradeMinorVersionHTTPError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/dbe7759b-55d8-4f65-9230-6a22b985ff17/upgrade-minor-version",
+		RawResponse: testErrGenericResponseRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusBadGateway,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "dbe7759b-55d8-4f65-9230-6a22b985ff17"
+
+	actual, httpResponse, err := cluster.UpgradeMinorVersion(ctx, testClient, id)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if actual != nil {
+		t.Fatal("expected no cluster from the UpgradeMinorVersion method")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the UpgradeMinorVersion method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the UpgradeMinorVersion method")
+	}
+	if httpResponse.StatusCode != http.StatusBadGateway {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusBadGateway, httpResponse.StatusCode)
+	}
+}
+
+func TestUpgradeMinorVersionTimeoutError(t *testing.T) {
+	testEnv := testutils.SetupTestEnv()
+	testEnv.Server.Close()
+	defer testEnv.TearDownTestEnv()
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "dbe1159b-55d8-4f65-9230-6a22b985ff18"
+
+	actual, httpResponse, err := cluster.UpgradeMinorVersion(ctx, testClient, id)
+
+	if actual != nil {
+		t.Fatal("expected no cluster from the UpgradeMinorVersion method")
+	}
+	if httpResponse != nil {
+		t.Fatal("expected no HTTP response from the UpgradeMinorVersion method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the UpgradeMinorVersion method")
+	}
+}
+
+func TestUpgradeMinorVersionUnmarshallError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/dbe7559b-55d8-4f65-9230-6a22b985ff19/upgrade-minor-version",
+		RawResponse: testSingleClusterInvalidResponseRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "dbe7559b-55d8-4f65-9230-6a22b985ff19"
+
+	actual, httpResponse, err := cluster.UpgradeMinorVersion(ctx, testClient, id)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if actual != nil {
+		t.Fatal("expected no cluster from the UpgradeMinorVersion method")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the UpgradeMinorVersion method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the UpgradeMinorVersion method")
+	}
+}
