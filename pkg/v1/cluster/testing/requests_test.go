@@ -1030,11 +1030,12 @@ func TestUpgradePatchVersion(t *testing.T) {
 	defer testEnv.TearDownTestEnv()
 
 	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
-		Mux:      testEnv.Mux,
-		URL:      "/v1/clusters/fc1d8841-d8dc-4981-a97f-4cb251e3a8aa/upgrade-patch-version",
-		Method:   http.MethodPost,
-		Status:   http.StatusNoContent,
-		CallFlag: &endpointCalled,
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/fc1d8841-d8dc-4981-a97f-4cb251e3a8aa/upgrade-patch-version",
+		RawResponse: testGetClusterResponseRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
 	})
 
 	ctx := context.Background()
@@ -1046,7 +1047,7 @@ func TestUpgradePatchVersion(t *testing.T) {
 	}
 	id := "fc1d8841-d8dc-4981-a97f-4cb251e3a8aa"
 
-	httpResponse, err := cluster.UpgradePatchVersion(ctx, testClient, id)
+	actual, httpResponse, err := cluster.UpgradePatchVersion(ctx, testClient, id)
 
 	if err != nil {
 		t.Fatal(err)
@@ -1057,9 +1058,12 @@ func TestUpgradePatchVersion(t *testing.T) {
 	if httpResponse == nil {
 		t.Fatal("expected an HTTP response from the UpgradePatchVersion method")
 	}
-	if httpResponse.StatusCode != http.StatusNoContent {
+	if httpResponse.StatusCode != http.StatusOK {
 		t.Fatalf("expected %d status in the HTTP response, but got %d",
 			http.StatusNoContent, httpResponse.StatusCode)
+	}
+	if !reflect.DeepEqual(expectedGetClusterResponse, actual) {
+		t.Fatalf("expected %#v, but got %#v", expectedGetClusterResponse, actual)
 	}
 }
 
@@ -1086,10 +1090,13 @@ func TestUpgradePatchVersionHTTPError(t *testing.T) {
 	}
 	id := "6025be99-ee53-4a9f-8589-e43801b8f778"
 
-	httpResponse, err := cluster.UpgradePatchVersion(ctx, testClient, id)
+	actual, httpResponse, err := cluster.UpgradePatchVersion(ctx, testClient, id)
 
 	if !endpointCalled {
 		t.Fatal("endpoint wasn't called")
+	}
+	if actual != nil {
+		t.Fatal("expected no cluster from the UpgradePatchVersion method")
 	}
 	if httpResponse == nil {
 		t.Fatal("expected an HTTP response from the UpgradePatchVersion method")
@@ -1117,10 +1124,52 @@ func TestUpgradePatchVersionTimeoutError(t *testing.T) {
 	}
 	id := "6af18629-f069-4bf1-888d-2476ab2bddff"
 
-	httpResponse, err := cluster.UpgradePatchVersion(ctx, testClient, id)
+	actual, httpResponse, err := cluster.UpgradePatchVersion(ctx, testClient, id)
 
+	if actual != nil {
+		t.Fatal("expected no cluster from the UpgradePatchVersion method")
+	}
 	if httpResponse != nil {
 		t.Fatal("expected no HTTP response from the UpgradePatchVersion method")
+	}
+	if err == nil {
+		t.Fatal("expected error from the UpgradePatchVersion method")
+	}
+}
+
+func TestUpgradePatchVersionUnmarshallError(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/7af18629-f069-4bf1-888d-2476ab2bddff/upgrade-patch-version",
+		RawResponse: testSingleClusterInvalidResponseRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "7af18629-f069-4bf1-888d-2476ab2bddff"
+
+	actual, httpResponse, err := cluster.UpgradePatchVersion(ctx, testClient, id)
+
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if actual != nil {
+		t.Fatal("expected no cluster from the UpgradePatchVersion method")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the UpgradePatchVersion method")
 	}
 	if err == nil {
 		t.Fatal("expected error from the UpgradePatchVersion method")
