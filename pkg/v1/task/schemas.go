@@ -19,16 +19,17 @@ const (
 type Type string
 
 const (
-	TypeCreateCluster         Type = "CREATE_CLUSTER"
-	TypeDeleteCluster         Type = "DELETE_CLUSTER"
-	TypeRotateCerts           Type = "ROTATE_CERTS"      // Task to rotate PKI-tree.
-	TypeNodeGroupResize       Type = "NODE_GROUP_RESIZE" // Task to resize nodes in a group.
-	TypeNodeReinstall         Type = "NODE_REINSTALL"    // Task to reinstall a single node.
-	TypeClusterResize         Type = "CLUSTER_RESIZE"    // Task to change amount of node-groups in a cluster.
-	TypeUpgradePatchVersion   Type = "UPGRADE_PATCH_VERSION"
-	TypeUpgradeMinorVersion   Type = "UPGRADE_MINOR_VERSION"
-	TypeUpdateNodegroupLabels Type = "UPDATE_NODEGROUP_LABELS"
-	TypeUnknown               Type = "UNKNOWN"
+	TypeCreateCluster               Type = "CREATE_CLUSTER"
+	TypeDeleteCluster               Type = "DELETE_CLUSTER"
+	TypeRotateCerts                 Type = "ROTATE_CERTS"      // Task to rotate PKI-tree.
+	TypeNodeGroupResize             Type = "NODE_GROUP_RESIZE" // Task to resize nodes in a group.
+	TypeNodeReinstall               Type = "NODE_REINSTALL"    // Task to reinstall a single node.
+	TypeClusterResize               Type = "CLUSTER_RESIZE"    // Task to change amount of node-groups in a cluster.
+	TypeUpgradePatchVersion         Type = "UPGRADE_PATCH_VERSION"
+	TypeUpgradeMinorVersion         Type = "UPGRADE_MINOR_VERSION"
+	TypeUpdateNodegroupLabels       Type = "UPDATE_NODEGROUP_LABELS"
+	TypeUpgradeMastersConfiguration Type = "UPGRADE_MASTERS_CONFIGURATION"
+	TypeUnknown                     Type = "UNKNOWN"
 )
 
 // View represents an unmarshalled cluster task body from an API response.
@@ -98,6 +99,8 @@ func (result *View) UnmarshalJSON(b []byte) error {
 		result.Type = TypeUpgradeMinorVersion
 	case TypeUpdateNodegroupLabels:
 		result.Type = TypeUpdateNodegroupLabels
+	case TypeUpgradeMastersConfiguration:
+		result.Type = TypeUpgradeMastersConfiguration
 	default:
 		result.Type = TypeUnknown
 	}
