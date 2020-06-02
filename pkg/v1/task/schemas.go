@@ -29,6 +29,7 @@ const (
 	TypeUpgradeMinorVersion         Type = "UPGRADE_MINOR_VERSION"
 	TypeUpdateNodegroupLabels       Type = "UPDATE_NODEGROUP_LABELS"
 	TypeUpgradeMastersConfiguration Type = "UPGRADE_MASTERS_CONFIGURATION"
+	TypeUpgradeClusterConfiguration Type = "UPGRADE_CLUSTER_CONFIGURATION"
 	TypeUnknown                     Type = "UNKNOWN"
 )
 
@@ -101,6 +102,8 @@ func (result *View) UnmarshalJSON(b []byte) error {
 		result.Type = TypeUpdateNodegroupLabels
 	case TypeUpgradeMastersConfiguration:
 		result.Type = TypeUpgradeMastersConfiguration
+	case TypeUpgradeClusterConfiguration:
+		result.Type = TypeUpgradeClusterConfiguration
 	default:
 		result.Type = TypeUnknown
 	}

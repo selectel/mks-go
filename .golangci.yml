@@ -8,3 +8,7 @@ linters:
     - gosec
     - lll
     - wsl
+
+linters-settings:
+  funlen:
+    statements: 42

@@ -21,6 +21,7 @@ const (
 	StatusPendingUpgradeMinorVersion         Status = "PENDING_UPGRADE_MINOR_VERSION"
 	StatusPendingUpdateNodegroup             Status = "PENDING_UPDATE_NODEGROUP"
 	StatusPendingUpgradeMastersConfiguration Status = "PENDING_UPGRADE_MASTERS_CONFIGURATION"
+	StatusPendingUpgradeClusterConfiguration Status = "PENDING_UPGRADE_CLUSTER_CONFIGURATION"
 	StatusMaintenance                        Status = "MAINTENANCE"
 	StatusError                              Status = "ERROR"
 	StatusUnknown                            Status = "UNKNOWN"
@@ -127,6 +128,8 @@ func (result *View) UnmarshalJSON(b []byte) error {
 		result.Status = StatusPendingUpdateNodegroup
 	case StatusPendingUpgradeMastersConfiguration:
 		result.Status = StatusPendingUpgradeMastersConfiguration
+	case StatusPendingUpgradeClusterConfiguration:
+		result.Status = StatusPendingUpgradeClusterConfiguration
 	case StatusMaintenance:
 		result.Status = StatusMaintenance
 	case StatusError:
