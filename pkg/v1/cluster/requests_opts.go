@@ -45,7 +45,7 @@ type CreateOpts struct {
 
 	// Zonal specifies that only a single zonal master will be created.
 	// It is needed if highly available control-plane is not required.
-	Zonal bool `json:"zonal"`
+	Zonal *bool `json:"zonal,omitempty"`
 }
 
 // UpdateOpts represents options for the cluster Update request.

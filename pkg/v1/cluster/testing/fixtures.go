@@ -748,8 +748,7 @@ const testCreateClusterOptsRaw = `
                   "test-label-key": "test-label-value"
                 }
             }
-        ],
-        "zonal": false
+        ]
     }
 }
 `
@@ -823,6 +822,7 @@ var expectedCreateClusterResponse = &cluster.View{
 	MaintenanceLastStart:          &clusterResponseTimestamp,
 	EnableAutorepair:              true,
 	EnablePatchVersionAutoUpgrade: true,
+	Zonal:                         false,
 }
 
 // testCreateClusterEnableBoolsOptsRaw represents marshalled options for the Create request
@@ -848,8 +848,7 @@ const testCreateClusterEnableBoolsOptsRaw = `
                   "test-label-key": "test-label-value"
                 }
             }
-        ],
-        "zonal": false
+        ]
     }
 }
 `
@@ -915,6 +914,7 @@ var testCreateClusterDisableBoolsOpts = &cluster.CreateOpts{
 	Region:                        "ru-1",
 	EnableAutorepair:              testutils.BoolToPtr(false),
 	EnablePatchVersionAutoUpgrade: testutils.BoolToPtr(false),
+	Zonal:                         testutils.BoolToPtr(false),
 	Nodegroups: []*nodegroup.CreateOpts{
 		{
 			Count:            1,
@@ -980,6 +980,7 @@ var expectedCreateClusterDisableBoolsResponse = &cluster.View{
 	MaintenanceLastStart:          &clusterResponseTimestamp,
 	EnableAutorepair:              false,
 	EnablePatchVersionAutoUpgrade: false,
+	Zonal:                         false,
 }
 
 // testCreateZonalClusterOptsRaw represents marshalled options for the Create request
@@ -1029,7 +1030,7 @@ var testCreateZonalClusterOpts = &cluster.CreateOpts{
 			},
 		},
 	},
-	Zonal: true,
+	Zonal: testutils.BoolToPtr(true),
 }
 
 // testCreateZonalClusterResponseRaw represents a raw response from the Create zonal cluster request.
