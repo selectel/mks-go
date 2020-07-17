@@ -29,7 +29,8 @@ const testGetClusterResponseRaw = `
         "status": "ACTIVE",
         "subnet_id": "c872541d-2d83-419f-841d-8288201b8fb9",
         "updated_at": "2020-02-13T09:18:32.05753Z",
-        "enable_patch_version_auto_upgrade": true
+        "enable_patch_version_auto_upgrade": true,
+        "zonal": false
     }
 }
 `
@@ -58,6 +59,55 @@ var expectedGetClusterResponse = &cluster.View{
 	EnablePatchVersionAutoUpgrade: true,
 }
 
+// testGetZonalClusterResponseRaw represents a raw zonal cluster response from the Get request.
+const testGetZonalClusterResponseRaw = `
+{
+    "cluster": {
+        "additional_software": null,
+        "created_at": "2020-02-13T09:18:32.05753Z",
+        "enable_autorepair": true,
+        "id": "763f1f5f-951e-48b2-abae-815a75ee747c",
+        "kube_api_ip": "203.0.113.101",
+        "kube_version": "1.16.9",
+        "maintenance_last_start": "2020-02-13T09:18:32.05753Z",
+        "maintenance_window_end": "07:00:00",
+        "maintenance_window_start": "04:00:00",
+        "name": "test-zonal-cluster",
+        "network_id": "74a591be-6be7-4abc-d30f-1614c0f9721c",
+        "pki_tree_updated_at": "2020-02-13T09:18:32.05753Z",
+        "project_id": "65044a03bede4fd0a77e5a4c882e3059",
+        "region": "ru-3",
+        "status": "PENDING_UPGRADE_MINOR_VERSION",
+        "subnet_id": "c872541d-2d83-419f-841d-8288201b8fb9",
+        "updated_at": "2020-02-13T09:18:32.05753Z",
+        "enable_patch_version_auto_upgrade": false,
+        "zonal": true
+    }
+}
+`
+
+// expectedGetZonalClusterResponse represents an unmarshalled testGetZonalClusterResponseRaw.
+var expectedGetZonalClusterResponse = &cluster.View{
+	ID:                            "763f1f5f-951e-48b2-abae-815a75ee747c",
+	CreatedAt:                     &clusterResponseTimestamp,
+	UpdatedAt:                     &clusterResponseTimestamp,
+	Name:                          "test-zonal-cluster",
+	Status:                        cluster.StatusPendingUpgradeMinorVersion,
+	ProjectID:                     "65044a03bede4fd0a77e5a4c882e3059",
+	NetworkID:                     "74a591be-6be7-4abc-d30f-1614c0f9721c",
+	SubnetID:                      "c872541d-2d83-419f-841d-8288201b8fb9",
+	KubeAPIIP:                     "203.0.113.101",
+	KubeVersion:                   "1.16.9",
+	Region:                        "ru-3",
+	PKITreeUpdatedAt:              &clusterResponseTimestamp,
+	MaintenanceWindowStart:        "04:00:00",
+	MaintenanceWindowEnd:          "07:00:00",
+	MaintenanceLastStart:          &clusterResponseTimestamp,
+	EnableAutorepair:              true,
+	EnablePatchVersionAutoUpgrade: false,
+	Zonal:                         true,
+}
+
 // testListClustersResponseRaw represents a raw response from the List request.
 const testListClustersResponseRaw = `
 {
@@ -76,7 +126,8 @@ const testListClustersResponseRaw = `
             "status": "ACTIVE",
             "subnet_id": "c872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": true
+            "enable_patch_version_auto_upgrade": true,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -92,7 +143,8 @@ const testListClustersResponseRaw = `
             "status": "PENDING_CREATE",
             "subnet_id": "2872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": false
+            "enable_patch_version_auto_upgrade": false,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -108,7 +160,8 @@ const testListClustersResponseRaw = `
             "status": "PENDING_UPDATE",
             "subnet_id": "3872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": true
+            "enable_patch_version_auto_upgrade": true,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -124,7 +177,8 @@ const testListClustersResponseRaw = `
             "status": "PENDING_UPGRADE",
             "subnet_id": "4872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": false
+            "enable_patch_version_auto_upgrade": false,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -140,7 +194,8 @@ const testListClustersResponseRaw = `
             "status": "PENDING_ROTATE_CERTS",
             "subnet_id": "5872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": true
+            "enable_patch_version_auto_upgrade": true,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -156,7 +211,8 @@ const testListClustersResponseRaw = `
             "status": "PENDING_DELETE",
             "subnet_id": "6872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": false
+            "enable_patch_version_auto_upgrade": false,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -172,7 +228,8 @@ const testListClustersResponseRaw = `
             "status": "PENDING_RESIZE",
             "subnet_id": "7872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": true
+            "enable_patch_version_auto_upgrade": true,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -188,7 +245,8 @@ const testListClustersResponseRaw = `
             "status": "PENDING_NODE_REINSTALL",
             "subnet_id": "8872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": false
+            "enable_patch_version_auto_upgrade": false,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -204,7 +262,8 @@ const testListClustersResponseRaw = `
             "status": "PENDING_UPGRADE_PATCH_VERSION",
             "subnet_id": "9872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": true
+            "enable_patch_version_auto_upgrade": true,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -220,7 +279,8 @@ const testListClustersResponseRaw = `
             "status": "PENDING_UPGRADE_MINOR_VERSION",
             "subnet_id": "9872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": true
+            "enable_patch_version_auto_upgrade": true,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -236,7 +296,8 @@ const testListClustersResponseRaw = `
             "status": "PENDING_UPDATE_NODEGROUP",
             "subnet_id": "9872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": true
+            "enable_patch_version_auto_upgrade": true,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -252,7 +313,8 @@ const testListClustersResponseRaw = `
             "status": "PENDING_UPGRADE_MASTERS_CONFIGURATION",
             "subnet_id": "9872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": true
+            "enable_patch_version_auto_upgrade": true,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -268,7 +330,8 @@ const testListClustersResponseRaw = `
             "status": "PENDING_UPGRADE_CLUSTER_CONFIGURATION",
             "subnet_id": "9872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": true
+            "enable_patch_version_auto_upgrade": true,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -284,7 +347,8 @@ const testListClustersResponseRaw = `
             "status": "MAINTENANCE",
             "subnet_id": "1072541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": false
+            "enable_patch_version_auto_upgrade": false,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -300,7 +364,8 @@ const testListClustersResponseRaw = `
             "status": "ERROR",
             "subnet_id": "1172541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": true
+            "enable_patch_version_auto_upgrade": true,
+            "zonal": false
         },
         {
             "additional_software": null,
@@ -316,7 +381,8 @@ const testListClustersResponseRaw = `
             "status": "UNKNOWN",
             "subnet_id": "1272541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
-            "enable_patch_version_auto_upgrade": false
+            "enable_patch_version_auto_upgrade": false,
+            "zonal": true
         }
     ]
 }
@@ -343,6 +409,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "2be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -363,6 +430,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "3be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -383,6 +451,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "4be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -403,6 +472,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "5be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -423,6 +493,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "6be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -443,6 +514,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "7be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -463,6 +535,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "8be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -483,6 +556,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -503,6 +577,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -523,6 +598,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -543,6 +619,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -563,6 +640,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -583,6 +661,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "10e7559b-55d8-4f65-9230-6a22b985ff73",
@@ -603,6 +682,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "117559b-55d8-4f65-9230-6a22b985ff73",
@@ -623,6 +703,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
+		Zonal:                         false,
 	},
 	{
 		ID:                            "12e7559b-55d8-4f65-9230-6a22b985ff73",
@@ -643,6 +724,7 @@ var expectedListClustersResponse = []*cluster.View{
 		MaintenanceLastStart:          nil,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
+		Zonal:                         true,
 	},
 }
 
@@ -666,7 +748,8 @@ const testCreateClusterOptsRaw = `
                   "test-label-key": "test-label-value"
                 }
             }
-        ]
+        ],
+        "zonal": false
     }
 }
 `
@@ -714,7 +797,8 @@ const testCreateClusterResponseRaw = `
         "region": "ru-1",
         "status": "PENDING_CREATE",
         "subnet_id": "",
-        "updated_at": null
+        "updated_at": null,
+        "zonal": false
     }
 }
 `
@@ -764,7 +848,8 @@ const testCreateClusterEnableBoolsOptsRaw = `
                   "test-label-key": "test-label-value"
                 }
             }
-        ]
+        ],
+        "zonal": false
     }
 }
 `
@@ -816,7 +901,8 @@ const testCreateClusterDisableBoolsOptsRaw = `
                   "test-label-key": "test-label-value"
                 }
             }
-        ]
+        ],
+        "zonal": false
     }
 }
 `
@@ -867,7 +953,8 @@ const testCreateClusterDisableBoolsResponseRaw = `
         "region": "ru-1",
         "status": "PENDING_CREATE",
         "subnet_id": "",
-        "updated_at": null
+        "updated_at": null,
+        "zonal": false
     }
 }
 `
@@ -893,6 +980,106 @@ var expectedCreateClusterDisableBoolsResponse = &cluster.View{
 	MaintenanceLastStart:          &clusterResponseTimestamp,
 	EnableAutorepair:              false,
 	EnablePatchVersionAutoUpgrade: false,
+}
+
+// testCreateZonalClusterOptsRaw represents marshalled options for the Create request
+// with zonal attribute set to true.
+const testCreateZonalClusterOptsRaw = `
+{
+    "cluster": {
+        "name": "test-zonal-cluster-0",
+        "kube_version": "1.16.9",
+        "region": "ru-3",
+        "nodegroups": [
+            {
+                "count": 1,
+                "cpus": 1,
+                "ram_mb": 2048,
+                "volume_gb": 10,
+                "volume_type": "fast.ru-3a",
+                "keypair_name": "ssh-key",
+                "availability_zone": "ru-3a",
+                "labels": {
+                  "test-label-key": "test-label-value"
+                }
+            }
+        ],
+        "zonal": true
+    }
+}
+`
+
+// nolint
+// testCreateZonalClusterOpts represents options for the Create request with zonal attribute set to true.
+var testCreateZonalClusterOpts = &cluster.CreateOpts{
+	Name:        "test-zonal-cluster-0",
+	KubeVersion: "1.16.9",
+	Region:      "ru-3",
+	Nodegroups: []*nodegroup.CreateOpts{
+		{
+			Count:            1,
+			CPUs:             1,
+			RAMMB:            2048,
+			VolumeGB:         10,
+			VolumeType:       "fast.ru-3a",
+			KeypairName:      "ssh-key",
+			AvailabilityZone: "ru-3a",
+			Labels: map[string]string{
+				"test-label-key": "test-label-value",
+			},
+		},
+	},
+	Zonal: true,
+}
+
+// testCreateZonalClusterResponseRaw represents a raw response from the Create zonal cluster request.
+const testCreateZonalClusterResponseRaw = `
+{
+    "cluster": {
+        "additional_software": null,
+        "created_at": "2020-02-13T09:18:32.05753Z",
+        "enable_autorepair": true,
+        "enable_patch_version_auto_upgrade": false,
+        "id": "effe751d-501a-4b06-8e23-3f686dbfccf6",
+        "kube_api_ip": "",
+        "kube_version": "1.16.9",
+        "maintenance_last_start": "2020-02-13T09:18:32.05753Z",
+        "maintenance_window_end": "03:00:00",
+        "maintenance_window_start": "01:00:00",
+        "name": "test-zonal-cluster-0",
+        "network_id": "",
+        "pki_tree_updated_at": null,
+        "project_id": "69744a03bebe4fd0a77e5a4c882e3059",
+        "region": "ru-3",
+        "status": "PENDING_CREATE",
+        "subnet_id": "",
+        "updated_at": null,
+        "zonal": true
+    }
+}
+`
+
+// expectedCreateZonalClusterResponse represents an unmarshalled testCreateZonalClusterResponseRaw.
+var expectedCreateZonalClusterResponse = &cluster.View{
+	ID:                            "effe751d-501a-4b06-8e23-3f686dbfccf6",
+	CreatedAt:                     &clusterResponseTimestamp,
+	UpdatedAt:                     nil,
+	Name:                          "test-zonal-cluster-0",
+	Status:                        "PENDING_CREATE",
+	ProjectID:                     "69744a03bebe4fd0a77e5a4c882e3059",
+	NetworkID:                     "",
+	SubnetID:                      "",
+	KubeAPIIP:                     "",
+	KubeVersion:                   "1.16.9",
+	Region:                        "ru-3",
+	AdditionalSoftware:            nil,
+	PKITreeUpdatedAt:              nil,
+	MaintenanceWindowStart:        "01:00:00",
+	MaintenanceWindowEnd:          "03:00:00",
+	MaintenanceLastStart:          &clusterResponseTimestamp,
+	EnableAutorepair:              true,
+	EnablePatchVersionAutoUpgrade: false,
+	Zonal:                         true,
 }
 
 // testManyClustersInvalidResponseRaw represents a raw invalid response with several clusters.
