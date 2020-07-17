@@ -87,6 +87,10 @@ type View struct {
 	// EnablePatchVersionAutoUpgrade specifies if Kubernetes patch version of the cluster is allowed to be upgraded
 	// automatically.
 	EnablePatchVersionAutoUpgrade bool `json:"enable_patch_version_auto_upgrade"`
+
+	// Zonal specifies that cluster has only a single master and that
+	// control-plane is not in highly available mode.
+	Zonal bool `json:"zonal"`
 }
 
 func (result *View) UnmarshalJSON(b []byte) error {

@@ -54,6 +54,49 @@ func TestGetCluster(t *testing.T) {
 	}
 }
 
+func TestGetZonalCluster(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/763f1f5f-951e-48b2-abae-815a75ee747c",
+		RawResponse: testGetZonalClusterResponseRaw,
+		Method:      http.MethodGet,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "763f1f5f-951e-48b2-abae-815a75ee747c"
+
+	actual, httpResponse, err := cluster.Get(ctx, testClient, id)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Get method")
+	}
+	if httpResponse.StatusCode != http.StatusOK {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusOK, httpResponse.StatusCode)
+	}
+	if !reflect.DeepEqual(expectedGetZonalClusterResponse, actual) {
+		t.Fatalf("expected %#v, but got %#v", expectedGetZonalClusterResponse, actual)
+	}
+}
+
 func TestGetClusterHTTPError(t *testing.T) {
 	endpointCalled := false
 	testEnv := testutils.SetupTestEnv()
@@ -437,6 +480,49 @@ func TestCreateClusterDisableBools(t *testing.T) {
 	}
 	if !reflect.DeepEqual(expectedCreateClusterDisableBoolsResponse, actual) {
 		t.Fatalf("expected %#v, but got %#v", expectedCreateClusterDisableBoolsResponse, actual)
+	}
+}
+
+func TestCreateZonalCluster(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters",
+		RawResponse: testCreateZonalClusterResponseRaw,
+		RawRequest:  testCreateZonalClusterOptsRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusCreated,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+
+	actual, httpResponse, err := cluster.Create(ctx, testClient, testCreateZonalClusterOpts)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Create method")
+	}
+	if httpResponse.StatusCode != http.StatusCreated {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusCreated, httpResponse.StatusCode)
+	}
+	if !reflect.DeepEqual(expectedCreateZonalClusterResponse, actual) {
+		t.Fatalf("expected %#v, but got %#v", expectedCreateZonalClusterResponse, actual)
 	}
 }
 
