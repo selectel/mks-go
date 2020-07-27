@@ -1413,3 +1413,47 @@ func TestUpgradeMinorVersionUnmarshallError(t *testing.T) {
 		t.Fatal("expected error from the UpgradeMinorVersion method")
 	}
 }
+
+func TestUpdateClusterEnablePSP(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/effe751d-501a-4b06-8e23-3f686dbfccf6",
+		RawResponse: testUpdateClusterWithEnabledPSPResponseRaw,
+		RawRequest:  testUpdateClusterWithEnabledPSPOptsRaw,
+		Method:      http.MethodPut,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "effe751d-501a-4b06-8e23-3f686dbfccf6"
+
+	actual, httpResponse, err := cluster.Update(ctx, testClient, id, testUpdateClusterWithEnabledPSPOpts)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Update method")
+	}
+	if httpResponse.StatusCode != http.StatusOK {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusOK, httpResponse.StatusCode)
+	}
+	if !reflect.DeepEqual(expectedUpdateClusterWithEnabledPSPResponse, actual) {
+		t.Fatalf("expected %#v, but got %#v", expectedGetClusterResponse, actual)
+	}
+}

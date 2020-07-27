@@ -91,6 +91,10 @@ type View struct {
 	// Zonal specifies that cluster has only a single master and that
 	// control-plane is not in highly available mode.
 	Zonal bool `json:"zonal"`
+
+	// KubernetesOptions represents additional k8s options such as pod security policy,
+	// feature gates and etc.
+	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
 }
 
 func (result *View) UnmarshalJSON(b []byte) error {
@@ -143,4 +147,12 @@ func (result *View) UnmarshalJSON(b []byte) error {
 	}
 
 	return err
+}
+
+// KubernetesOptions represents additional k8s options such as pod security policy,
+// feature gates and etc.
+type KubernetesOptions struct {
+	// EnablePodSecurityPolicy indicates if PodSecurityPolicy admission controller
+	// must be turned on/off.
+	EnablePodSecurityPolicy bool `json:"enable_pod_security_policy"`
 }
