@@ -46,6 +46,10 @@ type CreateOpts struct {
 	// Zonal specifies that only a single zonal master will be created.
 	// It is needed if highly available control-plane is not required.
 	Zonal *bool `json:"zonal,omitempty"`
+
+	// KubernetesOptions represents additional k8s options such as pod security policy,
+	// feature gates and etc.
+	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
 }
 
 // UpdateOpts represents options for the cluster Update request.
@@ -61,4 +65,8 @@ type UpdateOpts struct {
 	// EnablePatchVersionAutoUpgrade specifies if Kubernetes patch version of the cluster is allowed to be upgraded
 	// automatically. Enabled by default.
 	EnablePatchVersionAutoUpgrade *bool `json:"enable_patch_version_auto_upgrade,omitempty"`
+
+	// KubernetesOptions represents additional k8s options such as pod security policy,
+	// feature gates and etc.
+	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
 }

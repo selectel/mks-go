@@ -30,7 +30,10 @@ const testGetClusterResponseRaw = `
         "subnet_id": "c872541d-2d83-419f-841d-8288201b8fb9",
         "updated_at": "2020-02-13T09:18:32.05753Z",
         "enable_patch_version_auto_upgrade": true,
-        "zonal": false
+        "zonal": false,
+        "kubernetes_options": {
+            "enable_pod_security_policy": true
+        }
     }
 }
 `
@@ -57,6 +60,9 @@ var expectedGetClusterResponse = &cluster.View{
 	MaintenanceLastStart:          &clusterResponseTimestamp,
 	EnableAutorepair:              true,
 	EnablePatchVersionAutoUpgrade: true,
+	KubernetesOptions: &cluster.KubernetesOptions{
+		EnablePodSecurityPolicy: true,
+	},
 }
 
 // testGetZonalClusterResponseRaw represents a raw zonal cluster response from the Get request.
@@ -81,7 +87,10 @@ const testGetZonalClusterResponseRaw = `
         "subnet_id": "c872541d-2d83-419f-841d-8288201b8fb9",
         "updated_at": "2020-02-13T09:18:32.05753Z",
         "enable_patch_version_auto_upgrade": false,
-        "zonal": true
+        "zonal": true,
+        "kubernetes_options": {
+            "enable_pod_security_policy": false
+        }
     }
 }
 `
@@ -106,6 +115,9 @@ var expectedGetZonalClusterResponse = &cluster.View{
 	EnableAutorepair:              true,
 	EnablePatchVersionAutoUpgrade: false,
 	Zonal:                         true,
+	KubernetesOptions: &cluster.KubernetesOptions{
+		EnablePodSecurityPolicy: false,
+	},
 }
 
 // testListClustersResponseRaw represents a raw response from the List request.
@@ -127,7 +139,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "c872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -144,7 +159,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "2872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": false,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -161,7 +179,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "3872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -178,7 +199,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "4872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": false,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -195,7 +219,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "5872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -212,7 +239,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "6872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": false,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -229,7 +259,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "7872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -246,7 +279,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "8872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": false,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -263,7 +299,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "9872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -280,7 +319,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "9872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -297,7 +339,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "9872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -314,7 +359,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "9872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -331,7 +379,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "9872541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -348,7 +399,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "1072541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": false,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -365,7 +419,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "1172541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
-            "zonal": false
+            "zonal": false,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         },
         {
             "additional_software": null,
@@ -382,7 +439,10 @@ const testListClustersResponseRaw = `
             "subnet_id": "1272541d-2d83-419f-841d-8288201b8fb9",
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": false,
-            "zonal": true
+            "zonal": true,
+            "kubernetes_options": {
+                "enable_pod_security_policy": false
+            }
         }
     ]
 }
@@ -410,6 +470,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "2be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -431,6 +494,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "3be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -452,6 +518,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "4be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -473,6 +542,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "5be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -494,6 +566,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "6be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -515,6 +590,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "7be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -536,6 +614,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "8be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -557,6 +638,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -578,6 +662,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -599,6 +686,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -620,6 +710,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -641,6 +734,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -662,6 +758,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "10e7559b-55d8-4f65-9230-6a22b985ff73",
@@ -683,6 +782,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "117559b-55d8-4f65-9230-6a22b985ff73",
@@ -704,6 +806,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
 		Zonal:                         false,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 	{
 		ID:                            "12e7559b-55d8-4f65-9230-6a22b985ff73",
@@ -725,6 +830,9 @@ var expectedListClustersResponse = []*cluster.View{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
 		Zonal:                         true,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+		},
 	},
 }
 
@@ -748,7 +856,10 @@ const testCreateClusterOptsRaw = `
                   "test-label-key": "test-label-value"
                 }
             }
-        ]
+        ],
+        "kubernetes_options": {
+            "enable_pod_security_policy": false
+        }
     }
 }
 `
@@ -772,6 +883,9 @@ var testCreateClusterOpts = &cluster.CreateOpts{
 				"test-label-key": "test-label-value",
 			},
 		},
+	},
+	KubernetesOptions: &cluster.KubernetesOptions{
+		EnablePodSecurityPolicy: false,
 	},
 }
 
@@ -797,7 +911,10 @@ const testCreateClusterResponseRaw = `
         "status": "PENDING_CREATE",
         "subnet_id": "",
         "updated_at": null,
-        "zonal": false
+        "zonal": false,
+        "kubernetes_options": {
+            "enable_pod_security_policy": false
+        }
     }
 }
 `
@@ -823,6 +940,9 @@ var expectedCreateClusterResponse = &cluster.View{
 	EnableAutorepair:              true,
 	EnablePatchVersionAutoUpgrade: true,
 	Zonal:                         false,
+	KubernetesOptions: &cluster.KubernetesOptions{
+		EnablePodSecurityPolicy: false,
+	},
 }
 
 // testCreateClusterEnableBoolsOptsRaw represents marshalled options for the Create request
@@ -1144,4 +1264,80 @@ var testUpdateClusterOpts = &cluster.UpdateOpts{
 	MaintenanceWindowStart:        "07:00:00",
 	EnableAutorepair:              testutils.BoolToPtr(true),
 	EnablePatchVersionAutoUpgrade: testutils.BoolToPtr(false),
+}
+
+// testUpdateClusterWithEnabledPSPOptsRaw represents marshalled options variant A for the Update request.
+const testUpdateClusterWithEnabledPSPOptsRaw = `
+{
+    "cluster": {
+        "maintenance_window_start": "07:00:00",
+        "enable_autorepair": true,
+        "enable_patch_version_auto_upgrade": false,
+        "kubernetes_options": {
+            "enable_pod_security_policy": true
+        }
+    }
+}
+`
+
+// testUpdateClusterWithEnabledPSPOpts represents options for the Update request.
+var testUpdateClusterWithEnabledPSPOpts = &cluster.UpdateOpts{
+	MaintenanceWindowStart:        "07:00:00",
+	EnableAutorepair:              testutils.BoolToPtr(true),
+	EnablePatchVersionAutoUpgrade: testutils.BoolToPtr(false),
+	KubernetesOptions:             &cluster.KubernetesOptions{EnablePodSecurityPolicy: true},
+}
+
+// testUpdateClusterWithEnabledPSPResponseRaw represents a raw response from the Create cluster request.
+const testUpdateClusterWithEnabledPSPResponseRaw = `
+{
+    "cluster": {
+        "additional_software": null,
+        "created_at": "2020-02-13T09:18:32.05753Z",
+        "enable_autorepair": true,
+        "enable_patch_version_auto_upgrade": false,
+        "id": "effe751d-501a-4b06-8e23-3f686dbfccf6",
+        "kube_api_ip": "",
+        "kube_version": "1.16.9",
+        "maintenance_last_start": "2020-02-13T09:18:32.05753Z",
+        "maintenance_window_end": "03:00:00",
+        "maintenance_window_start": "01:00:00",
+        "name": "test-zonal-cluster-0",
+        "network_id": "",
+        "pki_tree_updated_at": null,
+        "project_id": "69744a03bebe4fd0a77e5a4c882e3059",
+        "region": "ru-3",
+        "status": "PENDING_UPGRADE_MASTERS_CONFIGURATION",
+        "subnet_id": "",
+        "updated_at": null,
+        "zonal": false,
+        "kubernetes_options": {
+            "enable_pod_security_policy": true
+        }
+    }
+}
+`
+
+// expectedUpdateClusterWithEnabledPSPResponse represents an unmarshalled testUpdateClusterWithEnabledPSPResponseRaw.
+var expectedUpdateClusterWithEnabledPSPResponse = &cluster.View{
+	ID:                            "effe751d-501a-4b06-8e23-3f686dbfccf6",
+	CreatedAt:                     &clusterResponseTimestamp,
+	UpdatedAt:                     nil,
+	Name:                          "test-zonal-cluster-0",
+	Status:                        cluster.StatusPendingUpgradeMastersConfiguration,
+	ProjectID:                     "69744a03bebe4fd0a77e5a4c882e3059",
+	NetworkID:                     "",
+	SubnetID:                      "",
+	KubeAPIIP:                     "",
+	KubeVersion:                   "1.16.9",
+	Region:                        "ru-3",
+	AdditionalSoftware:            nil,
+	PKITreeUpdatedAt:              nil,
+	MaintenanceWindowStart:        "01:00:00",
+	MaintenanceWindowEnd:          "03:00:00",
+	MaintenanceLastStart:          &clusterResponseTimestamp,
+	EnableAutorepair:              true,
+	EnablePatchVersionAutoUpgrade: false,
+	Zonal:                         false,
+	KubernetesOptions:             &cluster.KubernetesOptions{EnablePodSecurityPolicy: true},
 }
