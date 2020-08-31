@@ -39,7 +39,7 @@ const testGetNodegroupResponseRaw = `
                 "value": "test-value-0",
                 "effect": "NoSchedule"
             }
-		]
+       ]
     }
 }
 `
@@ -175,7 +175,7 @@ const testCreateNodegroupOptsRaw = `
             "value": "test-value-0",
             "effect": "NoSchedule"
           }
-		]
+        ]
     }
 }
 `
