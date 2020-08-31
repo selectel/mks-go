@@ -41,11 +41,10 @@ Example of creating a new cluster
           "label-key2": "label-value2",
         },
         Taints: []nodegroup.Taint{
-            {
+          {
                 Key:    "test-key-0",
                 Value:  "test-value-0",
                 Effect: nodegroup.NoScheduleEffect,
-            },
           },
         },
       },
