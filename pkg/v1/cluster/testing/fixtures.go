@@ -861,7 +861,7 @@ const testCreateClusterOptsRaw = `
                     "value": "test-value-0",
                     "effect": "NoSchedule"
                   }
-		        ]
+                ]
             }
         ],
         "kubernetes_options": {
