@@ -854,7 +854,14 @@ const testCreateClusterOptsRaw = `
                 "availability_zone": "ru-1b",
                 "labels": {
                   "test-label-key": "test-label-value"
-                }
+                },
+                "taints": [
+                  {
+                    "key": "test-key-0",
+                    "value": "test-value-0",
+                    "effect": "NoSchedule"
+                  }
+		        ]
             }
         ],
         "kubernetes_options": {
@@ -881,6 +888,13 @@ var testCreateClusterOpts = &cluster.CreateOpts{
 			AvailabilityZone: "ru-1b",
 			Labels: map[string]string{
 				"test-label-key": "test-label-value",
+			},
+			Taints: []nodegroup.Taint{
+				{
+					Key:    "test-key-0",
+					Value:  "test-value-0",
+					Effect: nodegroup.NoScheduleEffect,
+				},
 			},
 		},
 	},
@@ -966,7 +980,8 @@ const testCreateClusterEnableBoolsOptsRaw = `
                 "availability_zone": "ru-1b",
                 "labels": {
                   "test-label-key": "test-label-value"
-                }
+                },
+                "taints": []
             }
         ]
     }
@@ -993,6 +1008,7 @@ var testCreateClusterEnableBoolsOpts = &cluster.CreateOpts{
 			Labels: map[string]string{
 				"test-label-key": "test-label-value",
 			},
+			Taints: []nodegroup.Taint{},
 		},
 	},
 }
@@ -1018,7 +1034,8 @@ const testCreateClusterDisableBoolsOptsRaw = `
                 "availability_zone": "ru-1b",
                 "labels": {
                   "test-label-key": "test-label-value"
-                }
+                },
+                "taints": []
             }
         ],
         "zonal": false
@@ -1047,6 +1064,7 @@ var testCreateClusterDisableBoolsOpts = &cluster.CreateOpts{
 			Labels: map[string]string{
 				"test-label-key": "test-label-value",
 			},
+			Taints: []nodegroup.Taint{},
 		},
 	},
 }
@@ -1122,7 +1140,8 @@ const testCreateZonalClusterOptsRaw = `
                 "availability_zone": "ru-3a",
                 "labels": {
                   "test-label-key": "test-label-value"
-                }
+                },
+                "taints": []
             }
         ],
         "zonal": true
@@ -1148,6 +1167,7 @@ var testCreateZonalClusterOpts = &cluster.CreateOpts{
 			Labels: map[string]string{
 				"test-label-key": "test-label-value",
 			},
+			Taints: []nodegroup.Taint{},
 		},
 	},
 	Zonal: testutils.BoolToPtr(true),
