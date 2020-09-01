@@ -42,9 +42,9 @@ Example of creating a new cluster
         },
         Taints: []nodegroup.Taint{
           {
-                Key:    "test-key-0",
-                Value:  "test-value-0",
-                Effect: nodegroup.NoScheduleEffect,
+            Key:    "test-key-0",
+            Value:  "test-value-0",
+            Effect: nodegroup.NoScheduleEffect,
           },
         },
       },

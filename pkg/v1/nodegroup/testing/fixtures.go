@@ -39,7 +39,7 @@ const testGetNodegroupResponseRaw = `
                 "value": "test-value-0",
                 "effect": "NoSchedule"
             }
-       ]
+        ]
     }
 }
 `
