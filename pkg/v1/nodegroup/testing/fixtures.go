@@ -24,6 +24,7 @@ const testGetNodegroupResponseRaw = `
                 "id": "39e5dd4d-5e23-4a00-8173-974bf844f21b",
                 "ip": "198.51.100.11",
                 "nodegroup_id": "a376745a-fbcb-413d-b418-169d059d79ce",
+                "os_server_id": "dc56abe9-d0d4-4099-9b5f-e5cabfccf276",
                 "updated_at": "2020-02-19T15:41:45.948646Z"
             }
         ],
@@ -66,6 +67,7 @@ var expectedGetNodegroupResponse = &nodegroup.View{
 			Hostname:    "test-cluster-node-eegp9",
 			IP:          "198.51.100.11",
 			NodegroupID: "a376745a-fbcb-413d-b418-169d059d79ce",
+			OSServerID:  "dc56abe9-d0d4-4099-9b5f-e5cabfccf276",
 		},
 	},
 	Labels: map[string]string{
@@ -98,6 +100,7 @@ const testListNodegroupsResponseRaw = `
                     "id": "39e5dd4d-5e23-4a00-8173-974bf844f21b",
                     "ip": "198.51.100.11",
                     "nodegroup_id": "a376745a-fbcb-413d-b418-169d059d79ce",
+                    "os_server_id": "dc56abe9-d0d4-4099-9b5f-e5cabfccf276",
                     "updated_at": "2020-02-19T15:41:45.948646Z"
                 }
             ],
@@ -140,6 +143,7 @@ var expectedListNodegroupsResponse = []*nodegroup.View{
 				Hostname:    "test-cluster-node-eegp9",
 				IP:          "198.51.100.11",
 				NodegroupID: "a376745a-fbcb-413d-b418-169d059d79ce",
+				OSServerID:  "dc56abe9-d0d4-4099-9b5f-e5cabfccf276",
 			},
 		},
 		Labels: map[string]string{
