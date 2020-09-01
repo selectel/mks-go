@@ -32,7 +32,14 @@ const testGetNodegroupResponseRaw = `
         "volume_type": "basic.ru-1a",
         "labels": {
            "test-label-key": "test-label-value"
-        }
+        },
+        "taints": [
+            {
+                "key": "test-key-0",
+                "value": "test-value-0",
+                "effect": "NoSchedule"
+            }
+        ]
     }
 }
 `
@@ -64,6 +71,13 @@ var expectedGetNodegroupResponse = &nodegroup.View{
 	Labels: map[string]string{
 		"test-label-key": "test-label-value",
 	},
+	Taints: []nodegroup.Taint{
+		{
+			Key:    "test-key-0",
+			Value:  "test-value-0",
+			Effect: nodegroup.NoScheduleEffect,
+		},
+	},
 }
 
 // testListNodegroupsResponseRaw represents a raw response from the List method.
@@ -92,7 +106,14 @@ const testListNodegroupsResponseRaw = `
             "volume_type": "basic.ru-1a",
             "labels": {
               "test-label-key": "test-label-value"
-            }
+            },
+            "taints": [
+                {
+                    "key": "test-key-0",
+                    "value": "test-value-0",
+                    "effect": "NoSchedule"
+                }
+            ]
         }
     ]
 }
@@ -124,6 +145,13 @@ var expectedListNodegroupsResponse = []*nodegroup.View{
 		Labels: map[string]string{
 			"test-label-key": "test-label-value",
 		},
+		Taints: []nodegroup.Taint{
+			{
+				Key:    "test-key-0",
+				Value:  "test-value-0",
+				Effect: nodegroup.NoScheduleEffect,
+			},
+		},
 	},
 }
 
@@ -140,7 +168,14 @@ const testCreateNodegroupOptsRaw = `
         "availability_zone": "ru-1b",
         "labels": {
           "test-label-key": "test-label-value"
-        }
+        },
+        "taints": [
+          {
+            "key": "test-key-0",
+            "value": "test-value-0",
+            "effect": "NoSchedule"
+          }
+        ]
     }
 }
 `
@@ -157,6 +192,13 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 	AvailabilityZone: "ru-1b",
 	Labels: map[string]string{
 		"test-label-key": "test-label-value",
+	},
+	Taints: []nodegroup.Taint{
+		{
+			Key:    "test-key-0",
+			Value:  "test-value-0",
+			Effect: nodegroup.NoScheduleEffect,
+		},
 	},
 }
 
