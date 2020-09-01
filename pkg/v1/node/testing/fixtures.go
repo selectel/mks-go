@@ -15,6 +15,7 @@ const testGetNodeResponseRaw = `
         "id": "203d0f8c-547d-48a7-98ed-3075254b8d4a",
         "ip": "198.51.100.11",
         "nodegroup_id": "f174b65d-442a-4423-aaf7-5654789b8a9d",
+        "os_server_id": "dc56abe9-d0d4-4099-9b5f-e5cabfccf276",
         "updated_at": "2020-02-25T08:49:21.780542Z"
     }
 }
@@ -30,6 +31,7 @@ var expectedGetNodeResponse = &node.View{
 	Hostname:    "test-cluster-node-gap1g",
 	IP:          "198.51.100.11",
 	NodegroupID: "f174b65d-442a-4423-aaf7-5654789b8a9d",
+	OSServerID:  "dc56abe9-d0d4-4099-9b5f-e5cabfccf276",
 }
 
 // testSingleNodeInvalidResponseRaw represents a raw invalid response with a single node.
