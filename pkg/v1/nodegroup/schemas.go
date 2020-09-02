@@ -44,6 +44,15 @@ type View struct {
 
 	// Taints represents a list of nodegroup taints.
 	Taints []Taint `json:"taints"`
+
+	// EnableAutoscale reflects if the nodegroup is allowed to be scaled automatically.
+	EnableAutoscale bool `json:"enable_autoscale"`
+
+	// AutoscaleMinNodes represents minimum possible number of worker nodes in the nodegroup.
+	AutoscaleMinNodes int `json:"autoscale_min_nodes"`
+
+	// AutoscaleMaxNodes represents maximum possible number of worker nodes in the nodegroup.
+	AutoscaleMaxNodes int `json:"autoscale_max_nodes"`
 }
 
 // TaintEffect represents an effect of the node's taint.

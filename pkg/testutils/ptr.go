@@ -4,3 +4,8 @@ package testutils
 func BoolToPtr(v bool) *bool {
 	return &v
 }
+
+// IntToPtr can be used to convert integer value to integer pointer.
+func IntToPtr(v int) *int {
+	return &v
+}
