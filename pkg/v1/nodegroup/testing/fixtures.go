@@ -3,6 +3,7 @@ package testing
 import (
 	"time"
 
+	"github.com/selectel/mks-go/pkg/testutils"
 	"github.com/selectel/mks-go/pkg/v1/node"
 	"github.com/selectel/mks-go/pkg/v1/nodegroup"
 )
@@ -40,7 +41,10 @@ const testGetNodegroupResponseRaw = `
                 "value": "test-value-0",
                 "effect": "NoSchedule"
             }
-        ]
+        ],
+        "enable_autoscale": false,
+        "autoscale_min_nodes": 0,
+        "autoscale_max_nodes": 0
     }
 }
 `
@@ -80,6 +84,9 @@ var expectedGetNodegroupResponse = &nodegroup.View{
 			Effect: nodegroup.NoScheduleEffect,
 		},
 	},
+	EnableAutoscale:   false,
+	AutoscaleMinNodes: 0,
+	AutoscaleMaxNodes: 0,
 }
 
 // testListNodegroupsResponseRaw represents a raw response from the List method.
@@ -116,7 +123,10 @@ const testListNodegroupsResponseRaw = `
                     "value": "test-value-0",
                     "effect": "NoSchedule"
                 }
-            ]
+            ],
+            "enable_autoscale": false,
+            "autoscale_min_nodes": 0,
+            "autoscale_max_nodes": 0
         }
     ]
 }
@@ -156,6 +166,9 @@ var expectedListNodegroupsResponse = []*nodegroup.View{
 				Effect: nodegroup.NoScheduleEffect,
 			},
 		},
+		EnableAutoscale:   false,
+		AutoscaleMinNodes: 0,
+		AutoscaleMaxNodes: 0,
 	},
 }
 
@@ -179,7 +192,10 @@ const testCreateNodegroupOptsRaw = `
             "value": "test-value-0",
             "effect": "NoSchedule"
           }
-        ]
+        ],
+        "enable_autoscale": true,
+        "autoscale_min_nodes": 1,
+        "autoscale_max_nodes": 10
     }
 }
 `
@@ -204,6 +220,9 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 			Effect: nodegroup.NoScheduleEffect,
 		},
 	},
+	EnableAutoscale:   testutils.BoolToPtr(true),
+	AutoscaleMinNodes: testutils.IntToPtr(1),
+	AutoscaleMaxNodes: testutils.IntToPtr(10),
 }
 
 // testUpdateNodegroupOptsRaw represents marshalled options for the Update request.
@@ -212,7 +231,8 @@ const testUpdateNodegroupOptsRaw = `
     "nodegroup": {
         "labels": {
           "test-label-key": "test-label-value"
-        }
+        },
+        "enable_autoscale": false
     }
 }
 `
@@ -223,6 +243,7 @@ var testUpdateNodegroupOpts = &nodegroup.UpdateOpts{
 	Labels: map[string]string{
 		"test-label-key": "test-label-value",
 	},
+	EnableAutoscale: testutils.BoolToPtr(false),
 }
 
 // testResizeNodegroupOptsRaw represents marshalled options for the Resize request.
