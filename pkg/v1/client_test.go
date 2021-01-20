@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/selectel/mks-go/pkg/testutils"
 )
@@ -22,6 +23,34 @@ func TestNewMKSClientV1(t *testing.T) {
 	}
 
 	actual := NewMKSClientV1(tokenID, endpoint)
+
+	if expected.TokenID != actual.TokenID {
+		t.Errorf("expected Endpoint %s, but got %s", expected.Endpoint, actual.Endpoint)
+	}
+	if expected.Endpoint != actual.Endpoint {
+		t.Errorf("expected TokenID %s, but got %s", expected.TokenID, actual.TokenID)
+	}
+	if expected.UserAgent != actual.UserAgent {
+		t.Errorf("expected UserAgent %s, but got %s", expected.UserAgent, actual.UserAgent)
+	}
+	if actual.HTTPClient == nil {
+		t.Errorf("expected initialized HTTPClient but it's nil")
+	}
+}
+
+func TestNewMKSClientV1WithCustomHTTP(t *testing.T) {
+	tokenID := testutils.TokenID
+	endpoint := "http://example.org"
+	expected := &ServiceClient{
+		TokenID:   tokenID,
+		Endpoint:  endpoint,
+		UserAgent: userAgent,
+	}
+	customHTTPClient := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+
+	actual := NewMKSClientV1WithCustomHTTP(customHTTPClient, tokenID, endpoint)
 
 	if expected.TokenID != actual.TokenID {
 		t.Errorf("expected Endpoint %s, but got %s", expected.Endpoint, actual.Endpoint)
