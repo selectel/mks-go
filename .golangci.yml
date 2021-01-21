@@ -5,6 +5,7 @@ linters:
     - bodyclose
     - dupl
     - gochecknoglobals
+    - gomnd
     - gosec
     - lll
     - wsl
