@@ -49,6 +49,7 @@ Selectel Managed Kubernetes Service currently has the following API endpoints:
 | https://ru-3.mks.selcloud.ru/v1 | ru-3   |
 | https://ru-7.mks.selcloud.ru/v1 | ru-7   |
 | https://ru-8.mks.selcloud.ru/v1 | ru-8   |
+| https://ru-9.mks.selcloud.ru/v1 | ru-9   |
 
 You can also retrieve all available API endpoints from the Identity catalog.
 
