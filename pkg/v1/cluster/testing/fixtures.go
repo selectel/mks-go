@@ -32,7 +32,15 @@ const testGetClusterResponseRaw = `
         "enable_patch_version_auto_upgrade": true,
         "zonal": false,
         "kubernetes_options": {
-            "enable_pod_security_policy": true
+            "enable_pod_security_policy": true,
+            "feature_gates": [
+                "BoundServiceAccountTokenVolume",
+                "CSIMigrationOpenStack"
+              ],
+            "admission_controllers": [
+                "NamespaceLifecycle",
+                "LimitRanger"
+            ]
         }
     }
 }
@@ -62,6 +70,14 @@ var expectedGetClusterResponse = &cluster.View{
 	EnablePatchVersionAutoUpgrade: true,
 	KubernetesOptions: &cluster.KubernetesOptions{
 		EnablePodSecurityPolicy: true,
+		FeatureGates: []string{
+			"BoundServiceAccountTokenVolume",
+			"CSIMigrationOpenStack",
+		},
+		AdmissionControllers: []string{
+			"NamespaceLifecycle",
+			"LimitRanger",
+		},
 	},
 }
 
@@ -89,7 +105,15 @@ const testGetZonalClusterResponseRaw = `
         "enable_patch_version_auto_upgrade": false,
         "zonal": true,
         "kubernetes_options": {
-            "enable_pod_security_policy": false
+            "enable_pod_security_policy": true,
+            "feature_gates": [
+                "BoundServiceAccountTokenVolume",
+                "CSIMigrationOpenStack"
+              ],
+            "admission_controllers": [
+                "NamespaceLifecycle",
+                "LimitRanger"
+            ]
         }
     }
 }
@@ -116,7 +140,15 @@ var expectedGetZonalClusterResponse = &cluster.View{
 	EnablePatchVersionAutoUpgrade: false,
 	Zonal:                         true,
 	KubernetesOptions: &cluster.KubernetesOptions{
-		EnablePodSecurityPolicy: false,
+		EnablePodSecurityPolicy: true,
+		FeatureGates: []string{
+			"BoundServiceAccountTokenVolume",
+			"CSIMigrationOpenStack",
+		},
+		AdmissionControllers: []string{
+			"NamespaceLifecycle",
+			"LimitRanger",
+		},
 	},
 }
 
@@ -141,7 +173,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -161,7 +199,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": false,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -181,7 +225,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -201,7 +251,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": false,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -221,7 +277,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -241,7 +303,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": false,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -261,7 +329,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -281,7 +355,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": false,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -301,7 +381,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -321,7 +407,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -341,7 +433,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -361,7 +459,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -381,7 +485,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -401,7 +511,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": false,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -421,7 +537,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         },
         {
@@ -441,7 +563,13 @@ const testListClustersResponseRaw = `
             "enable_patch_version_auto_upgrade": false,
             "zonal": true,
             "kubernetes_options": {
-                "enable_pod_security_policy": false
+                "enable_pod_security_policy": false,
+                "feature_gates": [
+                    "CSIMigrationOpenStack"
+                ],
+                "admission_controllers": [
+                    "LimitRanger"
+                ]
             }
         }
     ]
@@ -472,6 +600,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"},
 		},
 	},
 	{
@@ -496,7 +626,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "3be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -520,7 +651,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "4be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -544,7 +676,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "5be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -568,7 +701,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "6be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -592,7 +726,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "7be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -616,7 +751,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "8be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -640,7 +776,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -664,7 +801,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -688,7 +826,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -712,7 +851,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -736,7 +876,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -760,7 +901,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "10e7559b-55d8-4f65-9230-6a22b985ff73",
@@ -784,7 +926,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "117559b-55d8-4f65-9230-6a22b985ff73",
@@ -808,7 +951,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         false,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
-		},
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"}},
 	},
 	{
 		ID:                            "12e7559b-55d8-4f65-9230-6a22b985ff73",
@@ -832,6 +976,8 @@ var expectedListClustersResponse = []*cluster.View{
 		Zonal:                         true,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
+			FeatureGates:            []string{"CSIMigrationOpenStack"},
+			AdmissionControllers:    []string{"LimitRanger"},
 		},
 	},
 }
@@ -865,7 +1011,13 @@ const testCreateClusterOptsRaw = `
             }
         ],
         "kubernetes_options": {
-            "enable_pod_security_policy": false
+            "enable_pod_security_policy": false,
+            "feature_gates": [
+                "CSIMigrationOpenStack"
+            ],
+            "admission_controllers": [
+                "LimitRanger"
+            ]
         }
     }
 }
@@ -900,6 +1052,8 @@ var testCreateClusterOpts = &cluster.CreateOpts{
 	},
 	KubernetesOptions: &cluster.KubernetesOptions{
 		EnablePodSecurityPolicy: false,
+		FeatureGates:            []string{"CSIMigrationOpenStack"},
+		AdmissionControllers:    []string{"LimitRanger"},
 	},
 }
 
@@ -927,7 +1081,13 @@ const testCreateClusterResponseRaw = `
         "updated_at": null,
         "zonal": false,
         "kubernetes_options": {
-            "enable_pod_security_policy": false
+            "enable_pod_security_policy": false,
+            "feature_gates": [
+                "CSIMigrationOpenStack"
+      	    ],
+            "admission_controllers": [
+                "LimitRanger"
+            ]
         }
     }
 }
@@ -956,6 +1116,8 @@ var expectedCreateClusterResponse = &cluster.View{
 	Zonal:                         false,
 	KubernetesOptions: &cluster.KubernetesOptions{
 		EnablePodSecurityPolicy: false,
+		FeatureGates:            []string{"CSIMigrationOpenStack"},
+		AdmissionControllers:    []string{"LimitRanger"},
 	},
 }
 
@@ -1294,7 +1456,13 @@ const testUpdateClusterWithEnabledPSPOptsRaw = `
         "enable_autorepair": true,
         "enable_patch_version_auto_upgrade": false,
         "kubernetes_options": {
-            "enable_pod_security_policy": true
+            "enable_pod_security_policy": true,
+            "feature_gates": [
+                "CSIMigrationOpenStack"
+            ],
+            "admission_controllers": [
+                "LimitRanger"
+            ]
         }
     }
 }
@@ -1305,7 +1473,11 @@ var testUpdateClusterWithEnabledPSPOpts = &cluster.UpdateOpts{
 	MaintenanceWindowStart:        "07:00:00",
 	EnableAutorepair:              testutils.BoolToPtr(true),
 	EnablePatchVersionAutoUpgrade: testutils.BoolToPtr(false),
-	KubernetesOptions:             &cluster.KubernetesOptions{EnablePodSecurityPolicy: true},
+	KubernetesOptions: &cluster.KubernetesOptions{
+		EnablePodSecurityPolicy: true,
+		FeatureGates:            []string{"CSIMigrationOpenStack"},
+		AdmissionControllers:    []string{"LimitRanger"},
+	},
 }
 
 // testUpdateClusterWithEnabledPSPResponseRaw represents a raw response from the Create cluster request.
@@ -1332,7 +1504,13 @@ const testUpdateClusterWithEnabledPSPResponseRaw = `
         "updated_at": null,
         "zonal": false,
         "kubernetes_options": {
-            "enable_pod_security_policy": true
+            "enable_pod_security_policy": true,
+            "feature_gates": [
+                "CSIMigrationOpenStack"
+            ],
+            "admission_controllers": [
+                "LimitRanger"
+            ] 
         }
     }
 }
@@ -1359,5 +1537,9 @@ var expectedUpdateClusterWithEnabledPSPResponse = &cluster.View{
 	EnableAutorepair:              true,
 	EnablePatchVersionAutoUpgrade: false,
 	Zonal:                         false,
-	KubernetesOptions:             &cluster.KubernetesOptions{EnablePodSecurityPolicy: true},
+	KubernetesOptions: &cluster.KubernetesOptions{
+		EnablePodSecurityPolicy: true,
+		FeatureGates:            []string{"CSIMigrationOpenStack"},
+		AdmissionControllers:    []string{"LimitRanger"},
+	},
 }
