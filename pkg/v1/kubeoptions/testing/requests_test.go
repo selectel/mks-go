@@ -11,7 +11,7 @@ import (
 	"github.com/selectel/mks-go/pkg/v1/kubeoptions"
 )
 
-func TestListFG(t *testing.T) {
+func TestListFeatureGates(t *testing.T) {
 	endpointCalled := false
 	testEnv := testutils.SetupTestEnv()
 	defer testEnv.TearDownTestEnv()
@@ -117,7 +117,7 @@ func TestListFeatureGatesUnmarshallError(t *testing.T) {
 	}
 }
 
-func TestListAC(t *testing.T) {
+func TestListAdmissionControllers(t *testing.T) {
 	endpointCalled := false
 	testEnv := testutils.SetupTestEnv()
 	defer testEnv.TearDownTestEnv()

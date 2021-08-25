@@ -2,7 +2,7 @@ package testing
 
 import "github.com/selectel/mks-go/pkg/v1/kubeoptions"
 
-var expectedFeatureGates = []*kubeoptions.ListView{
+var expectedFeatureGates = []*kubeoptions.View{
 	{
 		KubeVersion: "1.15",
 		Names:       []string{"ProcMountType", "RemainingItemCount", "APIResponseCompression", "CSIMigrationOpenStack", "CSIMigrationAzureDisk", "TTLAfterFinished", "VolumePVCDataSource", "ServerSideApply", "BalanceAttachedNodeVolumes", "HyperVContainer", "WinOverlay", "QOSReserved", "SCTPSupport", "CSIInlineVolume", "CustomCPUCFSQuotaPeriod", "VolumeSnapshotDataSource", "WindowsGMSA", "WatchBookmark", "NonPreemptingPriority", "CSIMigrationAzureFile", "ExpandCSIVolumes", "CSIMigration", "ServiceNodeExclusion", "RequestManagement", "ResourceLimitsPriorityFunction", "DynamicAuditing", "ServiceLoadBalancerFinalizer", "CSIMigrationAWS", "LocalStorageCapacityIsolationFSQuotaMonitoring", "WinDSR", "CustomResourceDefaulting", "CSIMigrationGCE"},
@@ -21,7 +21,7 @@ var expectedFeatureGates = []*kubeoptions.ListView{
 	},
 }
 
-var expectedAdmissionControllers = []*kubeoptions.ListView{
+var expectedAdmissionControllers = []*kubeoptions.View{
 	{
 		KubeVersion: "1.15",
 		Names:       []string{"ExtendedResourceToleration", "ServiceAccount", "DefaultTolerationSeconds", "CertificateApproval", "PodSecurityPolicy", "AlwaysPullImages", "StorageObjectInUseProtection", "ImagePolicyWebhook", "LimitRanger", "NamespaceLifecycle", "PodNodeSelector", "Priority", "EventRateLimit", "PersistentVolumeClaimResize", "PodPreset", "SecurityContextDeny", "LimitPodHardAntiAffinityTopology", "CertificateSubjectRestrictions", "OwnerReferencesPermissionEnforcement", "ResourceQuota", "ValidatingAdmissionWebhook", "CertificateSigning", "NamespaceExists", "PodTolerationRestriction", "TaintNodesByCondition", "DefaultStorageClass", "NamespaceAutoProvision", "MutatingAdmissionWebhook"},

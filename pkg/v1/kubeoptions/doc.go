@@ -9,7 +9,7 @@ Example of getting available feature gates by Kubernetes version:
     log.Fatal(err)
   }
   for _, fgList := range availableFG {
-  	fmt.Printf("%s: %v\n", fgList.KubeVersion, fgList.Names)
+    fmt.Printf("%s: %v\n", fgList.KubeVersion, fgList.Names)
   }
 
 Example of getting available admission controllers by Kubernetes version:
@@ -19,7 +19,7 @@ Example of getting available admission controllers by Kubernetes version:
     log.Fatal(err)
   }
   for _, acList := range availableAC {
-  	fmt.Printf("%s: %v\n", acList.KubeVersion, acList.Names)
+    fmt.Printf("%s: %v\n", acList.KubeVersion, acList.Names)
   }
 */
 package kubeoptions

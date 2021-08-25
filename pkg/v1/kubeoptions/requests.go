@@ -9,7 +9,7 @@ import (
 )
 
 // ListFeatureGates gets a list of available feature gates by Kubernetes versions.
-func ListFeatureGates(ctx context.Context, client *v1.ServiceClient) ([]*ListView, *v1.ResponseResult, error) {
+func ListFeatureGates(ctx context.Context, client *v1.ServiceClient) ([]*View, *v1.ResponseResult, error) {
 	url := strings.Join([]string{client.Endpoint, v1.ResourceURLFeatureGates}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodGet, url, nil)
 	if err != nil {
@@ -21,7 +21,7 @@ func ListFeatureGates(ctx context.Context, client *v1.ServiceClient) ([]*ListVie
 
 	// Extract available admission-controllers from the response body.
 	var result struct {
-		FGList []*ListView `json:"feature_gates"`
+		FGList []*View `json:"feature_gates"`
 	}
 	err = responseResult.ExtractResult(&result)
 	if err != nil {
@@ -32,7 +32,7 @@ func ListFeatureGates(ctx context.Context, client *v1.ServiceClient) ([]*ListVie
 }
 
 // ListAdmissionControllers gets a list of available admission controllers by Kubernetes versions.
-func ListAdmissionControllers(ctx context.Context, client *v1.ServiceClient) ([]*ListView, *v1.ResponseResult, error) {
+func ListAdmissionControllers(ctx context.Context, client *v1.ServiceClient) ([]*View, *v1.ResponseResult, error) {
 	url := strings.Join([]string{client.Endpoint, v1.ResourceURLAdmissionControllers}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodGet, url, nil)
 	if err != nil {
@@ -44,12 +44,12 @@ func ListAdmissionControllers(ctx context.Context, client *v1.ServiceClient) ([]
 
 	// Extract available admission-controllers from the response body.
 	var result struct {
-		FGList []*ListView `json:"admission_controllers"`
+		ACList []*View `json:"admission_controllers"`
 	}
 	err = responseResult.ExtractResult(&result)
 	if err != nil {
 		return nil, responseResult, err
 	}
 
-	return result.FGList, responseResult, nil
+	return result.ACList, responseResult, nil
 }
