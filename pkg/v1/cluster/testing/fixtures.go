@@ -34,7 +34,7 @@ const testGetClusterResponseRaw = `
         "kubernetes_options": {
             "enable_pod_security_policy": true,
             "feature_gates": [
-                "BoundServiceAccountTokenVolume",
+                "TTLAfterFinished",
                 "CSIMigrationOpenStack"
               ],
             "admission_controllers": [
@@ -71,7 +71,7 @@ var expectedGetClusterResponse = &cluster.View{
 	KubernetesOptions: &cluster.KubernetesOptions{
 		EnablePodSecurityPolicy: true,
 		FeatureGates: []string{
-			"BoundServiceAccountTokenVolume",
+			"TTLAfterFinished",
 			"CSIMigrationOpenStack",
 		},
 		AdmissionControllers: []string{
@@ -107,7 +107,7 @@ const testGetZonalClusterResponseRaw = `
         "kubernetes_options": {
             "enable_pod_security_policy": true,
             "feature_gates": [
-                "BoundServiceAccountTokenVolume",
+                "TTLAfterFinished",
                 "CSIMigrationOpenStack"
               ],
             "admission_controllers": [
@@ -142,7 +142,7 @@ var expectedGetZonalClusterResponse = &cluster.View{
 	KubernetesOptions: &cluster.KubernetesOptions{
 		EnablePodSecurityPolicy: true,
 		FeatureGates: []string{
-			"BoundServiceAccountTokenVolume",
+			"TTLAfterFinished",
 			"CSIMigrationOpenStack",
 		},
 		AdmissionControllers: []string{
