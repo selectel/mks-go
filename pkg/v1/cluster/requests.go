@@ -157,7 +157,7 @@ func GetKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterID stri
 	return kubeconfig, responseResult, nil
 }
 
-// GetParsedKubeconfig is a small helper function to get map of values from kubeconfig that can be useful for tf provider for example
+// GetParsedKubeconfig is a small helper function to get map of values from kubeconfig that can be useful for tf provider for example.
 func GetParsedKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterID string) (map[string]string, *v1.ResponseResult, error) {
 	kubeconfig, responceResult, err := GetKubeconfig(ctx, client, clusterID)
 	if err != nil {
@@ -167,18 +167,18 @@ func GetParsedKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterI
 		return nil, responceResult, responceResult.Err
 	}
 
-	parsedKubeconfig := make(map[string]string, 0)
+	parsedKubeconfig := make(map[string]string)
 
-	r, _ := regexp.Compile("certificate-authority-data.*")
+	r := regexp.MustCompile("certificate-authority-data.*")
 	parsedKubeconfig["cluster_ca"] = strings.Split(r.FindString(string(kubeconfig)), " ")[1]
 
-	r, _ = regexp.Compile("server.*")
+	r = regexp.MustCompile("server.*")
 	parsedKubeconfig["server"] = strings.Split(r.FindString(string(kubeconfig)), " ")[1]
 
-	r, _ = regexp.Compile("client-certificate-data.*")
+	r = regexp.MustCompile("client-certificate-data.*")
 	parsedKubeconfig["client_cert"] = strings.Split(r.FindString(string(kubeconfig)), " ")[1]
 
-	r, _ = regexp.Compile("client-key-data.*")
+	r = regexp.MustCompile("client-key-data.*")
 	parsedKubeconfig["client_key"] = strings.Split(r.FindString(string(kubeconfig)), " ")[1]
 
 	parsedKubeconfig["raw_config"] = string(kubeconfig)

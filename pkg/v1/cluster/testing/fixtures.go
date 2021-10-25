@@ -1431,10 +1431,10 @@ users:
 `
 
 var testGetParsedKubeconfig = map[string]string{
-	"cluster_ca": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
-	"server": "https://203.0.113.101:6443",
+	"cluster_ca":  "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
+	"server":      "https://203.0.113.101:6443",
 	"client_cert": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
-	"client_key": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
+	"client_key":  "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 	"raw_config": `apiVersion: v1
 clusters:
 - cluster:
