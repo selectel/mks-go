@@ -1430,6 +1430,33 @@ users:
     client-key-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=
 `
 
+var testGetParsedKubeconfig = map[string]string{
+	"cluster_ca": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
+	"server": "https://203.0.113.101:6443",
+	"client_cert": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
+	"client_key": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
+	"raw_config": `apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=
+    server: https://203.0.113.101:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: admin
+  name: admin@kubernetes
+current-context: admin@kubernetes
+kind: Config
+preferences: {}
+users:
+- name: admin
+  user:
+    client-certificate-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=
+    client-key-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=
+`,
+}
+
 // testUpdateClusterOptsRaw represents marshalled options variant A for the Update request.
 const testUpdateClusterOptsRaw = `
 {

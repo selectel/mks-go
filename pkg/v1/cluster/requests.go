@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"regexp"
 	"strings"
 
 	v1 "github.com/selectel/mks-go/pkg/v1"
@@ -154,6 +155,35 @@ func GetKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterID stri
 	}
 
 	return kubeconfig, responseResult, nil
+}
+
+// GetParsedKubeconfig is a small helper function to get map of values from kubeconfig that can be useful for tf provider for example
+func GetParsedKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterID string) (map[string]string, *v1.ResponseResult, error) {
+	kubeconfig, responceResult, err := GetKubeconfig(ctx, client, clusterID)
+	if err != nil {
+		return nil, nil, err
+	}
+	if responceResult.Err != nil {
+		return nil, responceResult, responceResult.Err
+	}
+
+	parsedKubeconfig := make(map[string]string, 0)
+
+	r, _ := regexp.Compile("certificate-authority-data.*")
+	parsedKubeconfig["cluster_ca"] = strings.Split(r.FindString(string(kubeconfig)), " ")[1]
+
+	r, _ = regexp.Compile("server.*")
+	parsedKubeconfig["server"] = strings.Split(r.FindString(string(kubeconfig)), " ")[1]
+
+	r, _ = regexp.Compile("client-certificate-data.*")
+	parsedKubeconfig["client_cert"] = strings.Split(r.FindString(string(kubeconfig)), " ")[1]
+
+	r, _ = regexp.Compile("client-key-data.*")
+	parsedKubeconfig["client_key"] = strings.Split(r.FindString(string(kubeconfig)), " ")[1]
+
+	parsedKubeconfig["raw_config"] = string(kubeconfig)
+
+	return parsedKubeconfig, responceResult, nil
 }
 
 // RotateCerts requests a rotation of cluster certificates by cluster id.
