@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"regexp"
 	"strings"
@@ -157,6 +158,17 @@ func GetKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterID stri
 	return kubeconfig, responseResult, nil
 }
 
+func getFieldFromKubeconfig(kubeconfig []byte, fieldName string) (string, error) {
+	r := regexp.MustCompile(fmt.Sprintf("%s.*", fieldName))
+	if s := r.FindString(string(kubeconfig)); len(s) != 0 {
+		if subS := strings.Split(s, " "); len(subS) > 1 {
+			return subS[1], nil
+		}
+		return "", fmt.Errorf("invalid %s field in the kubeconfig", fieldName)
+	}
+	return "", fmt.Errorf("unable to find %s field in kubeconfig", fieldName)
+}
+
 // GetParsedKubeconfig is a small helper function to get map of values from kubeconfig that can be useful for tf provider for example.
 func GetParsedKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterID string) (map[string]string, *v1.ResponseResult, error) {
 	kubeconfig, responceResult, err := GetKubeconfig(ctx, client, clusterID)
@@ -167,19 +179,21 @@ func GetParsedKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterI
 		return nil, responceResult, responceResult.Err
 	}
 
+	fieldsToParseAs := map[string]string{
+		"certificate-authority-data": "cluster_ca",
+		"server":                     "server",
+		"client-certificate-data":    "client_cert",
+		"client-key-data":            "client_key",
+	}
 	parsedKubeconfig := make(map[string]string)
 
-	r := regexp.MustCompile("certificate-authority-data.*")
-	parsedKubeconfig["cluster_ca"] = strings.Split(r.FindString(string(kubeconfig)), " ")[1]
-
-	r = regexp.MustCompile("server.*")
-	parsedKubeconfig["server"] = strings.Split(r.FindString(string(kubeconfig)), " ")[1]
-
-	r = regexp.MustCompile("client-certificate-data.*")
-	parsedKubeconfig["client_cert"] = strings.Split(r.FindString(string(kubeconfig)), " ")[1]
-
-	r = regexp.MustCompile("client-key-data.*")
-	parsedKubeconfig["client_key"] = strings.Split(r.FindString(string(kubeconfig)), " ")[1]
+	for rawName, parsedName := range fieldsToParseAs {
+		if s, err := getFieldFromKubeconfig(kubeconfig, rawName); err == nil {
+			parsedKubeconfig[parsedName] = s
+		} else {
+			return nil, responceResult, err
+		}
+	}
 
 	parsedKubeconfig["raw_config"] = string(kubeconfig)
 

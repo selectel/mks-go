@@ -944,7 +944,7 @@ func TestGetParsedKubeconfig(t *testing.T) {
 
 	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
 		Mux:         testEnv.Mux,
-		URL:         "/v1/clusters/dcd7559a-55d8-4f65-9230-6a22b985ff73/kubeconfig",
+		URL:         "/v1/clusters/dcd7559a-55d8-4f65-9230-6a22b985ff74/kubeconfig",
 		RawResponse: testGetKubeconfig,
 		Method:      http.MethodGet,
 		Status:      http.StatusOK,
@@ -958,7 +958,7 @@ func TestGetParsedKubeconfig(t *testing.T) {
 		Endpoint:   testEnv.Server.URL + "/v1",
 		UserAgent:  testutils.UserAgent,
 	}
-	id := "dcd7559a-55d8-4f65-9230-6a22b985ff73"
+	id := "dcd7559a-55d8-4f65-9230-6a22b985ff74"
 
 	actual, httpResponse, err := cluster.GetParsedKubeconfig(ctx, testClient, id)
 
@@ -979,6 +979,94 @@ func TestGetParsedKubeconfig(t *testing.T) {
 	}
 	if !reflect.DeepEqual(expected, actual) {
 		t.Fatalf("expected %#v, but got %#v", expected, actual)
+	}
+}
+
+func TestGetParsedKubeconfigInvalidServerField(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/dcd7559a-55d8-4f65-9230-6a22b985ff75/kubeconfig",
+		RawResponse: testGetKubeconfigInvalidServer,
+		Method:      http.MethodGet,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "dcd7559a-55d8-4f65-9230-6a22b985ff75"
+
+	_, httpResponse, err := cluster.GetParsedKubeconfig(ctx, testClient, id)
+
+	expectedErrorText := "invalid server field in the kubeconfig"
+
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the GetKubeconfig method")
+	}
+	if httpResponse.StatusCode != http.StatusOK {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusOK, httpResponse.StatusCode)
+	}
+
+	if err == nil {
+		t.Fatal("expected error but got nil")
+	}
+
+	if err.Error() != expectedErrorText {
+		t.Fatalf("expected error \"%s\" but got \"%s\"", expectedErrorText, err.Error())
+	}
+}
+
+func TestGetParsedKubeconfigEmptyServerField(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/dcd7559a-55d8-4f65-9230-6a22b985ff76/kubeconfig",
+		RawResponse: testGetKubeconfigEmptyServer,
+		Method:      http.MethodGet,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "dcd7559a-55d8-4f65-9230-6a22b985ff76"
+
+	_, httpResponse, err := cluster.GetParsedKubeconfig(ctx, testClient, id)
+
+	expectedErrorText := "unable to find server field in kubeconfig"
+
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the GetKubeconfig method")
+	}
+	if httpResponse.StatusCode != http.StatusOK {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusOK, httpResponse.StatusCode)
+	}
+
+	if err == nil {
+		t.Fatal("expected error but got nil")
+	}
+
+	if err.Error() != expectedErrorText {
+		t.Fatalf("expected error \"%s\" but got \"%s\"", expectedErrorText, err.Error())
 	}
 }
 
