@@ -971,13 +971,13 @@ func TestGetParsedKubeconfig(t *testing.T) {
 		t.Fatal("endpoint wasn't called")
 	}
 	if httpResponse == nil {
-		t.Fatal("expected an HTTP response from the GetKubeconfig method")
+		t.Fatal("expected an HTTP response from the GetParsedKubeconfig method")
 	}
 	if httpResponse.StatusCode != http.StatusOK {
 		t.Fatalf("expected %d status in the HTTP response, but got %d",
 			http.StatusOK, httpResponse.StatusCode)
 	}
-	if !reflect.DeepEqual(expected, actual) {
+	if !reflect.DeepEqual(expected, *actual) {
 		t.Fatalf("expected %#v, but got %#v", expected, actual)
 	}
 }
@@ -1010,7 +1010,7 @@ func TestGetParsedKubeconfigInvalidServerField(t *testing.T) {
 	expectedErrorText := "invalid server field in the kubeconfig"
 
 	if httpResponse == nil {
-		t.Fatal("expected an HTTP response from the GetKubeconfig method")
+		t.Fatal("expected an HTTP response from the GetParsedKubeconfig method")
 	}
 	if httpResponse.StatusCode != http.StatusOK {
 		t.Fatalf("expected %d status in the HTTP response, but got %d",
@@ -1054,7 +1054,7 @@ func TestGetParsedKubeconfigEmptyServerField(t *testing.T) {
 	expectedErrorText := "unable to find server field in kubeconfig"
 
 	if httpResponse == nil {
-		t.Fatal("expected an HTTP response from the GetKubeconfig method")
+		t.Fatal("expected an HTTP response from the GetParsedKubeconfig method")
 	}
 	if httpResponse.StatusCode != http.StatusOK {
 		t.Fatalf("expected %d status in the HTTP response, but got %d",

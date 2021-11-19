@@ -12,6 +12,15 @@ import (
 	v1 "github.com/selectel/mks-go/pkg/v1"
 )
 
+// KubeconfigFields is a struct that contains Kubeconfigs parsed fields and raw kubeconfig
+type KubeconfigFields struct {
+	ClusterCA     string
+	Server        string
+	ClientCert    string
+	ClientKey     string
+	KubeconfigRaw string
+}
+
 // Get returns a single cluster by its id.
 func Get(ctx context.Context, client *v1.ServiceClient, clusterID string) (*View, *v1.ResponseResult, error) {
 	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID}, "/")
@@ -164,13 +173,15 @@ func getFieldFromKubeconfig(kubeconfig []byte, fieldName string) (string, error)
 		if subS := strings.Split(s, " "); len(subS) > 1 {
 			return subS[1], nil
 		}
+
 		return "", fmt.Errorf("invalid %s field in the kubeconfig", fieldName)
 	}
+
 	return "", fmt.Errorf("unable to find %s field in kubeconfig", fieldName)
 }
 
-// GetParsedKubeconfig is a small helper function to get map of values from kubeconfig that can be useful for tf provider for example.
-func GetParsedKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterID string) (map[string]string, *v1.ResponseResult, error) {
+// GetParsedKubeconfig is a small helper function to get KubeconfigFields struct.
+func GetParsedKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterID string) (*KubeconfigFields, *v1.ResponseResult, error) {
 	kubeconfig, responceResult, err := GetKubeconfig(ctx, client, clusterID)
 	if err != nil {
 		return nil, nil, err
@@ -179,25 +190,34 @@ func GetParsedKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterI
 		return nil, responceResult, responceResult.Err
 	}
 
-	fieldsToParseAs := map[string]string{
-		"certificate-authority-data": "cluster_ca",
-		"server":                     "server",
-		"client-certificate-data":    "client_cert",
-		"client-key-data":            "client_key",
+	fieldsToParse := []string{
+		"certificate-authority-data",
+		"server",
+		"client-certificate-data",
+		"client-key-data",
 	}
-	parsedKubeconfig := make(map[string]string)
+	parsedKubeconfig := KubeconfigFields{}
 
-	for rawName, parsedName := range fieldsToParseAs {
+	for _, rawName := range fieldsToParse {
 		if s, err := getFieldFromKubeconfig(kubeconfig, rawName); err == nil {
-			parsedKubeconfig[parsedName] = s
+			switch rawName {
+			case "certificate-authority-data":
+				parsedKubeconfig.ClusterCA = s
+			case "server":
+				parsedKubeconfig.Server = s
+			case "client-certificate-data":
+				parsedKubeconfig.ClientCert = s
+			case "client-key-data":
+				parsedKubeconfig.ClientKey = s
+			}
 		} else {
 			return nil, responceResult, err
 		}
 	}
 
-	parsedKubeconfig["raw_config"] = string(kubeconfig)
+	parsedKubeconfig.KubeconfigRaw = string(kubeconfig)
 
-	return parsedKubeconfig, responceResult, nil
+	return &parsedKubeconfig, responceResult, nil
 }
 
 // RotateCerts requests a rotation of cluster certificates by cluster id.
