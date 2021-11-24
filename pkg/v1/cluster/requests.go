@@ -12,15 +12,6 @@ import (
 	v1 "github.com/selectel/mks-go/pkg/v1"
 )
 
-// KubeconfigFields is a struct that contains Kubeconfigs parsed fields and raw kubeconfig
-type KubeconfigFields struct {
-	ClusterCA     string
-	Server        string
-	ClientCert    string
-	ClientKey     string
-	KubeconfigRaw string
-}
-
 // Get returns a single cluster by its id.
 func Get(ctx context.Context, client *v1.ServiceClient, clusterID string) (*View, *v1.ResponseResult, error) {
 	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID}, "/")
@@ -182,12 +173,12 @@ func getFieldFromKubeconfig(kubeconfig []byte, fieldName string) (string, error)
 
 // GetParsedKubeconfig is a small helper function to get KubeconfigFields struct.
 func GetParsedKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterID string) (*KubeconfigFields, *v1.ResponseResult, error) {
-	kubeconfig, responceResult, err := GetKubeconfig(ctx, client, clusterID)
+	kubeconfig, responseResult, err := GetKubeconfig(ctx, client, clusterID)
 	if err != nil {
 		return nil, nil, err
 	}
-	if responceResult.Err != nil {
-		return nil, responceResult, responceResult.Err
+	if responseResult.Err != nil {
+		return nil, responseResult, responseResult.Err
 	}
 
 	fieldsToParse := []string{
@@ -211,13 +202,13 @@ func GetParsedKubeconfig(ctx context.Context, client *v1.ServiceClient, clusterI
 				parsedKubeconfig.ClientKey = s
 			}
 		} else {
-			return nil, responceResult, err
+			return nil, responseResult, err
 		}
 	}
 
 	parsedKubeconfig.KubeconfigRaw = string(kubeconfig)
 
-	return &parsedKubeconfig, responceResult, nil
+	return &parsedKubeconfig, responseResult, nil
 }
 
 // RotateCerts requests a rotation of cluster certificates by cluster id.

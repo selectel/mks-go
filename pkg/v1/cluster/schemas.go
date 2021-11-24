@@ -162,3 +162,12 @@ type KubernetesOptions struct {
 	// AdmissionControllers represents admission controllers that should be enabled.
 	AdmissionControllers []string `json:"admission_controllers"`
 }
+
+// KubeconfigFields is a struct that contains Kubeconfigs parsed fields and raw kubeconfig
+type KubeconfigFields struct {
+	ClusterCA     string
+	Server        string
+	ClientCert    string
+	ClientKey     string
+	KubeconfigRaw string
+}
