@@ -36,7 +36,6 @@ func TestGetNodegroup(t *testing.T) {
 	nodegroupID := "a376745a-fbcb-413d-b418-169d059d79ce"
 
 	actual, httpResponse, err := nodegroup.Get(ctx, testClient, clusterID, nodegroupID)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -191,7 +190,6 @@ func TestListNodegroups(t *testing.T) {
 	clusterID := "79265515-3700-49fa-af0e-7f547bce788a"
 
 	actual, httpResponse, err := nodegroup.List(ctx, testClient, clusterID)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -343,7 +341,6 @@ func TestCreateNodegroup(t *testing.T) {
 	clusterID := "d1465515-3700-49fa-af0e-7f547bce788a"
 
 	httpResponse, err := nodegroup.Create(ctx, testClient, clusterID, testCreateNodegroupOpts)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -448,7 +445,6 @@ func TestDeleteNodegroup(t *testing.T) {
 	nodegroupID := "b376745a-fbcb-413d-b418-180d059d79cd"
 
 	httpResponse, err := nodegroup.Delete(ctx, testClient, clusterID, nodegroupID)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -555,7 +551,6 @@ func TestResizeNodegroup(t *testing.T) {
 	nodegroupID := "c476d45a-0bcc-e13d-b418-180d059d79cd"
 
 	httpResponse, err := nodegroup.Resize(ctx, testClient, clusterID, nodegroupID, testResizeNodegroupOpts)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -663,7 +658,6 @@ func TestUpdateNodegroup(t *testing.T) {
 	nodegroupID := "c476d45a-0bcc-e13d-b418-180d059d79cd"
 
 	httpResponse, err := nodegroup.Update(ctx, testClient, clusterID, nodegroupID, testUpdateNodegroupOpts)
-
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -35,7 +35,6 @@ func TestGetCluster(t *testing.T) {
 	id := "dbe7559b-55d8-4f65-9230-6a22b985ff73"
 
 	actual, httpResponse, err := cluster.Get(ctx, testClient, id)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -78,7 +77,6 @@ func TestGetZonalCluster(t *testing.T) {
 	id := "763f1f5f-951e-48b2-abae-815a75ee747c"
 
 	actual, httpResponse, err := cluster.Get(ctx, testClient, id)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -229,7 +227,6 @@ func TestListClusters(t *testing.T) {
 	}
 
 	actual, httpResponse, err := cluster.List(ctx, testClient)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -378,7 +375,6 @@ func TestCreateCluster(t *testing.T) {
 	}
 
 	actual, httpResponse, err := cluster.Create(ctx, testClient, testCreateClusterOpts)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -421,7 +417,6 @@ func TestCreateClusterEnableBools(t *testing.T) {
 	}
 
 	actual, httpResponse, err := cluster.Create(ctx, testClient, testCreateClusterEnableBoolsOpts)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -464,7 +459,6 @@ func TestCreateClusterDisableBools(t *testing.T) {
 	}
 
 	actual, httpResponse, err := cluster.Create(ctx, testClient, testCreateClusterDisableBoolsOpts)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -507,7 +501,6 @@ func TestCreateZonalCluster(t *testing.T) {
 	}
 
 	actual, httpResponse, err := cluster.Create(ctx, testClient, testCreateZonalClusterOpts)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -659,7 +652,6 @@ func TestUpdateCluster(t *testing.T) {
 	id := "57b244b4-a49e-4067-a837-e0024a3a8aed"
 
 	actual, httpResponse, err := cluster.Update(ctx, testClient, id, testUpdateClusterOpts)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -812,7 +804,6 @@ func TestDeleteCluster(t *testing.T) {
 	id := "dbe7559c-55d8-4f65-9230-6a22b985ff73"
 
 	httpResponse, err := cluster.Delete(ctx, testClient, id)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1163,7 +1154,6 @@ func TestRotateCerts(t *testing.T) {
 	id := "dbe1259c-55d8-4f65-9230-6a22b985ff73"
 
 	httpResponse, err := cluster.RotateCerts(ctx, testClient, id)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1267,7 +1257,6 @@ func TestUpgradePatchVersion(t *testing.T) {
 	id := "fc1d8841-d8dc-4981-a97f-4cb251e3a8aa"
 
 	actual, httpResponse, err := cluster.UpgradePatchVersion(ctx, testClient, id)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1419,7 +1408,6 @@ func TestUpgradeMinorVersion(t *testing.T) {
 	id := "dbe7559b-55d8-4f65-9230-6a22b985ff16"
 
 	actual, httpResponse, err := cluster.UpgradeMinorVersion(ctx, testClient, id)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1572,7 +1560,6 @@ func TestUpdateClusterEnablePSP(t *testing.T) {
 	id := "effe751d-501a-4b06-8e23-3f686dbfccf6"
 
 	actual, httpResponse, err := cluster.Update(ctx, testClient, id, testUpdateClusterWithEnabledPSPOpts)
-
 	if err != nil {
 		t.Fatal(err)
 	}

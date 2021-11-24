@@ -627,7 +627,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "3be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -652,7 +653,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "4be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -677,7 +679,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "5be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -702,7 +705,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "6be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -727,7 +731,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "7be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -752,7 +757,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "8be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -777,7 +783,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -802,7 +809,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -827,7 +835,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -852,7 +861,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -877,7 +887,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "9be7559b-55d8-4f65-9230-6a22b985ff73",
@@ -902,7 +913,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "10e7559b-55d8-4f65-9230-6a22b985ff73",
@@ -927,7 +939,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "117559b-55d8-4f65-9230-6a22b985ff73",
@@ -952,7 +965,8 @@ var expectedListClustersResponse = []*cluster.View{
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
-			AdmissionControllers:    []string{"LimitRanger"}},
+			AdmissionControllers:    []string{"LimitRanger"},
+		},
 	},
 	{
 		ID:                            "12e7559b-55d8-4f65-9230-6a22b985ff73",
@@ -1023,7 +1037,6 @@ const testCreateClusterOptsRaw = `
 }
 `
 
-// nolint
 // testCreateClusterOpts represents options for the Create request.
 var testCreateClusterOpts = &cluster.CreateOpts{
 	Name:        "test-cluster-0",
@@ -1150,7 +1163,6 @@ const testCreateClusterEnableBoolsOptsRaw = `
 }
 `
 
-// nolint
 // testCreateClusterEnableBoolsOpts represents options for the Create request with enabled booleans opts.
 var testCreateClusterEnableBoolsOpts = &cluster.CreateOpts{
 	Name:                          "test-cluster-0",
@@ -1205,7 +1217,6 @@ const testCreateClusterDisableBoolsOptsRaw = `
 }
 `
 
-// nolint
 // testCreateClusterDisableBoolsOpts represents options for the Create request with disabled booleans opts.
 var testCreateClusterDisableBoolsOpts = &cluster.CreateOpts{
 	Name:                          "test-cluster-0",
@@ -1311,7 +1322,6 @@ const testCreateZonalClusterOptsRaw = `
 }
 `
 
-// nolint
 // testCreateZonalClusterOpts represents options for the Create request with zonal attribute set to true.
 var testCreateZonalClusterOpts = &cluster.CreateOpts{
 	Name:        "test-zonal-cluster-0",

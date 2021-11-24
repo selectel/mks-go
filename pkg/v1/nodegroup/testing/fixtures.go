@@ -51,7 +51,6 @@ const testGetNodegroupResponseRaw = `
 
 var nodegroupResponseTimestamp, _ = time.Parse(time.RFC3339, "2020-02-19T15:41:45.948646Z")
 
-// nolint
 // expectedGetNodegroupResponse represents an unmarshalled testGetNodegroupResponseRaw.
 var expectedGetNodegroupResponse = &nodegroup.View{
 	ID:               "a376745a-fbcb-413d-b418-169d059d79ce",
@@ -132,7 +131,6 @@ const testListNodegroupsResponseRaw = `
 }
 `
 
-// nolint
 // expectedListNodegroupsResponse represents an unmarshalled testListNodegroupsResponseRaw.
 var expectedListNodegroupsResponse = []*nodegroup.View{
 	{
@@ -200,7 +198,6 @@ const testCreateNodegroupOptsRaw = `
 }
 `
 
-// nolint
 // testCreateNodegroupOpts represents options for the Create request.
 var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 	Count:            1,
@@ -237,7 +234,6 @@ const testUpdateNodegroupOptsRaw = `
 }
 `
 
-// nolint
 // testCreateNodegroupOpts represents options for the Update request.
 var testUpdateNodegroupOpts = &nodegroup.UpdateOpts{
 	Labels: map[string]string{
@@ -255,7 +251,6 @@ const testResizeNodegroupOptsRaw = `
 }
 `
 
-// nolint
 // testResizeNodegroupOpts represents options for the Resize request.
 var testResizeNodegroupOpts = &nodegroup.ResizeOpts{
 	Desired: 1,

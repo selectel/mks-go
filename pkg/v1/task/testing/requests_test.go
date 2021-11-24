@@ -36,7 +36,6 @@ func TestGetTask(t *testing.T) {
 	taskID := "2f6fb93c-cf0d-4289-a78c-34393ac75f92"
 
 	actual, httpResponse, err := task.Get(ctx, testClient, clusterID, taskID)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -192,7 +191,6 @@ func TestGetTaskUnknownStatusAndType(t *testing.T) {
 	taskID := "2f6fb93c-cf0d-4289-a78c-34393ac75f92"
 
 	actual, httpResponse, err := task.Get(ctx, testClient, clusterID, taskID)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -235,7 +233,6 @@ func TestListTasks(t *testing.T) {
 	clusterID := "d2e16a48-a9c5-4449-9b71-81f21fc872db"
 
 	actual, httpResponse, err := task.List(ctx, testClient, clusterID)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -387,7 +384,6 @@ func TestListTasksUnknownStatusAndType(t *testing.T) {
 	clusterID := "d1e16a48-a9c5-4449-9b71-81f21fc872cb"
 
 	actual, httpResponse, err := task.List(ctx, testClient, clusterID)
-
 	if err != nil {
 		t.Fatal(err)
 	}
