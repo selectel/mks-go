@@ -15,6 +15,20 @@ const (
 	StatusUnknown    Status = "UNKNOWN"
 )
 
+func getSupportedStatuses() []Status {
+	return []Status{StatusInProgress, StatusDone, StatusError, StatusUnknown}
+}
+
+func isSupportedStatus(s Status) bool {
+	for _, v := range getSupportedStatuses() {
+		if s == v {
+			return true
+		}
+	}
+
+	return false
+}
+
 // Type represents custom type for various task types.
 type Type string
 
@@ -32,6 +46,24 @@ const (
 	TypeUpgradeClusterConfiguration Type = "UPGRADE_CLUSTER_CONFIGURATION"
 	TypeUnknown                     Type = "UNKNOWN"
 )
+
+func getSupportedTaskTypes() []Type {
+	return []Type{
+		TypeCreateCluster, TypeDeleteCluster, TypeRotateCerts, TypeNodeGroupResize,
+		TypeNodeReinstall, TypeClusterResize, TypeUpgradePatchVersion, TypeUpgradeMinorVersion,
+		TypeUpdateNodegroupLabels, TypeUpgradeMastersConfiguration, TypeUpgradeClusterConfiguration, TypeUnknown,
+	}
+}
+
+func isTaskTypeSupported(t Type) bool {
+	for _, v := range getSupportedTaskTypes() {
+		if t == v {
+			return true
+		}
+	}
+
+	return false
+}
 
 // View represents an unmarshalled cluster task body from an API response.
 type View struct {
@@ -61,56 +93,25 @@ func (result *View) UnmarshalJSON(b []byte) error {
 		Status Status `json:"status"`
 		Type   Type   `json:"type"`
 	}
-	err := json.Unmarshal(b, &s)
-	if err != nil {
+	if err := json.Unmarshal(b, &s); err != nil {
 		return err
 	}
 
 	*result = View(s.tmp)
 
 	// Check task status.
-	switch s.Status {
-	case StatusDone:
-		result.Status = StatusDone
-	case StatusInProgress:
-		result.Status = StatusInProgress
-	case StatusError:
-		result.Status = StatusError
-	case StatusUnknown:
-		result.Status = StatusUnknown
-	default:
+	if isSupportedStatus(s.Status) {
+		result.Status = s.Status
+	} else {
 		result.Status = StatusUnknown
 	}
 
 	// Check task type.
-	switch s.Type {
-	case TypeCreateCluster:
-		result.Type = TypeCreateCluster
-	case TypeDeleteCluster:
-		result.Type = TypeDeleteCluster
-	case TypeRotateCerts:
-		result.Type = TypeRotateCerts
-	case TypeNodeGroupResize:
-		result.Type = TypeNodeGroupResize
-	case TypeNodeReinstall:
-		result.Type = TypeNodeReinstall
-	case TypeClusterResize:
-		result.Type = TypeClusterResize
-	case TypeUpgradePatchVersion:
-		result.Type = TypeUpgradePatchVersion
-	case TypeUpgradeMinorVersion:
-		result.Type = TypeUpgradeMinorVersion
-	case TypeUpdateNodegroupLabels:
-		result.Type = TypeUpdateNodegroupLabels
-	case TypeUpgradeMastersConfiguration:
-		result.Type = TypeUpgradeMastersConfiguration
-	case TypeUpgradeClusterConfiguration:
-		result.Type = TypeUpgradeClusterConfiguration
-	case TypeUnknown:
-		result.Type = TypeUnknown
-	default:
+	if isTaskTypeSupported(s.Type) {
+		result.Type = s.Type
+	} else {
 		result.Type = TypeUnknown
 	}
 
-	return err
+	return nil
 }

@@ -3,7 +3,7 @@ linters:
   disable-all: true
   enable:
     - asciicheck
-#    - cyclop
+    - cyclop
     - deadcode
     - depguard
     - dogsled
