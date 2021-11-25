@@ -39,7 +39,7 @@ linters:
     - nakedret
     - nestif
     - nilerr
-#    - nlreturn
+    - nlreturn
     - noctx
     - nolintlint
     - prealloc
