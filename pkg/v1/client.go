@@ -237,7 +237,7 @@ func (result *ResponseResult) extractErr() error {
 	} else {
 		_ = json.Unmarshal(body, &result.ErrGeneric)
 	}
-	if result.ErrNotFound == nil || result.ErrGeneric == nil {
+	if result.ErrNotFound == nil && result.ErrGeneric == nil {
 		result.Err = fmt.Errorf(errGotHTTPStatusCodeFmt, result.StatusCode)
 
 		return nil
