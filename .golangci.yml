@@ -38,7 +38,7 @@ linters:
     - misspell
     - nakedret
     - nestif
-#    - nilerr
+    - nilerr
 #    - nlreturn
     - noctx
     - nolintlint
