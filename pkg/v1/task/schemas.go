@@ -76,6 +76,8 @@ func (result *View) UnmarshalJSON(b []byte) error {
 		result.Status = StatusInProgress
 	case StatusError:
 		result.Status = StatusError
+	case StatusUnknown:
+		result.Status = StatusUnknown
 	default:
 		result.Status = StatusUnknown
 	}
@@ -104,6 +106,8 @@ func (result *View) UnmarshalJSON(b []byte) error {
 		result.Type = TypeUpgradeMastersConfiguration
 	case TypeUpgradeClusterConfiguration:
 		result.Type = TypeUpgradeClusterConfiguration
+	case TypeUnknown:
+		result.Type = TypeUnknown
 	default:
 		result.Type = TypeUnknown
 	}

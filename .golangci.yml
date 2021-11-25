@@ -11,7 +11,7 @@ linters:
     - errcheck
     - errname
     - errorlint
-#    - exhaustive
+    - exhaustive
     - exportloopref
     - forbidigo
     - forcetypeassert

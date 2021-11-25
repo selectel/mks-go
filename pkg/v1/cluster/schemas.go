@@ -142,6 +142,8 @@ func (result *View) UnmarshalJSON(b []byte) error {
 		result.Status = StatusMaintenance
 	case StatusError:
 		result.Status = StatusError
+	case StatusUnknown:
+		result.Status = StatusUnknown
 	default:
 		result.Status = StatusUnknown
 	}
