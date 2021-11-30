@@ -29,10 +29,21 @@ const (
 
 func getSupportedStatuses() []Status {
 	return []Status{
-		StatusActive, StatusPendingCreate, StatusPendingUpdate, StatusPendingUpgrade, StatusPendingRotateCerts,
-		StatusPendingDelete, StatusPendingResize, StatusPendingNodeReinstall, StatusPendingUpgradePatchVersion,
-		StatusPendingUpgradeMinorVersion, StatusPendingUpdateNodegroup, StatusPendingUpgradeMastersConfiguration,
-		StatusPendingUpgradeClusterConfiguration, StatusMaintenance, StatusError, StatusUnknown,
+		StatusActive,
+		StatusPendingCreate,
+		StatusPendingUpdate,
+		StatusPendingUpgrade,
+		StatusPendingRotateCerts,
+		StatusPendingDelete,
+		StatusPendingResize,
+		StatusPendingNodeReinstall,
+		StatusPendingUpgradePatchVersion,
+		StatusPendingUpgradeMinorVersion,
+		StatusPendingUpdateNodegroup,
+		StatusPendingUpgradeMastersConfiguration,
+		StatusPendingUpgradeClusterConfiguration,
+		StatusMaintenance,
+		StatusError,
 	}
 }
 

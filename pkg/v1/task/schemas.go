@@ -16,7 +16,11 @@ const (
 )
 
 func getSupportedStatuses() []Status {
-	return []Status{StatusInProgress, StatusDone, StatusError, StatusUnknown}
+	return []Status{
+		StatusInProgress,
+		StatusDone,
+		StatusError,
+	}
 }
 
 func isSupportedStatus(s Status) bool {
@@ -49,9 +53,17 @@ const (
 
 func getSupportedTaskTypes() []Type {
 	return []Type{
-		TypeCreateCluster, TypeDeleteCluster, TypeRotateCerts, TypeNodeGroupResize,
-		TypeNodeReinstall, TypeClusterResize, TypeUpgradePatchVersion, TypeUpgradeMinorVersion,
-		TypeUpdateNodegroupLabels, TypeUpgradeMastersConfiguration, TypeUpgradeClusterConfiguration, TypeUnknown,
+		TypeCreateCluster,
+		TypeDeleteCluster,
+		TypeRotateCerts,
+		TypeNodeGroupResize,
+		TypeNodeReinstall,
+		TypeClusterResize,
+		TypeUpgradePatchVersion,
+		TypeUpgradeMinorVersion,
+		TypeUpdateNodegroupLabels,
+		TypeUpgradeMastersConfiguration,
+		TypeUpgradeClusterConfiguration,
 	}
 }
 
