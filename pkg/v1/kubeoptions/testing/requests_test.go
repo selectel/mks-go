@@ -34,7 +34,6 @@ func TestListFeatureGates(t *testing.T) {
 	}
 
 	actual, httpResponse, err := kubeoptions.ListFeatureGates(ctx, testClient)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -140,7 +139,6 @@ func TestListAdmissionControllers(t *testing.T) {
 	}
 
 	actual, httpResponse, err := kubeoptions.ListAdmissionControllers(ctx, testClient)
-
 	if err != nil {
 		t.Fatal(err)
 	}

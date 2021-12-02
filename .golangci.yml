@@ -1,15 +1,74 @@
 linters:
   fast: false
-  enable-all: true
-  disable:
-    - bodyclose
-    - dupl
+  disable-all: true
+  enable:
+    - asciicheck
+    - cyclop
+    - deadcode
+    - depguard
+    - dogsled
+    - durationcheck
+    - errcheck
+    - errname
+    - errorlint
+    - exhaustive
+    - exportloopref
+    - forbidigo
+    - forcetypeassert
+    - funlen
+    - gci
+    - goconst
     - gochecknoglobals
-    - gomnd
-    - gosec
-    - lll
-    - wsl
+    - gocritic
+    - godot
+#    - goerr113
+    - gofmt
+    - gofumpt
+    - goheader
+    - goimports
+    - gomoddirectives
+    - gomodguard
+    - goprintffuncname
+    - gosimple
+    - govet
+    - ifshort
+    - importas
+    - ineffassign
+    - makezero
+    - misspell
+    - nakedret
+    - nestif
+    - nilerr
+    - nlreturn
+    - noctx
+    - nolintlint
+    - prealloc
+    - predeclared
+    - promlinter
+    - revive
+    - staticcheck
+    - structcheck
+    - stylecheck
+#    - tagliatelle
+    - tparallel
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - varcheck
+    - wastedassign
+    - whitespace
 
 linters-settings:
   funlen:
-    statements: 42
+    statements: 65
+
+  tagliatelle:
+    case:
+      use-field-name: false
+      rules:
+        json: snake
+
+run:
+  skip-files:
+    - "fixtures.go"

@@ -15,6 +15,7 @@ type TestEnv struct {
 func SetupTestEnv() *TestEnv {
 	mux := http.NewServeMux()
 	server := httptest.NewServer(mux)
+
 	return &TestEnv{
 		Mux:    mux,
 		Server: server,

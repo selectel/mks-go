@@ -37,7 +37,6 @@ func TestGetNode(t *testing.T) {
 	nodeID := "203d0f8c-547d-48a7-98ed-3075254b8d4a"
 
 	actual, httpResponse, err := node.Get(ctx, testClient, clusterID, nodegroupID, nodeID)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -196,7 +195,6 @@ func TestReinstallNode(t *testing.T) {
 	nodeID := "c1800f8c-547d-48a7-98ed-3075254b8d4a"
 
 	httpResponse, err := node.Reinstall(ctx, testClient, clusterID, nodegroupID, nodeID)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -305,7 +303,6 @@ func TestDeleteNode(t *testing.T) {
 	nodeID := "d1800f8c-547d-48a7-98ed-3075254b8d4a"
 
 	httpResponse, err := node.Delete(ctx, testClient, clusterID, nodegroupID, nodeID)
-
 	if err != nil {
 		t.Fatal(err)
 	}

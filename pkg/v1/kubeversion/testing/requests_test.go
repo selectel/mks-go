@@ -34,7 +34,6 @@ func TestListKubeVersions(t *testing.T) {
 	}
 
 	actual, httpResponse, err := kubeversion.List(ctx, testClient)
-
 	if err != nil {
 		t.Fatal(err)
 	}
