@@ -19,6 +19,7 @@ You can use this library to work with the following objects of the Selectel Mana
 * [node](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/node)
 * [task](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/task)
 * [kubeversion](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/kubeversion)
+* [kubeoptions](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/kubeoptions)
 
 ## Getting started
 
