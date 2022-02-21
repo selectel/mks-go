@@ -68,10 +68,10 @@ type UpdateOpts struct {
 	Labels map[string]string `json:"labels"`
 
 	// Taints represents a list of nodegroup taints.
-	Taints []Taint `json:"taints"`
+	Taints []Taint `json:"taints,omitempty"`
 
 	// EnableAutoscale reflects if the nodegroup is allowed to be scaled automatically.
-	EnableAutoscale *bool `json:"enable_autoscale,omitempty"`
+	EnableAutoscale *bool `json:"enable_autoscale"`
 
 	// AutoscaleMinNodes represents minimum possible number of worker nodes in the nodegroup.
 	AutoscaleMinNodes *int `json:"autoscale_min_nodes,omitempty"`
