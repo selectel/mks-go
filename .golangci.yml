@@ -3,6 +3,7 @@ linters:
   disable-all: true
   enable:
     - asciicheck
+    - bodyclose
     - cyclop
     - deadcode
     - depguard
@@ -15,10 +16,8 @@ linters:
     - exportloopref
     - forbidigo
     - forcetypeassert
-    - funlen
     - gci
     - goconst
-    - gochecknoglobals
     - gocritic
     - godot
 #    - goerr113
@@ -46,6 +45,8 @@ linters:
     - predeclared
     - promlinter
     - revive
+    - rowserrcheck
+    - sqlclosecheck
     - staticcheck
     - structcheck
     - stylecheck
