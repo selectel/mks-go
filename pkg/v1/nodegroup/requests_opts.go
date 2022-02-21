@@ -67,6 +67,9 @@ type UpdateOpts struct {
 	// for each node in the group. The keys must be user-defined.
 	Labels map[string]string `json:"labels"`
 
+	// Taints represents a list of nodegroup taints.
+	Taints []Taint `json:"taints"`
+
 	// EnableAutoscale reflects if the nodegroup is allowed to be scaled automatically.
 	EnableAutoscale *bool `json:"enable_autoscale,omitempty"`
 
