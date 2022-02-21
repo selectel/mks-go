@@ -1,9 +1,8 @@
-linters:
+inters:
   fast: false
   disable-all: true
   enable:
     - asciicheck
-    - bodyclose
     - cyclop
     - deadcode
     - depguard
@@ -16,11 +15,13 @@ linters:
     - exportloopref
     - forbidigo
     - forcetypeassert
+    - funlen
     - gci
     - goconst
+    - gochecknoglobals
     - gocritic
     - godot
-#    - goerr113
+    #    - goerr113
     - gofmt
     - gofumpt
     - goheader
@@ -45,12 +46,10 @@ linters:
     - predeclared
     - promlinter
     - revive
-    - rowserrcheck
-    - sqlclosecheck
     - staticcheck
     - structcheck
     - stylecheck
-#    - tagliatelle
+    #    - tagliatelle
     - tparallel
     - typecheck
     - unconvert
