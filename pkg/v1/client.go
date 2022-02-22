@@ -228,7 +228,7 @@ func (result *ResponseResult) extractErr() error {
 	defer result.Body.Close()
 
 	if len(body) == 0 {
-		result.Err = fmt.Errorf(errGotHTTPStatusCodeFmt, result.StatusCode)
+		result.Err = fmt.Errorf(errGotHTTPStatusCodeFmt, result.StatusCode) //nolint:goerr113
 
 		return nil
 	}
@@ -238,12 +238,12 @@ func (result *ResponseResult) extractErr() error {
 		_ = json.Unmarshal(body, &result.ErrGeneric)
 	}
 	if result.ErrNotFound == nil && result.ErrGeneric == nil {
-		result.Err = fmt.Errorf(errGotHTTPStatusCodeFmt, result.StatusCode)
+		result.Err = fmt.Errorf(errGotHTTPStatusCodeFmt, result.StatusCode) //nolint:goerr113
 
 		return nil
 	}
 
-	result.Err = fmt.Errorf(errGotHTTPStatusCodeFmt+": %s", result.StatusCode, string(body))
+	result.Err = fmt.Errorf(errGotHTTPStatusCodeFmt+": %s", result.StatusCode, string(body)) //nolint:goerr113
 
 	return nil
 }

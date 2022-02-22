@@ -294,7 +294,6 @@ func TestListClustersUnmarshallError(t *testing.T) {
 		Endpoint:   testEnv.Server.URL + "/v1",
 		UserAgent:  testutils.UserAgent,
 	}
-	clusterID := "d1265515-3700-49fa-af0e-7f547bce788a"
 
 	actual, httpResponse, err := nodegroup.List(ctx, testClient, clusterID)
 

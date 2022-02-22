@@ -165,10 +165,10 @@ func getFieldFromKubeconfig(kubeconfig []byte, fieldName string) (string, error)
 			return subS[1], nil
 		}
 
-		return "", fmt.Errorf("invalid %s field in the kubeconfig", fieldName)
+		return "", fmt.Errorf("invalid %s field in the kubeconfig", fieldName) //nolint:goerr113
 	}
 
-	return "", fmt.Errorf("unable to find %s field in kubeconfig", fieldName)
+	return "", fmt.Errorf("unable to find %s field in kubeconfig", fieldName) //nolint:goerr113
 }
 
 // GetParsedKubeconfig is a small helper function to get KubeconfigFields struct.
