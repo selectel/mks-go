@@ -229,7 +229,8 @@ const testUpdateNodegroupOptsRaw = `
 		"labels": {
 			"test-label-key": "test-label-value"
 		},
-		"enable_autoscale": false
+		"enable_autoscale": false,
+		"taints": null
 	}
 }
 `
@@ -243,7 +244,7 @@ var testUpdateNodegroupOpts = &nodegroup.UpdateOpts{
 	Taints:          nil,
 }
 
-// testUpdateNodegroupTaints represents options for the
+// testUpdateNodegroupTaints represents options for the nodegroup taints update request.
 var testUpdateNodegroupTaints = &nodegroup.UpdateOpts{
 	Taints: []nodegroup.Taint{
 		{
@@ -252,6 +253,7 @@ var testUpdateNodegroupTaints = &nodegroup.UpdateOpts{
 			Effect: "NoSchedule",
 		},
 	},
+	Labels: nil,
 }
 
 // testUpdateNodegroupTaintsRaw represents marshalled options for the nodegroup taints update request.
@@ -263,8 +265,7 @@ const testUpdateNodegroupTaintsRaw = `
 			"key": "TestKey",
 			"value": "TestValue",
 			"effect": "NoSchedule"
-		}],
-		"enable_autoscale": null
+		}]
 	}
 }
 `
