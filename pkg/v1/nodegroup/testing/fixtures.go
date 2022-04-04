@@ -253,14 +253,12 @@ var testUpdateNodegroupTaints = &nodegroup.UpdateOpts{
 			Effect: "NoSchedule",
 		},
 	},
-	Labels: nil,
 }
 
 // testUpdateNodegroupTaintsRaw represents marshalled options for the nodegroup taints update request.
 const testUpdateNodegroupTaintsRaw = `
 {
 	"nodegroup": {
-		"labels": null,
 		"taints": [{
 			"key": "TestKey",
 			"value": "TestValue",
