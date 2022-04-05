@@ -1,6 +1,5 @@
 run:
   timeout: 5m
-  modules-download-mode: vendor
   skip-files:
     - "fixtures.go"
 
@@ -66,7 +65,7 @@ linters:
     - goconst
     - gocritic
     - godot
-    - goerr113
+#    - goerr113
     - gofmt
     - gofumpt
     - goheader
@@ -96,7 +95,7 @@ linters:
     - staticcheck
     - structcheck
     - stylecheck
-    - tagliatelle
+#    - tagliatelle
     - tparallel
     - typecheck
     - unconvert
