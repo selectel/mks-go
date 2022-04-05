@@ -224,15 +224,13 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 
 // testUpdateNodegroupOptsRaw represents marshalled options for the Update request.
 const testUpdateNodegroupOptsRaw = `
-{
-	"nodegroup": {
-		"labels": {
-			"test-label-key": "test-label-value"
-		},
-		"enable_autoscale": false,
-		"taints": null
-	}
-}
+    "nodegroup": {
+        "labels": {
+            "test-label-key": "test-label-value"
+        },
+        "enable_autoscale": false,
+        "taints": null
+    }
 `
 
 // testCreateNodegroupOpts represents options for the Update request.
@@ -259,14 +257,14 @@ var testUpdateNodegroupTaints = &nodegroup.UpdateOpts{
 // testUpdateNodegroupTaintsRaw represents marshalled options for the nodegroup taints update request.
 const testUpdateNodegroupTaintsRaw = `
 {
-	"nodegroup": {
-		"labels": null,
-		"taints": [{
-			"key": "TestKey",
-			"value": "TestValue",
-			"effect": "NoSchedule"
-		}]
-	}
+    "nodegroup": {
+        "labels": null,
+        "taints": [{
+            "key": "TestKey",
+            "value": "TestValue",
+            "effect": "NoSchedule"
+        }]
+    }
 }
 `
 
