@@ -224,6 +224,7 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 
 // testUpdateNodegroupOptsRaw represents marshalled options for the Update request.
 const testUpdateNodegroupOptsRaw = `
+{
     "nodegroup": {
         "labels": {
             "test-label-key": "test-label-value"
@@ -231,7 +232,7 @@ const testUpdateNodegroupOptsRaw = `
         "enable_autoscale": false,
         "taints": null
     }
-`
+}`
 
 // testCreateNodegroupOpts represents options for the Update request.
 var testUpdateNodegroupOpts = &nodegroup.UpdateOpts{
