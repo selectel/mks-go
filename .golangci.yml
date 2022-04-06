@@ -9,7 +9,6 @@ linters-settings:
   funlen:
     statements: 65
 
-
   cyclop:
     # the maximal code complexity to report, 8 by default
     max-complexity: 9
@@ -27,28 +26,11 @@ linters-settings:
     # minimal complexity of if statements to report, 5 by default
     min-complexity: 5
 
-  tagliatelle:
-    # check the struct tag name case
-    case:
-      # use the struct field name to check the name of the struct tag
-      use-field-name: false
-      rules:
-        # any struct tag type can be used.
-        # support string case: `camel`, `pascal`, `kebab`, `snake`, `goCamel`,
-        # `goPascal`, `goKebab`, `goSnake`, `upper`, `lower`
-        json: snake
-        yaml: snake
-        xml: camel
-        bson: camel
-        avro: camel
-        mapstructure: kebab
-
 linters:
   fast: false
   disable-all: true
   enable:
     - asciicheck
-#    - bodyclose
     - cyclop
     - deadcode
     - depguard
@@ -65,7 +47,6 @@ linters:
     - goconst
     - gocritic
     - godot
-#    - goerr113
     - gofmt
     - gofumpt
     - goheader
@@ -95,7 +76,6 @@ linters:
     - staticcheck
     - structcheck
     - stylecheck
-#    - tagliatelle
     - tparallel
     - typecheck
     - unconvert
