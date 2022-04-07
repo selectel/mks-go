@@ -78,5 +78,21 @@ Example of updating nodegroup labels
   if err != nil {
     log.Fatal(err)
   }
+
+Example of updating nodegroup taints
+
+  updateOpts := &nodegroup.UpdateOpts{
+    Taints: []nodegroup.Taint{
+      {
+        Key:    "new-key-0",
+        Value:  "new-value-0",
+        Effect: nodegroup.NoScheduleEffect,
+      },
+    },
+  }
+  _, err := nodegroup.Update(ctx, mksClient, clusterID, nodegroupID, updateOpts)
+  if err != nil {
+    log.Fatal(err)
+  }
 */
 package nodegroup

@@ -1,3 +1,31 @@
+run:
+  timeout: 5m
+  skip-files:
+    - "fixtures.go"
+
+linters-settings:
+  nlreturn:
+    block-size: 3
+  funlen:
+    statements: 65
+
+  cyclop:
+    # the maximal code complexity to report, 8 by default
+    max-complexity: 9
+
+  godot:
+    scope: declarations
+
+  gci:
+    # put imports beginning with prefix after 3rd-party packages;
+    # only support one prefix
+    # if not set, use goimports.local-prefixes
+    local-prefixes: github.com/selectel
+
+  nestif:
+    # minimal complexity of if statements to report, 5 by default
+    min-complexity: 5
+
 linters:
   fast: false
   disable-all: true
@@ -15,13 +43,10 @@ linters:
     - exportloopref
     - forbidigo
     - forcetypeassert
-    - funlen
     - gci
     - goconst
-    - gochecknoglobals
     - gocritic
     - godot
-#    - goerr113
     - gofmt
     - gofumpt
     - goheader
@@ -46,10 +71,11 @@ linters:
     - predeclared
     - promlinter
     - revive
+    - rowserrcheck
+    - sqlclosecheck
     - staticcheck
     - structcheck
     - stylecheck
-#    - tagliatelle
     - tparallel
     - typecheck
     - unconvert
@@ -58,17 +84,3 @@ linters:
     - varcheck
     - wastedassign
     - whitespace
-
-linters-settings:
-  funlen:
-    statements: 65
-
-  tagliatelle:
-    case:
-      use-field-name: false
-      rules:
-        json: snake
-
-run:
-  skip-files:
-    - "fixtures.go"

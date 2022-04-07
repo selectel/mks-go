@@ -227,12 +227,12 @@ const testUpdateNodegroupOptsRaw = `
 {
     "nodegroup": {
         "labels": {
-          "test-label-key": "test-label-value"
+            "test-label-key": "test-label-value"
         },
-        "enable_autoscale": false
+        "enable_autoscale": false,
+        "taints": null
     }
-}
-`
+}`
 
 // testCreateNodegroupOpts represents options for the Update request.
 var testUpdateNodegroupOpts = &nodegroup.UpdateOpts{
@@ -240,7 +240,34 @@ var testUpdateNodegroupOpts = &nodegroup.UpdateOpts{
 		"test-label-key": "test-label-value",
 	},
 	EnableAutoscale: testutils.BoolToPtr(false),
+	Taints:          nil,
 }
+
+// testUpdateNodegroupTaints represents options for the nodegroup taints update request.
+var testUpdateNodegroupTaints = &nodegroup.UpdateOpts{
+	Taints: []nodegroup.Taint{
+		{
+			Key:    "TestKey",
+			Value:  "TestValue",
+			Effect: "NoSchedule",
+		},
+	},
+	Labels: nil,
+}
+
+// testUpdateNodegroupTaintsRaw represents marshalled options for the nodegroup taints update request.
+const testUpdateNodegroupTaintsRaw = `
+{
+    "nodegroup": {
+        "labels": null,
+        "taints": [{
+            "key": "TestKey",
+            "value": "TestValue",
+            "effect": "NoSchedule"
+        }]
+    }
+}
+`
 
 // testResizeNodegroupOptsRaw represents marshalled options for the Resize request.
 const testResizeNodegroupOptsRaw = `
