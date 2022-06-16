@@ -44,8 +44,8 @@ const testGetNodegroupResponseRaw = `
         ],
         "enable_autoscale": false,
         "autoscale_min_nodes": 0,
-        "autoscale_max_nodes": 0
-		"nodegroup_type": "STANDARD",
+        "autoscale_max_nodes": 0,
+		"nodegroup_type": "STANDARD"
     }
 }
 `
@@ -127,7 +127,8 @@ const testListNodegroupsResponseRaw = `
             ],
             "enable_autoscale": false,
             "autoscale_min_nodes": 0,
-            "autoscale_max_nodes": 0
+            "autoscale_max_nodes": 0,
+			"nodegroup_type": "STANDARD"
         }
     ]
 }
