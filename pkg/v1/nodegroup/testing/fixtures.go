@@ -45,6 +45,7 @@ const testGetNodegroupResponseRaw = `
         "enable_autoscale": false,
         "autoscale_min_nodes": 0,
         "autoscale_max_nodes": 0
+		"nodegroup_type": "STANDARD",
     }
 }
 `
@@ -86,6 +87,7 @@ var expectedGetNodegroupResponse = &nodegroup.View{
 	EnableAutoscale:   false,
 	AutoscaleMinNodes: 0,
 	AutoscaleMaxNodes: 0,
+	NodegroupType:     "STANDARD",
 }
 
 // testListNodegroupsResponseRaw represents a raw response from the List method.
