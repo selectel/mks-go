@@ -54,6 +54,9 @@ type View struct {
 
 	// AutoscaleMaxNodes represents maximum possible number of worker nodes in the nodegroup.
 	AutoscaleMaxNodes int `json:"autoscale_max_nodes"`
+
+	// NodegroupType represents nodegroup type.
+	NodegroupType string `json:"nodegroup_type"`
 }
 
 // TaintEffect represents an effect of the node's taint.
