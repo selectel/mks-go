@@ -170,6 +170,7 @@ var expectedListNodegroupsResponse = []*nodegroup.View{
 		EnableAutoscale:   false,
 		AutoscaleMinNodes: 0,
 		AutoscaleMaxNodes: 0,
+		NodegroupType:     "STANDARD",
 	},
 }
 
