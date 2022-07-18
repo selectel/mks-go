@@ -1093,6 +1093,7 @@ const testCreateClusterResponseRaw = `
         "subnet_id": "",
         "updated_at": null,
         "zonal": false,
+        "private_kube_api": false,
         "kubernetes_options": {
             "enable_pod_security_policy": false,
             "feature_gates": [
@@ -1132,6 +1133,7 @@ var expectedCreateClusterResponse = &cluster.View{
 		FeatureGates:            []string{"CSIMigrationOpenStack"},
 		AdmissionControllers:    []string{"LimitRanger"},
 	},
+	PrivateKubeAPI: false,
 }
 
 // testCreateClusterEnableBoolsOptsRaw represents marshalled options for the Create request
@@ -1212,7 +1214,8 @@ const testCreateClusterDisableBoolsOptsRaw = `
                 "taints": []
             }
         ],
-        "zonal": false
+        "zonal": false,
+        "private_kube_api": false
     }
 }
 `
@@ -1240,6 +1243,7 @@ var testCreateClusterDisableBoolsOpts = &cluster.CreateOpts{
 			Taints: []nodegroup.Taint{},
 		},
 	},
+	PrivateKubeAPI: testutils.BoolToPtr(false),
 }
 
 // testCreateClusterDisableBoolsResponseRaw represents a raw response from the Create request
@@ -1265,7 +1269,8 @@ const testCreateClusterDisableBoolsResponseRaw = `
         "status": "PENDING_CREATE",
         "subnet_id": "",
         "updated_at": null,
-        "zonal": false
+        "zonal": false,
+        "private_kube_api": false
     }
 }
 `
@@ -1292,6 +1297,7 @@ var expectedCreateClusterDisableBoolsResponse = &cluster.View{
 	EnableAutorepair:              false,
 	EnablePatchVersionAutoUpgrade: false,
 	Zonal:                         false,
+	PrivateKubeAPI:                false,
 }
 
 // testCreateZonalClusterOptsRaw represents marshalled options for the Create request
@@ -1367,7 +1373,8 @@ const testCreateZonalClusterResponseRaw = `
         "status": "PENDING_CREATE",
         "subnet_id": "",
         "updated_at": null,
-        "zonal": true
+        "zonal": true,
+        "private_kube_api": false
     }
 }
 `
@@ -1393,6 +1400,115 @@ var expectedCreateZonalClusterResponse = &cluster.View{
 	EnableAutorepair:              true,
 	EnablePatchVersionAutoUpgrade: false,
 	Zonal:                         true,
+}
+
+// testCreatePrivateKubeAPIClusterOptsRaw represents marshalled options for the Create request
+// with private kube API attribute set to true.
+const testCreatePrivateKubeAPIClusterOptsRaw = `
+{
+    "cluster": {
+        "name": "test-private-cluster-0",
+        "kube_version": "1.16.9",
+        "region": "ru-3",
+        "enable_autorepair": true,
+        "enable_patch_version_auto_upgrade": false,
+        "nodegroups": [
+            {
+                "count": 1,
+                "cpus": 1,
+                "ram_mb": 2048,
+                "volume_gb": 10,
+                "volume_type": "fast.ru-3a",
+                "keypair_name": "ssh-key",
+                "availability_zone": "ru-3a",
+                "labels": {
+                  "test-label-key": "test-label-value"
+                },
+                "taints": []
+            }
+        ],
+        "zonal": false,
+        "private_kube_api": true
+    }
+}
+`
+
+// testCreatePrivateKubeAPIClusterOpts represents options for the Create request with private kube API attribute set to true.
+var testCreatePrivateKubeAPIClusterOpts = &cluster.CreateOpts{
+	Name:                          "test-private-cluster-0",
+	KubeVersion:                   "1.16.9",
+	Region:                        "ru-3",
+	EnableAutorepair:              testutils.BoolToPtr(true),
+	EnablePatchVersionAutoUpgrade: testutils.BoolToPtr(false),
+	Nodegroups: []*nodegroup.CreateOpts{
+		{
+			Count:            1,
+			CPUs:             1,
+			RAMMB:            2048,
+			VolumeGB:         10,
+			VolumeType:       "fast.ru-3a",
+			KeypairName:      "ssh-key",
+			AvailabilityZone: "ru-3a",
+			Labels: map[string]string{
+				"test-label-key": "test-label-value",
+			},
+			Taints: []nodegroup.Taint{},
+		},
+	},
+	PrivateKubeAPI: testutils.BoolToPtr(true),
+	Zonal:          testutils.BoolToPtr(false),
+}
+
+// testCreatePrivateKubeAPIClusterResponseRaw represents a raw response from the Create cluster with private kube API request.
+const testCreatePrivateKubeAPIClusterResponseRaw = `
+{
+    "cluster": {
+        "additional_software": null,
+        "created_at": "2020-02-13T09:18:32.05753Z",
+        "enable_autorepair": true,
+        "enable_patch_version_auto_upgrade": false,
+        "id": "effe751d-501a-4b06-8e23-3f686dbfccf6",
+        "kube_api_ip": "",
+        "kube_version": "1.16.9",
+        "maintenance_last_start": "2020-02-13T09:18:32.05753Z",
+        "maintenance_window_end": "03:00:00",
+        "maintenance_window_start": "01:00:00",
+        "name": "test-private-cluster-0",
+        "network_id": "",
+        "pki_tree_updated_at": null,
+        "project_id": "69744a03bebe4fd0a77e5a4c882e3059",
+        "region": "ru-3",
+        "status": "PENDING_CREATE",
+        "subnet_id": "",
+        "updated_at": null,
+        "zonal": false,
+        "private_kube_api": true
+    }
+}
+`
+
+// expectedCreatePrivateKubeAPIClusterResponse represents an unmarshalled testCreatePrivateKubeAPIClusterResponseRaw.
+var expectedCreatePrivateKubeAPIClusterResponse = &cluster.View{
+	ID:                            "effe751d-501a-4b06-8e23-3f686dbfccf6",
+	CreatedAt:                     &clusterResponseTimestamp,
+	UpdatedAt:                     nil,
+	Name:                          "test-private-cluster-0",
+	Status:                        "PENDING_CREATE",
+	ProjectID:                     "69744a03bebe4fd0a77e5a4c882e3059",
+	NetworkID:                     "",
+	SubnetID:                      "",
+	KubeAPIIP:                     "",
+	KubeVersion:                   "1.16.9",
+	Region:                        "ru-3",
+	AdditionalSoftware:            nil,
+	PKITreeUpdatedAt:              nil,
+	MaintenanceWindowStart:        "01:00:00",
+	MaintenanceWindowEnd:          "03:00:00",
+	MaintenanceLastStart:          &clusterResponseTimestamp,
+	EnableAutorepair:              true,
+	EnablePatchVersionAutoUpgrade: false,
+	Zonal:                         false,
+	PrivateKubeAPI:                true,
 }
 
 // testManyClustersInvalidResponseRaw represents a raw invalid response with several clusters.

@@ -125,6 +125,8 @@ type View struct {
 	// KubernetesOptions represents additional k8s options such as pod security policy,
 	// feature gates (Alpha stage only) and admission controllers.
 	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
+
+	PrivateKubeAPI bool `json:"private_kube_api"`
 }
 
 func (result *View) UnmarshalJSON(b []byte) error {

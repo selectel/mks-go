@@ -519,6 +519,48 @@ func TestCreateZonalCluster(t *testing.T) {
 	}
 }
 
+func TestCreatePrivateKubeAPICluster(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters",
+		RawResponse: testCreatePrivateKubeAPIClusterResponseRaw,
+		RawRequest:  testCreatePrivateKubeAPIClusterOptsRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusCreated,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+
+	actual, httpResponse, err := cluster.Create(ctx, testClient, testCreatePrivateKubeAPIClusterOpts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Create method")
+	}
+	if httpResponse.StatusCode != http.StatusCreated {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusCreated, httpResponse.StatusCode)
+	}
+	if !reflect.DeepEqual(expectedCreatePrivateKubeAPIClusterResponse, actual) {
+		t.Fatalf("expected %#v, but got %#v", expectedCreatePrivateKubeAPIClusterResponse, actual)
+	}
+}
+
 func TestCreateClusterHTTPError(t *testing.T) {
 	endpointCalled := false
 	testEnv := testutils.SetupTestEnv()

@@ -50,6 +50,10 @@ type CreateOpts struct {
 	// KubernetesOptions represents additional k8s options such as pod security policy,
 	// feature gates (Alpha stage only) and admission controllers.
 	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
+
+	// PrivateKubeAPI specifies if kube API should be available from the Internet or not.
+	// By default false so kube API available from the Internet.
+	PrivateKubeAPI *bool `json:"private_kube_api,omitempty"`
 }
 
 // UpdateOpts represents options for the cluster Update request.
