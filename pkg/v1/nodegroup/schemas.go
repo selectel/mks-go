@@ -6,8 +6,9 @@ import (
 	"github.com/selectel/mks-go/pkg/v1/node"
 )
 
-// nolint:maligned
 // View represents an unmarshalled nodegroup body from an API response.
+//
+//nolint:maligned
 type View struct {
 	// ID is the identifier of the nodegroup.
 	ID string `json:"id"`
