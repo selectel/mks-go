@@ -5,7 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"testing"
 	"time"
@@ -110,7 +110,7 @@ func TestDoPostRequest(t *testing.T) {
 			t.Errorf("got %s method, want POST", r.Method)
 		}
 
-		_, err := ioutil.ReadAll(r.Body)
+		_, err := io.ReadAll(r.Body)
 		if err != nil {
 			t.Errorf("unable to read the request body: %v", err)
 		}

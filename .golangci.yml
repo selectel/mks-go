@@ -32,7 +32,6 @@ linters:
   enable:
     - asciicheck
     - cyclop
-    - deadcode
     - depguard
     - dogsled
     - durationcheck
@@ -56,7 +55,6 @@ linters:
     - goprintffuncname
     - gosimple
     - govet
-    - ifshort
     - importas
     - ineffassign
     - makezero
@@ -74,13 +72,11 @@ linters:
     - rowserrcheck
     - sqlclosecheck
     - staticcheck
-    - structcheck
     - stylecheck
     - tparallel
     - typecheck
     - unconvert
     - unparam
     - unused
-    - varcheck
     - wastedassign
     - whitespace
