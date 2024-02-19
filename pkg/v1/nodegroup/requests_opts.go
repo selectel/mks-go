@@ -54,7 +54,7 @@ type CreateOpts struct {
 	// AutoscaleMaxNodes represents maximum possible number of worker nodes in the nodegroup.
 	AutoscaleMaxNodes *int `json:"autoscale_max_nodes,omitempty"`
 
-	// UserData represents base64 data which is used to pass a shell script that worker nodes run on boot.
+	// UserData represents base64 data which is used to pass a script that worker nodes run on boot.
 	UserData *string `json:"user_data,omitempty"`
 }
 
