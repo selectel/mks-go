@@ -197,7 +197,8 @@ const testCreateNodegroupOptsRaw = `
         ],
         "enable_autoscale": true,
         "autoscale_min_nodes": 1,
-        "autoscale_max_nodes": 10
+        "autoscale_max_nodes": 10,
+        "user_data": "cGFja2FnZSBtYWluCgppbXBvcnQgImZtdCIKCmZ1bmMgbWFpbigpIHsKCWZtdC5QcmludGxuKCJIZWxsbyIpCn0="
     }
 }
 `
@@ -224,6 +225,7 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 	EnableAutoscale:   testutils.BoolToPtr(true),
 	AutoscaleMinNodes: testutils.IntToPtr(1),
 	AutoscaleMaxNodes: testutils.IntToPtr(10),
+	UserData:          testutils.StringToPtr("cGFja2FnZSBtYWluCgppbXBvcnQgImZtdCIKCmZ1bmMgbWFpbigpIHsKCWZtdC5QcmludGxuKCJIZWxsbyIpCn0="),
 }
 
 // testUpdateNodegroupOptsRaw represents marshalled options for the Update request.

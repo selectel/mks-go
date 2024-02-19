@@ -9,3 +9,8 @@ func BoolToPtr(v bool) *bool {
 func IntToPtr(v int) *int {
 	return &v
 }
+
+// StringToPtr can be used to convert string value to string pointer.
+func StringToPtr(v string) *string {
+	return &v
+}
