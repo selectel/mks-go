@@ -225,7 +225,7 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 	EnableAutoscale:   testutils.BoolToPtr(true),
 	AutoscaleMinNodes: testutils.IntToPtr(1),
 	AutoscaleMaxNodes: testutils.IntToPtr(10),
-	UserData:          testutils.StringToPtr("cGFja2FnZSBtYWluCgppbXBvcnQgImZtdCIKCmZ1bmMgbWFpbigpIHsKCWZtdC5QcmludGxuKCJIZWxsbyIpCn0="),
+	UserData:          "cGFja2FnZSBtYWluCgppbXBvcnQgImZtdCIKCmZ1bmMgbWFpbigpIHsKCWZtdC5QcmludGxuKCJIZWxsbyIpCn0=",
 }
 
 // testUpdateNodegroupOptsRaw represents marshalled options for the Update request.

@@ -55,7 +55,7 @@ type CreateOpts struct {
 	AutoscaleMaxNodes *int `json:"autoscale_max_nodes,omitempty"`
 
 	// UserData represents base64 data which is used to pass a script that worker nodes run on boot.
-	UserData *string `json:"user_data,omitempty"`
+	UserData string `json:"user_data,omitempty"`
 }
 
 // ResizeOpts represents options for the nodegroup Resize request.
