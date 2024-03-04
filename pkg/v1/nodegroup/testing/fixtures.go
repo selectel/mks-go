@@ -45,7 +45,8 @@ const testGetNodegroupResponseRaw = `
         "enable_autoscale": false,
         "autoscale_min_nodes": 0,
         "autoscale_max_nodes": 0,
-		"nodegroup_type": "STANDARD"
+		"nodegroup_type": "STANDARD",
+		"user_data": "test_ud"
     }
 }
 `
@@ -53,41 +54,44 @@ const testGetNodegroupResponseRaw = `
 var nodegroupResponseTimestamp, _ = time.Parse(time.RFC3339, "2020-02-19T15:41:45.948646Z")
 
 // expectedGetNodegroupResponse represents an unmarshalled testGetNodegroupResponseRaw.
-var expectedGetNodegroupResponse = &nodegroup.View{
-	ID:               "a376745a-fbcb-413d-b418-169d059d79ce",
-	CreatedAt:        &nodegroupResponseTimestamp,
-	UpdatedAt:        &nodegroupResponseTimestamp,
-	ClusterID:        "79265515-3700-49fa-af0e-7f547bce788a",
-	FlavorID:         "99b62670-9d78-43fd-8f55-d184a4800f8d",
-	VolumeGB:         10,
-	VolumeType:       "basic.ru-1a",
-	LocalVolume:      false,
-	AvailabilityZone: "ru-1a",
-	Nodes: []*node.View{
-		{
-			ID:          "39e5dd4d-5e23-4a00-8173-974bf844f21b",
-			CreatedAt:   &nodegroupResponseTimestamp,
-			UpdatedAt:   &nodegroupResponseTimestamp,
-			Hostname:    "test-cluster-node-eegp9",
-			IP:          "198.51.100.11",
-			NodegroupID: "a376745a-fbcb-413d-b418-169d059d79ce",
-			OSServerID:  "dc56abe9-d0d4-4099-9b5f-e5cabfccf276",
+var expectedGetNodegroupResponse = &nodegroup.GetView{
+	BaseView: nodegroup.BaseView{
+		ID:               "a376745a-fbcb-413d-b418-169d059d79ce",
+		CreatedAt:        &nodegroupResponseTimestamp,
+		UpdatedAt:        &nodegroupResponseTimestamp,
+		ClusterID:        "79265515-3700-49fa-af0e-7f547bce788a",
+		FlavorID:         "99b62670-9d78-43fd-8f55-d184a4800f8d",
+		VolumeGB:         10,
+		VolumeType:       "basic.ru-1a",
+		LocalVolume:      false,
+		AvailabilityZone: "ru-1a",
+		Nodes: []*node.View{
+			{
+				ID:          "39e5dd4d-5e23-4a00-8173-974bf844f21b",
+				CreatedAt:   &nodegroupResponseTimestamp,
+				UpdatedAt:   &nodegroupResponseTimestamp,
+				Hostname:    "test-cluster-node-eegp9",
+				IP:          "198.51.100.11",
+				NodegroupID: "a376745a-fbcb-413d-b418-169d059d79ce",
+				OSServerID:  "dc56abe9-d0d4-4099-9b5f-e5cabfccf276",
+			},
 		},
-	},
-	Labels: map[string]string{
-		"test-label-key": "test-label-value",
-	},
-	Taints: []nodegroup.Taint{
-		{
-			Key:    "test-key-0",
-			Value:  "test-value-0",
-			Effect: nodegroup.NoScheduleEffect,
+		Labels: map[string]string{
+			"test-label-key": "test-label-value",
 		},
+		Taints: []nodegroup.Taint{
+			{
+				Key:    "test-key-0",
+				Value:  "test-value-0",
+				Effect: nodegroup.NoScheduleEffect,
+			},
+		},
+		EnableAutoscale:   false,
+		AutoscaleMinNodes: 0,
+		AutoscaleMaxNodes: 0,
+		NodegroupType:     "STANDARD",
 	},
-	EnableAutoscale:   false,
-	AutoscaleMinNodes: 0,
-	AutoscaleMaxNodes: 0,
-	NodegroupType:     "STANDARD",
+	UserData: "test_ud",
 }
 
 // testListNodegroupsResponseRaw represents a raw response from the List method.
@@ -128,49 +132,55 @@ const testListNodegroupsResponseRaw = `
             "enable_autoscale": false,
             "autoscale_min_nodes": 0,
             "autoscale_max_nodes": 0,
-			"nodegroup_type": "STANDARD"
+			"nodegroup_type": "STANDARD",
+			"available_additional_info": {
+				"user_data": true
+			}
         }
     ]
 }
 `
 
 // expectedListNodegroupsResponse represents an unmarshalled testListNodegroupsResponseRaw.
-var expectedListNodegroupsResponse = []*nodegroup.View{
+var expectedListNodegroupsResponse = []*nodegroup.ListView{
 	{
-		ID:               "a376745a-fbcb-413d-b418-169d059d79ce",
-		CreatedAt:        &nodegroupResponseTimestamp,
-		UpdatedAt:        &nodegroupResponseTimestamp,
-		ClusterID:        "79265515-3700-49fa-af0e-7f547bce788a",
-		FlavorID:         "99b62670-9d78-43fd-8f55-d184a4800f8d",
-		VolumeGB:         10,
-		VolumeType:       "basic.ru-1a",
-		LocalVolume:      false,
-		AvailabilityZone: "ru-1a",
-		Nodes: []*node.View{
-			{
-				ID:          "39e5dd4d-5e23-4a00-8173-974bf844f21b",
-				CreatedAt:   &nodegroupResponseTimestamp,
-				UpdatedAt:   &nodegroupResponseTimestamp,
-				Hostname:    "test-cluster-node-eegp9",
-				IP:          "198.51.100.11",
-				NodegroupID: "a376745a-fbcb-413d-b418-169d059d79ce",
-				OSServerID:  "dc56abe9-d0d4-4099-9b5f-e5cabfccf276",
+		BaseView: nodegroup.BaseView{
+			ID:               "a376745a-fbcb-413d-b418-169d059d79ce",
+			CreatedAt:        &nodegroupResponseTimestamp,
+			UpdatedAt:        &nodegroupResponseTimestamp,
+			ClusterID:        "79265515-3700-49fa-af0e-7f547bce788a",
+			FlavorID:         "99b62670-9d78-43fd-8f55-d184a4800f8d",
+			VolumeGB:         10,
+			VolumeType:       "basic.ru-1a",
+			LocalVolume:      false,
+			AvailabilityZone: "ru-1a",
+			Nodes: []*node.View{
+				{
+					ID:          "39e5dd4d-5e23-4a00-8173-974bf844f21b",
+					CreatedAt:   &nodegroupResponseTimestamp,
+					UpdatedAt:   &nodegroupResponseTimestamp,
+					Hostname:    "test-cluster-node-eegp9",
+					IP:          "198.51.100.11",
+					NodegroupID: "a376745a-fbcb-413d-b418-169d059d79ce",
+					OSServerID:  "dc56abe9-d0d4-4099-9b5f-e5cabfccf276",
+				},
 			},
-		},
-		Labels: map[string]string{
-			"test-label-key": "test-label-value",
-		},
-		Taints: []nodegroup.Taint{
-			{
-				Key:    "test-key-0",
-				Value:  "test-value-0",
-				Effect: nodegroup.NoScheduleEffect,
+			Labels: map[string]string{
+				"test-label-key": "test-label-value",
 			},
+			Taints: []nodegroup.Taint{
+				{
+					Key:    "test-key-0",
+					Value:  "test-value-0",
+					Effect: nodegroup.NoScheduleEffect,
+				},
+			},
+			EnableAutoscale:   false,
+			AutoscaleMinNodes: 0,
+			AutoscaleMaxNodes: 0,
+			NodegroupType:     "STANDARD",
 		},
-		EnableAutoscale:   false,
-		AutoscaleMinNodes: 0,
-		AutoscaleMaxNodes: 0,
-		NodegroupType:     "STANDARD",
+		AvailableAdditionalInfo: map[string]bool{"user_data": true},
 	},
 }
 

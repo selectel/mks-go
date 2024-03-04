@@ -6,10 +6,10 @@ import (
 	"github.com/selectel/mks-go/pkg/v1/node"
 )
 
-// View represents an unmarshalled nodegroup body from an API response.
+// BaseView represents a base struct of unmarshalled nodegroup body from an API response.
 //
 //nolint:maligned
-type View struct {
+type BaseView struct {
 	// ID is the identifier of the nodegroup.
 	ID string `json:"id"`
 
@@ -58,6 +58,23 @@ type View struct {
 
 	// NodegroupType represents nodegroup type.
 	NodegroupType string `json:"nodegroup_type"`
+}
+
+// ListView represents an unmarshalled nodegroup body from the list API response.
+type ListView struct {
+	BaseView
+
+	// AvailableAdditionalInfo provides additional information about nodegroup like userdata, etc.
+	// Usually it's large volume of data and here we only show presence of this info.
+	AvailableAdditionalInfo map[string]bool `json:"available_additional_info"`
+}
+
+// GetView represents an unmarshalled nodegroup body from the get API response.
+type GetView struct {
+	BaseView
+
+	// UserData represents base64 data which is used to pass a script that worker nodes run on boot.
+	UserData string `json:"user_data"`
 }
 
 // TaintEffect represents an effect of the node's taint.
