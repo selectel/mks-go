@@ -11,7 +11,7 @@ import (
 )
 
 // Get returns a cluster nodegroup by its id.
-func Get(ctx context.Context, client *v1.ServiceClient, clusterID, nodegroupID string) (*View, *v1.ResponseResult, error) {
+func Get(ctx context.Context, client *v1.ServiceClient, clusterID, nodegroupID string) (*GetView, *v1.ResponseResult, error) {
 	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID, v1.ResourceURLNodegroup, nodegroupID}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodGet, url, nil)
 	if err != nil {
@@ -23,7 +23,7 @@ func Get(ctx context.Context, client *v1.ServiceClient, clusterID, nodegroupID s
 
 	// Extract a nodegroup to the response body.
 	var result struct {
-		Nodegroup *View `json:"nodegroup"`
+		Nodegroup *GetView `json:"nodegroup"`
 	}
 	err = responseResult.ExtractResult(&result)
 	if err != nil {
@@ -34,7 +34,7 @@ func Get(ctx context.Context, client *v1.ServiceClient, clusterID, nodegroupID s
 }
 
 // List gets a list of all cluster nodegroups.
-func List(ctx context.Context, client *v1.ServiceClient, clusterID string) ([]*View, *v1.ResponseResult, error) {
+func List(ctx context.Context, client *v1.ServiceClient, clusterID string) ([]*ListView, *v1.ResponseResult, error) {
 	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID, v1.ResourceURLNodegroup}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodGet, url, nil)
 	if err != nil {
@@ -46,7 +46,7 @@ func List(ctx context.Context, client *v1.ServiceClient, clusterID string) ([]*V
 
 	// Extract nodegroups from the response body.
 	var result struct {
-		Nodegroups []*View `json:"nodegroups"`
+		Nodegroups []*ListView `json:"nodegroups"`
 	}
 	err = responseResult.ExtractResult(&result)
 	if err != nil {
