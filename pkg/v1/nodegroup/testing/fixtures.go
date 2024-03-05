@@ -46,7 +46,7 @@ const testGetNodegroupResponseRaw = `
         "autoscale_min_nodes": 0,
         "autoscale_max_nodes": 0,
 		"nodegroup_type": "STANDARD",
-		"user_data": "test_ud"
+		"user_data": "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI="
     }
 }
 `
@@ -91,7 +91,7 @@ var expectedGetNodegroupResponse = &nodegroup.GetView{
 		AutoscaleMaxNodes: 0,
 		NodegroupType:     "STANDARD",
 	},
-	UserData: "test_ud",
+	UserData: "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
 }
 
 // testListNodegroupsResponseRaw represents a raw response from the List method.
@@ -208,7 +208,7 @@ const testCreateNodegroupOptsRaw = `
         "enable_autoscale": true,
         "autoscale_min_nodes": 1,
         "autoscale_max_nodes": 10,
-        "user_data": "cGFja2FnZSBtYWluCgppbXBvcnQgImZtdCIKCmZ1bmMgbWFpbigpIHsKCWZtdC5QcmludGxuKCJIZWxsbyIpCn0="
+        "user_data": "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI="
     }
 }
 `
@@ -235,7 +235,7 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 	EnableAutoscale:   testutils.BoolToPtr(true),
 	AutoscaleMinNodes: testutils.IntToPtr(1),
 	AutoscaleMaxNodes: testutils.IntToPtr(10),
-	UserData:          "cGFja2FnZSBtYWluCgppbXBvcnQgImZtdCIKCmZ1bmMgbWFpbigpIHsKCWZtdC5QcmludGxuKCJIZWxsbyIpCn0=",
+	UserData:          "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
 }
 
 // testUpdateNodegroupOptsRaw represents marshalled options for the Update request.
