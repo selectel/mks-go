@@ -56,6 +56,9 @@ type CreateOpts struct {
 
 	// UserData represents base64 data which is used to pass a script that worker nodes run on boot.
 	UserData string `json:"user_data,omitempty"`
+
+	// InstallNvidiaDevicePlugin indicates if nvidia device plugin installation was requested.
+	InstallNvidiaDevicePlugin *bool `json:"install_nvidia_device_plugin,omitempty"`
 }
 
 // ResizeOpts represents options for the nodegroup Resize request.

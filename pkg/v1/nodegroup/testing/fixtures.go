@@ -45,8 +45,9 @@ const testGetNodegroupResponseRaw = `
         "enable_autoscale": false,
         "autoscale_min_nodes": 0,
         "autoscale_max_nodes": 0,
-		"nodegroup_type": "STANDARD",
-		"user_data": "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI="
+        "nodegroup_type": "STANDARD",
+        "user_data": "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
+        "install_nvidia_device_plugin": false
     }
 }
 `
@@ -86,10 +87,11 @@ var expectedGetNodegroupResponse = &nodegroup.GetView{
 				Effect: nodegroup.NoScheduleEffect,
 			},
 		},
-		EnableAutoscale:   false,
-		AutoscaleMinNodes: 0,
-		AutoscaleMaxNodes: 0,
-		NodegroupType:     "STANDARD",
+		EnableAutoscale:           false,
+		AutoscaleMinNodes:         0,
+		AutoscaleMaxNodes:         0,
+		NodegroupType:             "STANDARD",
+		InstallNvidiaDevicePlugin: false,
 	},
 	UserData: "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
 }
@@ -133,9 +135,10 @@ const testListNodegroupsResponseRaw = `
             "autoscale_min_nodes": 0,
             "autoscale_max_nodes": 0,
 			"nodegroup_type": "STANDARD",
-			"available_additional_info": {
-				"user_data": true
-			}
+            "available_additional_info": {
+                "user_data": true
+            },
+            "install_nvidia_device_plugin": false
         }
     ]
 }
@@ -175,10 +178,11 @@ var expectedListNodegroupsResponse = []*nodegroup.ListView{
 					Effect: nodegroup.NoScheduleEffect,
 				},
 			},
-			EnableAutoscale:   false,
-			AutoscaleMinNodes: 0,
-			AutoscaleMaxNodes: 0,
-			NodegroupType:     "STANDARD",
+			EnableAutoscale:           false,
+			AutoscaleMinNodes:         0,
+			AutoscaleMaxNodes:         0,
+			NodegroupType:             "STANDARD",
+			InstallNvidiaDevicePlugin: false,
 		},
 		AvailableAdditionalInfo: map[string]bool{"user_data": true},
 	},
@@ -208,7 +212,8 @@ const testCreateNodegroupOptsRaw = `
         "enable_autoscale": true,
         "autoscale_min_nodes": 1,
         "autoscale_max_nodes": 10,
-        "user_data": "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI="
+        "user_data": "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
+        "install_nvidia_device_plugin": false
     }
 }
 `
@@ -232,10 +237,11 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 			Effect: nodegroup.NoScheduleEffect,
 		},
 	},
-	EnableAutoscale:   testutils.BoolToPtr(true),
-	AutoscaleMinNodes: testutils.IntToPtr(1),
-	AutoscaleMaxNodes: testutils.IntToPtr(10),
-	UserData:          "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
+	EnableAutoscale:           testutils.BoolToPtr(true),
+	AutoscaleMinNodes:         testutils.IntToPtr(1),
+	AutoscaleMaxNodes:         testutils.IntToPtr(10),
+	UserData:                  "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
+	InstallNvidiaDevicePlugin: testutils.BoolToPtr(false),
 }
 
 // testUpdateNodegroupOptsRaw represents marshalled options for the Update request.
@@ -250,7 +256,7 @@ const testUpdateNodegroupOptsRaw = `
     }
 }`
 
-// testCreateNodegroupOpts represents options for the Update request.
+// testUpdateNodegroupOpts represents options for the Update request.
 var testUpdateNodegroupOpts = &nodegroup.UpdateOpts{
 	Labels: map[string]string{
 		"test-label-key": "test-label-value",
