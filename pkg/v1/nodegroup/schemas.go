@@ -58,6 +58,9 @@ type BaseView struct {
 
 	// NodegroupType represents nodegroup type.
 	NodegroupType string `json:"nodegroup_type"`
+
+	// InstallNvidiaDevicePlugin indicates if nvidia device plugin installation was requested.
+	InstallNvidiaDevicePlugin bool `json:"install_nvidia_device_plugin"`
 }
 
 // ListView represents an unmarshalled nodegroup body from the list API response.
