@@ -1,7 +1,7 @@
 # mks-go: Go SDK for Managed Kubernetes Service
 [![Go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/selectel/mks-go/)
 [![Go Report Card](https://goreportcard.com/badge/github.com/selectel/mks-go)](https://goreportcard.com/report/github.com/selectel/mks-go)
-[![Build Status](https://github.com/selectel/mks-go/actions/workflows/unit-tests.yml/badge.svg)
+![Build Status](https://github.com/selectel/mks-go/actions/workflows/unit-tests.yml/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/selectel/mks-go/badge.svg?branch=master)](https://coveralls.io/github/selectel/mks-go?branch=master)
 
 Package mks-go provides Go SDK to work with the Selectel Managed Kubernetes Service.
