@@ -48,7 +48,7 @@ type CreateOpts struct {
 	Zonal *bool `json:"zonal,omitempty"`
 
 	// KubernetesOptions represents additional k8s options such as pod security policy,
-	// feature gates (Alpha stage only) and admission controllers.
+	// feature gates (Alpha stage only), admission controllers and audit logs.
 	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
 
 	// PrivateKubeAPI specifies if kube API should be available from the Internet or not.
@@ -71,6 +71,6 @@ type UpdateOpts struct {
 	EnablePatchVersionAutoUpgrade *bool `json:"enable_patch_version_auto_upgrade,omitempty"`
 
 	// KubernetesOptions represents additional k8s options such as pod security policy,
-	// feature gates (Alpha stage only) and admission controllers.
+	// feature gates (Alpha stage only), admission controllers and audit logs.
 	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
 }
