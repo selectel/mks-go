@@ -123,7 +123,7 @@ type View struct {
 	Zonal bool `json:"zonal"`
 
 	// KubernetesOptions represents additional k8s options such as pod security policy,
-	// feature gates (Alpha stage only), admission controllers and audit logs.
+	// feature gates, admission controllers and audit logs.
 	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
 
 	PrivateKubeAPI bool `json:"private_kube_api"`
@@ -152,7 +152,7 @@ func (result *View) UnmarshalJSON(b []byte) error {
 }
 
 // KubernetesOptions represents additional k8s options such as pod security policy,
-// feature gates (Alpha stage only), admission controllers and audit logs.
+// feature gates, admission controllers and audit logs.
 type KubernetesOptions struct {
 	// EnablePodSecurityPolicy indicates if PodSecurityPolicy admission controller
 	// must be turned on/off.
