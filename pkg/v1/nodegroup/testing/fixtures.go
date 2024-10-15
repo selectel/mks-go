@@ -47,7 +47,8 @@ const testGetNodegroupResponseRaw = `
         "autoscale_max_nodes": 0,
         "nodegroup_type": "STANDARD",
         "user_data": "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
-        "install_nvidia_device_plugin": false
+        "install_nvidia_device_plugin": false,
+        "preemptible": false
     }
 }
 `
@@ -92,6 +93,7 @@ var expectedGetNodegroupResponse = &nodegroup.GetView{
 		AutoscaleMaxNodes:         0,
 		NodegroupType:             "STANDARD",
 		InstallNvidiaDevicePlugin: false,
+		Preemptible:               false,
 	},
 	UserData: "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
 }
@@ -138,7 +140,8 @@ const testListNodegroupsResponseRaw = `
             "available_additional_info": {
                 "user_data": true
             },
-            "install_nvidia_device_plugin": false
+            "install_nvidia_device_plugin": false,
+            "preemptible": false
         }
     ]
 }
@@ -183,6 +186,7 @@ var expectedListNodegroupsResponse = []*nodegroup.ListView{
 			AutoscaleMaxNodes:         0,
 			NodegroupType:             "STANDARD",
 			InstallNvidiaDevicePlugin: false,
+			Preemptible:               false,
 		},
 		AvailableAdditionalInfo: map[string]bool{"user_data": true},
 	},
@@ -213,7 +217,8 @@ const testCreateNodegroupOptsRaw = `
         "autoscale_min_nodes": 1,
         "autoscale_max_nodes": 10,
         "user_data": "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
-        "install_nvidia_device_plugin": false
+        "install_nvidia_device_plugin": false,
+        "preemptible": false
     }
 }
 `
@@ -242,6 +247,7 @@ var testCreateNodegroupOpts = &nodegroup.CreateOpts{
 	AutoscaleMaxNodes:         testutils.IntToPtr(10),
 	UserData:                  "IyEvYmluL2Jhc2ggLXYKYXB0IC15IHVwZGF0ZQphcHQgLXkgaW5zdGFsbCBtdHI=",
 	InstallNvidiaDevicePlugin: testutils.BoolToPtr(false),
+	Preemptible:               testutils.BoolToPtr(false),
 }
 
 // testUpdateNodegroupOptsRaw represents marshalled options for the Update request.
