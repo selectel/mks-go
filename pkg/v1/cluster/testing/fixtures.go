@@ -36,11 +36,15 @@ const testGetClusterResponseRaw = `
             "feature_gates": [
                 "TTLAfterFinished",
                 "CSIMigrationOpenStack"
-              ],
+			],
             "admission_controllers": [
                 "NamespaceLifecycle",
                 "LimitRanger"
-            ]
+            ],
+			"audit_logs": {
+				"enabled": true,
+				"secret_name": "mks-audit-logs"
+			}
         }
     }
 }
@@ -78,6 +82,10 @@ var expectedGetClusterResponse = &cluster.View{
 			"NamespaceLifecycle",
 			"LimitRanger",
 		},
+		AuditLogs: cluster.AuditLogs{
+			Enabled:    true,
+			SecretName: "mks-audit-logs",
+		},
 	},
 }
 
@@ -109,11 +117,15 @@ const testGetZonalClusterResponseRaw = `
             "feature_gates": [
                 "TTLAfterFinished",
                 "CSIMigrationOpenStack"
-              ],
+            ],
             "admission_controllers": [
                 "NamespaceLifecycle",
                 "LimitRanger"
-            ]
+            ],
+			"audit_logs": {
+				"enabled": true,
+				"secret_name": "mks-audit-logs"
+			}
         }
     }
 }
@@ -149,6 +161,10 @@ var expectedGetZonalClusterResponse = &cluster.View{
 			"NamespaceLifecycle",
 			"LimitRanger",
 		},
+		AuditLogs: cluster.AuditLogs{
+			Enabled:    true,
+			SecretName: "mks-audit-logs",
+		},
 	},
 }
 
@@ -179,7 +195,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -205,7 +225,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -231,7 +255,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -257,7 +285,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -283,7 +315,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -309,7 +345,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -335,7 +375,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -361,7 +405,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -387,7 +435,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -413,7 +465,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -439,7 +495,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -465,7 +525,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -491,7 +555,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -517,7 +585,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -543,7 +615,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         },
         {
@@ -569,7 +645,11 @@ const testListClustersResponseRaw = `
                 ],
                 "admission_controllers": [
                     "LimitRanger"
-                ]
+                ],
+				"audit_logs": {
+					"enabled": true,
+					"secret_name": "mks-audit-logs"
+				}
             }
         }
     ]
@@ -602,6 +682,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -628,6 +712,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -654,6 +742,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -680,6 +772,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -706,6 +802,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -732,6 +832,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -758,6 +862,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -784,6 +892,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -810,6 +922,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -836,6 +952,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -862,6 +982,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -888,6 +1012,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -914,6 +1042,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -940,6 +1072,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -966,6 +1102,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 	{
@@ -992,6 +1132,10 @@ var expectedListClustersResponse = []*cluster.View{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    true,
+				SecretName: "mks-audit-logs",
+			},
 		},
 	},
 }
@@ -1031,7 +1175,11 @@ const testCreateClusterOptsRaw = `
             ],
             "admission_controllers": [
                 "LimitRanger"
-            ]
+            ],
+			"audit_logs": {
+				"enabled": true,
+				"secret_name": "mks-audit-logs"
+			}
         }
     }
 }
@@ -1067,6 +1215,10 @@ var testCreateClusterOpts = &cluster.CreateOpts{
 		EnablePodSecurityPolicy: false,
 		FeatureGates:            []string{"CSIMigrationOpenStack"},
 		AdmissionControllers:    []string{"LimitRanger"},
+		AuditLogs: cluster.AuditLogs{
+			Enabled:    true,
+			SecretName: "mks-audit-logs",
+		},
 	},
 }
 
@@ -1101,7 +1253,11 @@ const testCreateClusterResponseRaw = `
       	    ],
             "admission_controllers": [
                 "LimitRanger"
-            ]
+            ],
+			"audit_logs": {
+				"enabled": true,
+				"secret_name": "mks-audit-logs"
+			}
         }
     }
 }
@@ -1132,6 +1288,10 @@ var expectedCreateClusterResponse = &cluster.View{
 		EnablePodSecurityPolicy: false,
 		FeatureGates:            []string{"CSIMigrationOpenStack"},
 		AdmissionControllers:    []string{"LimitRanger"},
+		AuditLogs: cluster.AuditLogs{
+			Enabled:    true,
+			SecretName: "mks-audit-logs",
+		},
 	},
 	PrivateKubeAPI: false,
 }
@@ -1658,7 +1818,11 @@ const testUpdateClusterWithEnabledPSPOptsRaw = `
             ],
             "admission_controllers": [
                 "LimitRanger"
-            ]
+            ],
+			"audit_logs": {
+				"enabled": false,
+				"secret_name": ""
+			}
         }
     }
 }

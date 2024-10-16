@@ -123,7 +123,7 @@ type View struct {
 	Zonal bool `json:"zonal"`
 
 	// KubernetesOptions represents additional k8s options such as pod security policy,
-	// feature gates (Alpha stage only) and admission controllers.
+	// feature gates, admission controllers and audit logs.
 	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
 
 	PrivateKubeAPI bool `json:"private_kube_api"`
@@ -152,7 +152,7 @@ func (result *View) UnmarshalJSON(b []byte) error {
 }
 
 // KubernetesOptions represents additional k8s options such as pod security policy,
-// feature gates (Alpha stage only) and admission controllers.
+// feature gates, admission controllers and audit logs.
 type KubernetesOptions struct {
 	// EnablePodSecurityPolicy indicates if PodSecurityPolicy admission controller
 	// must be turned on/off.
@@ -163,6 +163,25 @@ type KubernetesOptions struct {
 
 	// AdmissionControllers represents admission controllers that should be enabled.
 	AdmissionControllers []string `json:"admission_controllers"`
+
+	// AuditLogs represents configuration of kubernetes audit logs in the cluster.
+	// More: https://docs.selectel.ru/en/cloud/managed-kubernetes/clusters/logs/#configure-integration-with-external-system
+	AuditLogs AuditLogs `json:"audit_logs"`
+}
+
+type AuditLogs struct {
+	// Enabled indicates whether kubernetes audit logs should be collected
+	// and pushed into SIEM system (e.g. logstash).
+	// False by default.
+	Enabled bool `json:"enabled"`
+
+	// SecretName contains name of the kubernetes secret in namespace kube-system
+	// with credentials of SIEM system where logs should be pushed.
+	// Fields of the secret: host, port, username (optional), password (optional), ca.crt (optional).
+	// This field is optional. By default, used "mks-audit-logs".
+	// Secret name should be as a DNS subdomain name as defined in RFC 1123.
+	// More: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names
+	SecretName string `json:"secret_name"`
 }
 
 // KubeconfigFields is a struct that contains Kubeconfigs parsed fields and raw kubeconfig.
