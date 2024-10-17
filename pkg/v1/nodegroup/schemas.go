@@ -61,6 +61,9 @@ type BaseView struct {
 
 	// InstallNvidiaDevicePlugin indicates if nvidia device plugin installation was requested.
 	InstallNvidiaDevicePlugin bool `json:"install_nvidia_device_plugin"`
+
+	// Preemptible indicates if preemptible instances are used.
+	Preemptible bool `json:"preemptible"`
 }
 
 // ListView represents an unmarshalled nodegroup body from the list API response.

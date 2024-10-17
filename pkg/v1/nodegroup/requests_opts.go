@@ -59,6 +59,9 @@ type CreateOpts struct {
 
 	// InstallNvidiaDevicePlugin indicates if nvidia device plugin installation was requested.
 	InstallNvidiaDevicePlugin *bool `json:"install_nvidia_device_plugin,omitempty"`
+
+	// Preemptible indicates if preemptible instances are used.
+	Preemptible *bool `json:"preemptible,omitempty"`
 }
 
 // ResizeOpts represents options for the nodegroup Resize request.
