@@ -123,7 +123,7 @@ type View struct {
 	Zonal bool `json:"zonal"`
 
 	// KubernetesOptions represents additional k8s options such as pod security policy,
-	// feature gates, admission controllers and audit logs.
+	// feature gates, admission controllers, audit logs and oidc.
 	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
 
 	PrivateKubeAPI bool `json:"private_kube_api"`
@@ -152,7 +152,7 @@ func (result *View) UnmarshalJSON(b []byte) error {
 }
 
 // KubernetesOptions represents additional k8s options such as pod security policy,
-// feature gates, admission controllers and audit logs.
+// feature gates, admission controllers, audit logs and oidc.
 type KubernetesOptions struct {
 	// EnablePodSecurityPolicy indicates if PodSecurityPolicy admission controller
 	// must be turned on/off.
@@ -167,6 +167,10 @@ type KubernetesOptions struct {
 	// AuditLogs represents configuration of kubernetes audit logs in the cluster.
 	// More: https://docs.selectel.ru/en/cloud/managed-kubernetes/clusters/logs/#configure-integration-with-external-system
 	AuditLogs AuditLogs `json:"audit_logs"`
+
+	// OIDC represents configuration to enable authorization via OpenID Connect in kubernetes cluster.
+	// More: https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens
+	OIDC OIDC `json:"oidc"`
 }
 
 type AuditLogs struct {
@@ -182,6 +186,35 @@ type AuditLogs struct {
 	// Secret name should be as a DNS subdomain name as defined in RFC 1123.
 	// More: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names
 	SecretName string `json:"secret_name"`
+}
+
+// OIDC represents parameters to connect client's OIDC provider with kubernetes.
+type OIDC struct {
+	// Enabled indicates whether OIDC should be turned on in the cluster.
+	// False by default.
+	Enabled bool `json:"enabled"`
+
+	// ProviderName represents custom user defined name of the provider. It is not used in the cluster directly.
+	// It is required when enabled = true.
+	ProviderName string `json:"provider_name"`
+
+	// IssuerURL represents URL of the provider that allows the API server to discover public signing keys.
+	// Will be placed in `--oidc-issuer-url` flag.
+	// It is required when enabled = true.
+	IssuerURL string `json:"issuer_url"`
+
+	// ClientID represents required client id that all tokens must be issued for.
+	// Will be placed in `--oidc-client-id` flag.
+	// It is required when enabled = true.
+	ClientID string `json:"client_id"`
+
+	// UsernameClaim represents optional JWT claim to use as the username. By default, `sub`.
+	// Will be placed in `--oidc-username-claim` flag.
+	UsernameClaim string `json:"username_claim"`
+
+	// GroupsClaim represents optional JWT claim to use as the user's group. By default, `groups`.
+	// Will be placed in `--oidc-groups-claim` flag.
+	GroupsClaim string `json:"groups_claim"`
 }
 
 // KubeconfigFields is a struct that contains Kubeconfigs parsed fields and raw kubeconfig.
