@@ -44,7 +44,15 @@ const testGetClusterResponseRaw = `
 			"audit_logs": {
 				"enabled": true,
 				"secret_name": "mks-audit-logs"
-			}
+			},
+	        "oidc": {
+				"enabled": true,
+				"provider_name": "keycloak",
+				"client_id": "kubernetes",
+				"groups_claim": "groups",
+				"issuer_url": "https://example.com/",
+				"username_claim": "email"
+	        }
         }
     }
 }
@@ -86,6 +94,14 @@ var expectedGetClusterResponse = &cluster.View{
 			Enabled:    true,
 			SecretName: "mks-audit-logs",
 		},
+		OIDC: cluster.OIDC{
+			Enabled:       true,
+			ProviderName:  "keycloak",
+			IssuerURL:     "https://example.com/",
+			ClientID:      "kubernetes",
+			UsernameClaim: "email",
+			GroupsClaim:   "groups",
+		},
 	},
 }
 
@@ -125,7 +141,15 @@ const testGetZonalClusterResponseRaw = `
 			"audit_logs": {
 				"enabled": true,
 				"secret_name": "mks-audit-logs"
-			}
+			},
+	        "oidc": {
+				"enabled": true,
+				"provider_name": "keycloak",
+				"client_id": "kubernetes",
+				"groups_claim": "groups",
+				"issuer_url": "https://example.com/",
+				"username_claim": "email"
+	        }
         }
     }
 }
@@ -165,6 +189,14 @@ var expectedGetZonalClusterResponse = &cluster.View{
 			Enabled:    true,
 			SecretName: "mks-audit-logs",
 		},
+		OIDC: cluster.OIDC{
+			Enabled:       true,
+			ProviderName:  "keycloak",
+			IssuerURL:     "https://example.com/",
+			ClientID:      "kubernetes",
+			UsernameClaim: "email",
+			GroupsClaim:   "groups",
+		},
 	},
 }
 
@@ -199,6 +231,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -229,6 +269,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -259,6 +307,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -289,6 +345,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -319,6 +383,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -349,6 +421,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -379,6 +459,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -409,6 +497,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -439,6 +535,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -469,6 +573,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -499,6 +611,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -529,6 +649,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -559,6 +687,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -589,6 +725,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -619,6 +763,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         },
@@ -649,6 +801,14 @@ const testListClustersResponseRaw = `
 				"audit_logs": {
 					"enabled": true,
 					"secret_name": "mks-audit-logs"
+				},
+				"oidc": {
+					"enabled": true,
+					"provider_name": "keycloak",
+					"client_id": "kubernetes",
+					"groups_claim": "groups",
+					"issuer_url": "https://example.com/",
+					"username_claim": "email"
 				}
             }
         }
@@ -686,6 +846,14 @@ var expectedListClustersResponse = []*cluster.View{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
 			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
+			},
 		},
 	},
 	{
@@ -715,6 +883,14 @@ var expectedListClustersResponse = []*cluster.View{
 			AuditLogs: cluster.AuditLogs{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
+			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
 			},
 		},
 	},
@@ -746,6 +922,14 @@ var expectedListClustersResponse = []*cluster.View{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
 			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
+			},
 		},
 	},
 	{
@@ -775,6 +959,14 @@ var expectedListClustersResponse = []*cluster.View{
 			AuditLogs: cluster.AuditLogs{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
+			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
 			},
 		},
 	},
@@ -806,6 +998,14 @@ var expectedListClustersResponse = []*cluster.View{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
 			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
+			},
 		},
 	},
 	{
@@ -835,6 +1035,14 @@ var expectedListClustersResponse = []*cluster.View{
 			AuditLogs: cluster.AuditLogs{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
+			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
 			},
 		},
 	},
@@ -866,6 +1074,14 @@ var expectedListClustersResponse = []*cluster.View{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
 			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
+			},
 		},
 	},
 	{
@@ -895,6 +1111,14 @@ var expectedListClustersResponse = []*cluster.View{
 			AuditLogs: cluster.AuditLogs{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
+			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
 			},
 		},
 	},
@@ -926,6 +1150,14 @@ var expectedListClustersResponse = []*cluster.View{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
 			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
+			},
 		},
 	},
 	{
@@ -955,6 +1187,14 @@ var expectedListClustersResponse = []*cluster.View{
 			AuditLogs: cluster.AuditLogs{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
+			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
 			},
 		},
 	},
@@ -986,6 +1226,14 @@ var expectedListClustersResponse = []*cluster.View{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
 			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
+			},
 		},
 	},
 	{
@@ -1015,6 +1263,14 @@ var expectedListClustersResponse = []*cluster.View{
 			AuditLogs: cluster.AuditLogs{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
+			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
 			},
 		},
 	},
@@ -1046,6 +1302,14 @@ var expectedListClustersResponse = []*cluster.View{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
 			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
+			},
 		},
 	},
 	{
@@ -1075,6 +1339,14 @@ var expectedListClustersResponse = []*cluster.View{
 			AuditLogs: cluster.AuditLogs{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
+			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
 			},
 		},
 	},
@@ -1106,6 +1378,14 @@ var expectedListClustersResponse = []*cluster.View{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
 			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
+			},
 		},
 	},
 	{
@@ -1135,6 +1415,14 @@ var expectedListClustersResponse = []*cluster.View{
 			AuditLogs: cluster.AuditLogs{
 				Enabled:    true,
 				SecretName: "mks-audit-logs",
+			},
+			OIDC: cluster.OIDC{
+				Enabled:       true,
+				ProviderName:  "keycloak",
+				IssuerURL:     "https://example.com/",
+				ClientID:      "kubernetes",
+				UsernameClaim: "email",
+				GroupsClaim:   "groups",
 			},
 		},
 	},
@@ -1179,6 +1467,14 @@ const testCreateClusterOptsRaw = `
 			"audit_logs": {
 				"enabled": true,
 				"secret_name": "mks-audit-logs"
+			},
+			"oidc": {
+				"enabled": true,
+				"provider_name": "keycloak",
+				"client_id": "kubernetes",
+				"groups_claim": "groups",
+				"issuer_url": "https://example.com/",
+				"username_claim": "email"
 			}
         }
     }
@@ -1219,6 +1515,14 @@ var testCreateClusterOpts = &cluster.CreateOpts{
 			Enabled:    true,
 			SecretName: "mks-audit-logs",
 		},
+		OIDC: cluster.OIDC{
+			Enabled:       true,
+			ProviderName:  "keycloak",
+			IssuerURL:     "https://example.com/",
+			ClientID:      "kubernetes",
+			UsernameClaim: "email",
+			GroupsClaim:   "groups",
+		},
 	},
 }
 
@@ -1257,6 +1561,14 @@ const testCreateClusterResponseRaw = `
 			"audit_logs": {
 				"enabled": true,
 				"secret_name": "mks-audit-logs"
+			},
+			"oidc": {
+				"enabled": true,
+				"provider_name": "keycloak",
+				"client_id": "kubernetes",
+				"groups_claim": "groups",
+				"issuer_url": "https://example.com/",
+				"username_claim": "email"
 			}
         }
     }
@@ -1291,6 +1603,14 @@ var expectedCreateClusterResponse = &cluster.View{
 		AuditLogs: cluster.AuditLogs{
 			Enabled:    true,
 			SecretName: "mks-audit-logs",
+		},
+		OIDC: cluster.OIDC{
+			Enabled:       true,
+			ProviderName:  "keycloak",
+			IssuerURL:     "https://example.com/",
+			ClientID:      "kubernetes",
+			UsernameClaim: "email",
+			GroupsClaim:   "groups",
 		},
 	},
 	PrivateKubeAPI: false,
@@ -1822,6 +2142,14 @@ const testUpdateClusterWithEnabledPSPOptsRaw = `
 			"audit_logs": {
 				"enabled": false,
 				"secret_name": ""
+			},
+			"oidc": {
+				"enabled": false,
+				"provider_name": "",
+				"client_id": "",
+				"groups_claim": "",
+				"issuer_url": "",
+				"username_claim": ""
 			}
         }
     }
