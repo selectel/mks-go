@@ -51,7 +51,6 @@ func TestGetCluster(t *testing.T) {
 	if !reflect.DeepEqual(expectedGetClusterResponse, actual) {
 		t.Fatalf("expected %#v, but got %#v", expectedGetClusterResponse, actual)
 	}
-	t.Log(actual.Status)
 }
 
 func TestGetZonalCluster(t *testing.T) {

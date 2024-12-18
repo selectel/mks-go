@@ -135,7 +135,7 @@ func (result *GetView) UnmarshalJSON(b []byte) error {
 
 	*result = GetView(s.tmp)
 
-	// Check cluster status.
+	// Check nodegroup status.
 	if isStatusSupported(s.Status) {
 		result.Status = s.Status
 	} else {
