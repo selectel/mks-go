@@ -18,6 +18,7 @@ const testGetNodegroupResponseRaw = `
         "flavor_id": "99b62670-9d78-43fd-8f55-d184a4800f8d",
         "id": "a376745a-fbcb-413d-b418-169d059d79ce",
         "local_volume": false,
+        "status": "ACTIVE", 
         "nodes": [
             {
                 "created_at": "2020-02-19T15:41:45.948646Z",
@@ -64,6 +65,7 @@ var expectedGetNodegroupResponse = &nodegroup.GetView{
 		ClusterID:        "79265515-3700-49fa-af0e-7f547bce788a",
 		FlavorID:         "99b62670-9d78-43fd-8f55-d184a4800f8d",
 		VolumeGB:         10,
+		Status:           nodegroup.StatusActive,
 		VolumeType:       "basic.ru-1a",
 		LocalVolume:      false,
 		AvailabilityZone: "ru-1a",
