@@ -19,6 +19,7 @@ const (
 	StatusPendingScaleDown     Status = "PENDING_SCALE_DOWN"
 	StatusPendingNodeReinstall Status = "PENDING_NODE_REINSTALL"
 	StatusUnknown              Status = "UNKNOWN"
+	StatusError                Status = "ERROR"
 )
 
 func getSupportedStatuses() []Status {
@@ -30,6 +31,7 @@ func getSupportedStatuses() []Status {
 		StatusPendingScaleDown,
 		StatusPendingDelete,
 		StatusPendingNodeReinstall,
+		StatusError,
 	}
 }
 
