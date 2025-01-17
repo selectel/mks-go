@@ -1,10 +1,49 @@
 package nodegroup
 
 import (
+	"encoding/json"
 	"time"
 
 	"github.com/selectel/mks-go/pkg/v1/node"
 )
+
+// Status represents custom type for various nodegroup statuses.
+type Status string
+
+const (
+	StatusActive               Status = "ACTIVE"
+	StatusPendingCreate        Status = "PENDING_CREATE"
+	StatusPendingUpdate        Status = "PENDING_UPDATE"
+	StatusPendingDelete        Status = "PENDING_DELETE"
+	StatusPendingScaleUp       Status = "PENDING_SCALE_UP"
+	StatusPendingScaleDown     Status = "PENDING_SCALE_DOWN"
+	StatusPendingNodeReinstall Status = "PENDING_NODE_REINSTALL"
+	StatusUnknown              Status = "UNKNOWN"
+	StatusError                Status = "ERROR"
+)
+
+func getSupportedStatuses() []Status {
+	return []Status{
+		StatusActive,
+		StatusPendingCreate,
+		StatusPendingUpdate,
+		StatusPendingScaleUp,
+		StatusPendingScaleDown,
+		StatusPendingDelete,
+		StatusPendingNodeReinstall,
+		StatusError,
+	}
+}
+
+func isStatusSupported(s Status) bool {
+	for _, v := range getSupportedStatuses() {
+		if s == v {
+			return true
+		}
+	}
+
+	return false
+}
 
 // BaseView represents a base struct of unmarshalled nodegroup body from an API response.
 //
@@ -18,6 +57,9 @@ type BaseView struct {
 
 	// UpdatedAt is the timestamp in UTC timezone of when the nodegroup has been updated.
 	UpdatedAt *time.Time `json:"updated_at"`
+
+	// Status represents the current status of the nodegroup.
+	Status Status `json:"-"`
 
 	// ClusterID contains cluster identifier.
 	ClusterID string `json:"cluster_id"`
@@ -81,6 +123,28 @@ type GetView struct {
 
 	// UserData represents base64 data which is used to pass a script that worker nodes run on boot.
 	UserData string `json:"user_data"`
+}
+
+func (result *GetView) UnmarshalJSON(b []byte) error {
+	type tmp GetView
+	var s struct {
+		tmp
+		Status Status `json:"status"`
+	}
+	if err := json.Unmarshal(b, &s); err != nil {
+		return err
+	}
+
+	*result = GetView(s.tmp)
+
+	// Check nodegroup status.
+	if isStatusSupported(s.Status) {
+		result.Status = s.Status
+	} else {
+		result.Status = StatusUnknown
+	}
+
+	return nil
 }
 
 // TaintEffect represents an effect of the node's taint.
