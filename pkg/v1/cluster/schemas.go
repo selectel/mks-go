@@ -215,6 +215,10 @@ type OIDC struct {
 	// GroupsClaim represents optional JWT claim to use as the user's group. By default, `groups`.
 	// Will be placed in `--oidc-groups-claim` flag.
 	GroupsClaim string `json:"groups_claim"`
+
+	// CACerts represent optional custom CA certs chain in X509 PEM format of provider's SSL certificate.
+	// Will be written to file on masters which will be passed in `--oidc-ca-file` kube-apiserver flag.
+	CACerts string `json:"ca_certs,omitempty"`
 }
 
 // KubeconfigFields is a struct that contains Kubeconfigs parsed fields and raw kubeconfig.

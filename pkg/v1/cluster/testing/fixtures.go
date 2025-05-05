@@ -50,6 +50,7 @@ const testGetClusterResponseRaw = `
 				"provider_name": "keycloak",
 				"client_id": "kubernetes",
 				"groups_claim": "groups",
+				"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 				"issuer_url": "https://example.com/",
 				"username_claim": "email"
 	        }
@@ -101,6 +102,7 @@ var expectedGetClusterResponse = &cluster.View{
 			ClientID:      "kubernetes",
 			UsernameClaim: "email",
 			GroupsClaim:   "groups",
+			CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 		},
 	},
 }
@@ -147,6 +149,7 @@ const testGetZonalClusterResponseRaw = `
 				"provider_name": "keycloak",
 				"client_id": "kubernetes",
 				"groups_claim": "groups",
+				"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 				"issuer_url": "https://example.com/",
 				"username_claim": "email"
 	        }
@@ -196,6 +199,7 @@ var expectedGetZonalClusterResponse = &cluster.View{
 			ClientID:      "kubernetes",
 			UsernameClaim: "email",
 			GroupsClaim:   "groups",
+			CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 		},
 	},
 }
@@ -237,6 +241,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -275,6 +280,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -313,6 +319,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -351,6 +358,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -389,6 +397,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -427,6 +436,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -465,6 +475,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -503,6 +514,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -541,6 +553,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -579,6 +592,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -617,6 +631,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -655,6 +670,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -693,6 +709,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -731,6 +748,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -769,6 +787,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -807,6 +826,7 @@ const testListClustersResponseRaw = `
 					"provider_name": "keycloak",
 					"client_id": "kubernetes",
 					"groups_claim": "groups",
+					"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 					"issuer_url": "https://example.com/",
 					"username_claim": "email"
 				}
@@ -853,6 +873,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -891,6 +912,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -929,6 +951,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -967,6 +990,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1005,6 +1029,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1043,6 +1068,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1081,6 +1107,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1119,6 +1146,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1157,6 +1185,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1195,6 +1224,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1233,6 +1263,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1271,6 +1302,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1309,6 +1341,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1347,6 +1380,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1385,6 +1419,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1423,6 +1458,7 @@ var expectedListClustersResponse = []*cluster.View{
 				ClientID:      "kubernetes",
 				UsernameClaim: "email",
 				GroupsClaim:   "groups",
+				CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 			},
 		},
 	},
@@ -1473,6 +1509,7 @@ const testCreateClusterOptsRaw = `
 				"provider_name": "keycloak",
 				"client_id": "kubernetes",
 				"groups_claim": "groups",
+				"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 				"issuer_url": "https://example.com/",
 				"username_claim": "email"
 			}
@@ -1522,6 +1559,7 @@ var testCreateClusterOpts = &cluster.CreateOpts{
 			ClientID:      "kubernetes",
 			UsernameClaim: "email",
 			GroupsClaim:   "groups",
+			CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 		},
 	},
 }
@@ -1567,6 +1605,7 @@ const testCreateClusterResponseRaw = `
 				"provider_name": "keycloak",
 				"client_id": "kubernetes",
 				"groups_claim": "groups",
+				"ca_certs": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 				"issuer_url": "https://example.com/",
 				"username_claim": "email"
 			}
@@ -1611,6 +1650,7 @@ var expectedCreateClusterResponse = &cluster.View{
 			ClientID:      "kubernetes",
 			UsernameClaim: "email",
 			GroupsClaim:   "groups",
+			CACerts:       "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tS0tLQo=",
 		},
 	},
 	PrivateKubeAPI: false,
