@@ -85,6 +85,7 @@ const testListTasksResponseRaw = `
             "status": "DONE",
             "type": "NODE_GROUP_RESIZE",
             "updated_at": "2020-02-19T11:43:02.868387Z"
+			"nodegroup_id":"9e714bc6-3815-4af5-9c94-f1560e87641a",
         },
         {
             "cluster_id": "d2e16a48-a9c5-4449-9b71-81f21fc872db",
@@ -93,6 +94,7 @@ const testListTasksResponseRaw = `
             "status": "DONE",
             "type": "NODE_REINSTALL",
             "updated_at": "2020-02-19T11:43:02.868387Z"
+			"nodegroup_id":"9e714bc6-3815-4af5-9c94-f1560e87641a",
         },
         {
             "cluster_id": "d2e16a48-a9c5-4449-9b71-81f21fc872db",
@@ -125,6 +127,7 @@ const testListTasksResponseRaw = `
             "status": "IN_PROGRESS",
             "type": "UPDATE_NODEGROUP_LABELS",
             "updated_at": "2020-02-19T11:43:02.868387Z"
+			"nodegroup_id":"9e714bc6-3815-4af5-9c94-f1560e87641a",
         },
         {
             "cluster_id": "d2e16a48-a9c5-4449-9b71-81f21fc872db",
@@ -173,20 +176,22 @@ var expectedListTasksResponse = []*task.View{
 		Type:      task.TypeRotateCerts,
 	},
 	{
-		ID:        "4f8fb93c-cf9e-4289-a78c-34393ac75f92",
-		StartedAt: &taskResponseTimestamp,
-		UpdatedAt: &taskResponseTimestamp,
-		ClusterID: "d2e16a48-a9c5-4449-9b71-81f21fc872db",
-		Status:    task.StatusDone,
-		Type:      task.TypeNodeGroupResize,
+		ID:          "4f8fb93c-cf9e-4289-a78c-34393ac75f92",
+		StartedAt:   &taskResponseTimestamp,
+		UpdatedAt:   &taskResponseTimestamp,
+		ClusterID:   "d2e16a48-a9c5-4449-9b71-81f21fc872db",
+		Status:      task.StatusDone,
+		Type:        task.TypeNodeGroupResize,
+		NodeGroupID: "9e714bc6-3815-4af5-9c94-f1560e87641a",
 	},
 	{
-		ID:        "5f8fb93c-cf9e-4289-a78c-34393ac75f92",
-		StartedAt: &taskResponseTimestamp,
-		UpdatedAt: &taskResponseTimestamp,
-		ClusterID: "d2e16a48-a9c5-4449-9b71-81f21fc872db",
-		Status:    task.StatusDone,
-		Type:      task.TypeNodeReinstall,
+		ID:          "5f8fb93c-cf9e-4289-a78c-34393ac75f92",
+		StartedAt:   &taskResponseTimestamp,
+		UpdatedAt:   &taskResponseTimestamp,
+		ClusterID:   "d2e16a48-a9c5-4449-9b71-81f21fc872db",
+		Status:      task.StatusDone,
+		Type:        task.TypeNodeReinstall,
+		NodeGroupID: "9e714bc6-3815-4af5-9c94-f1560e87641a",
 	},
 	{
 		ID:        "6f8fb93c-cf9e-4289-a78c-34393ac75f92",
@@ -213,12 +218,13 @@ var expectedListTasksResponse = []*task.View{
 		Type:      task.TypeUpgradeMinorVersion,
 	},
 	{
-		ID:        "7f8fb93c-cf9e-4289-a78c-34393ac75f92",
-		StartedAt: &taskResponseTimestamp,
-		UpdatedAt: &taskResponseTimestamp,
-		ClusterID: "d2e16a48-a9c5-4449-9b71-81f21fc872db",
-		Status:    task.StatusInProgress,
-		Type:      task.TypeUpdateNodegroupLabels,
+		ID:          "7f8fb93c-cf9e-4289-a78c-34393ac75f92",
+		StartedAt:   &taskResponseTimestamp,
+		UpdatedAt:   &taskResponseTimestamp,
+		ClusterID:   "d2e16a48-a9c5-4449-9b71-81f21fc872db",
+		Status:      task.StatusInProgress,
+		Type:        task.TypeUpdateNodegroupLabels,
+		NodeGroupID: "9e714bc6-3815-4af5-9c94-f1560e87641a",
 	},
 	{
 		ID:        "7f8fb93c-cf9e-4289-a78c-34393ac75f92",
