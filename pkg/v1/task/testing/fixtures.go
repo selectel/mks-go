@@ -84,8 +84,8 @@ const testListTasksResponseRaw = `
             "started_at": "2020-02-19T11:43:02.868387Z",
             "status": "DONE",
             "type": "NODE_GROUP_RESIZE",
-            "updated_at": "2020-02-19T11:43:02.868387Z"
-			"nodegroup_id":"9e714bc6-3815-4af5-9c94-f1560e87641a",
+            "updated_at": "2020-02-19T11:43:02.868387Z",
+			"nodegroup_id":"9e714bc6-3815-4af5-9c94-f1560e87641a"
         },
         {
             "cluster_id": "d2e16a48-a9c5-4449-9b71-81f21fc872db",
@@ -93,8 +93,8 @@ const testListTasksResponseRaw = `
             "started_at": "2020-02-19T11:43:02.868387Z",
             "status": "DONE",
             "type": "NODE_REINSTALL",
-            "updated_at": "2020-02-19T11:43:02.868387Z"
-			"nodegroup_id":"9e714bc6-3815-4af5-9c94-f1560e87641a",
+            "updated_at": "2020-02-19T11:43:02.868387Z",
+			"nodegroup_id":"9e714bc6-3815-4af5-9c94-f1560e87641a"
         },
         {
             "cluster_id": "d2e16a48-a9c5-4449-9b71-81f21fc872db",
@@ -126,8 +126,8 @@ const testListTasksResponseRaw = `
             "started_at": "2020-02-19T11:43:02.868387Z",
             "status": "IN_PROGRESS",
             "type": "UPDATE_NODEGROUP_LABELS",
-            "updated_at": "2020-02-19T11:43:02.868387Z"
-			"nodegroup_id":"9e714bc6-3815-4af5-9c94-f1560e87641a",
+            "updated_at": "2020-02-19T11:43:02.868387Z",
+			"nodegroup_id":"9e714bc6-3815-4af5-9c94-f1560e87641a"
         },
         {
             "cluster_id": "d2e16a48-a9c5-4449-9b71-81f21fc872db",
