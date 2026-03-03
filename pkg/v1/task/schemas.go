@@ -96,6 +96,9 @@ type View struct {
 
 	// Task represents task's type.
 	Type Type `json:"-"`
+
+	// NodeGroupID contains node group identifier. It can be empty.
+	NodeGroupID string `json:"nodegroup_id,omitempty"`
 }
 
 func (result *View) UnmarshalJSON(b []byte) error {
