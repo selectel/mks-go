@@ -3,7 +3,7 @@ package testing
 import (
 	"time"
 
-	"github.com/selectel/mks-go/pkg/v1/task"
+	"github.com/ormequ/mks-go/pkg/v1/task"
 )
 
 // testGetTaskResponseRaw represents a raw response from the Get request.

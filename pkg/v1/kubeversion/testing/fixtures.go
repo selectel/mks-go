@@ -1,6 +1,6 @@
 package testing
 
-import "github.com/selectel/mks-go/pkg/v1/kubeversion"
+import "github.com/ormequ/mks-go/pkg/v1/kubeversion"
 
 // testListKubeVersionsResponseRaw represents a raw response from the List request.
 const testListKubeVersionsResponseRaw = `

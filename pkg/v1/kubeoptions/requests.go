@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	v1 "github.com/selectel/mks-go/pkg/v1"
+	v1 "github.com/ormequ/mks-go/pkg/v1"
 )
 
 // ListFeatureGates gets a list of available feature gates by Kubernetes versions.

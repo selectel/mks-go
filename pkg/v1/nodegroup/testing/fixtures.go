@@ -3,9 +3,9 @@ package testing
 import (
 	"time"
 
-	"github.com/selectel/mks-go/pkg/testutils"
-	"github.com/selectel/mks-go/pkg/v1/node"
-	"github.com/selectel/mks-go/pkg/v1/nodegroup"
+	"github.com/ormequ/mks-go/pkg/testutils"
+	"github.com/ormequ/mks-go/pkg/v1/node"
+	"github.com/ormequ/mks-go/pkg/v1/nodegroup"
 )
 
 // testGetNodegroupResponseRaw represents a raw response from the Get request.
@@ -18,7 +18,7 @@ const testGetNodegroupResponseRaw = `
         "flavor_id": "99b62670-9d78-43fd-8f55-d184a4800f8d",
         "id": "a376745a-fbcb-413d-b418-169d059d79ce",
         "local_volume": false,
-        "status": "ACTIVE", 
+        "status": "ACTIVE",
         "nodes": [
             {
                 "created_at": "2020-02-19T15:41:45.948646Z",

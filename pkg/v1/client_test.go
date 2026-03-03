@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/selectel/mks-go/pkg/testutils"
+	"github.com/ormequ/mks-go/pkg/testutils"
 )
 
 func TestNewMKSClientV1(t *testing.T) {

@@ -7,9 +7,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/selectel/mks-go/pkg/testutils"
-	v1 "github.com/selectel/mks-go/pkg/v1"
-	"github.com/selectel/mks-go/pkg/v1/nodegroup"
+	"github.com/ormequ/mks-go/pkg/testutils"
+	v1 "github.com/ormequ/mks-go/pkg/v1"
+	"github.com/ormequ/mks-go/pkg/v1/nodegroup"
 )
 
 const (

@@ -6,9 +6,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/selectel/mks-go/pkg/testutils"
-	v1 "github.com/selectel/mks-go/pkg/v1"
-	"github.com/selectel/mks-go/pkg/v1/kubeversion"
+	"github.com/ormequ/mks-go/pkg/testutils"
+	v1 "github.com/ormequ/mks-go/pkg/v1"
+	"github.com/ormequ/mks-go/pkg/v1/kubeversion"
 )
 
 func TestListKubeVersions(t *testing.T) {

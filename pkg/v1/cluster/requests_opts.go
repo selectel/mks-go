@@ -1,6 +1,6 @@
 package cluster
 
-import "github.com/selectel/mks-go/pkg/v1/nodegroup"
+import "github.com/ormequ/mks-go/pkg/v1/nodegroup"
 
 // CreateOpts represents options for the cluster Create request.
 type CreateOpts struct {

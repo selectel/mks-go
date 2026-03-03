@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"strings"
 
-	v1 "github.com/selectel/mks-go/pkg/v1"
+	v1 "github.com/ormequ/mks-go/pkg/v1"
 )
 
 // Get returns a single cluster by its id.

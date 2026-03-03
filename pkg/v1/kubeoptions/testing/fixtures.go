@@ -1,6 +1,6 @@
 package testing
 
-import "github.com/selectel/mks-go/pkg/v1/kubeoptions"
+import "github.com/ormequ/mks-go/pkg/v1/kubeoptions"
 
 var expectedFeatureGates = []*kubeoptions.View{
 	{

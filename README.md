@@ -1,25 +1,25 @@
 # mks-go: Go SDK for Managed Kubernetes Service
-[![Go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/selectel/mks-go/)
-[![Go Report Card](https://goreportcard.com/badge/github.com/selectel/mks-go)](https://goreportcard.com/report/github.com/selectel/mks-go)
-![Build Status](https://github.com/selectel/mks-go/actions/workflows/unit-tests.yml/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/selectel/mks-go/badge.svg?branch=master)](https://coveralls.io/github/selectel/mks-go?branch=master)
+[![Go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/ormequ/mks-go/)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ormequ/mks-go)](https://goreportcard.com/report/github.com/ormequ/mks-go)
+![Build Status](https://github.com/ormequ/mks-go/actions/workflows/unit-tests.yml/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/ormequ/mks-go/badge.svg?branch=master)](https://coveralls.io/github/ormequ/mks-go?branch=master)
 
 Package mks-go provides Go SDK to work with the Selectel Managed Kubernetes Service.
 
 ## Documentation
 
-The Go library documentation is available at [go.dev](https://pkg.go.dev/github.com/selectel/mks-go/).
+The Go library documentation is available at [go.dev](https://pkg.go.dev/github.com/ormequ/mks-go/).
 
 ## What this library is capable of
 
 You can use this library to work with the following objects of the Selectel Managed Kubernetes Service:
 
-* [cluster](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/cluster)
-* [nodegroup](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/nodegroup)
-* [node](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/node)
-* [task](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/task)
-* [kubeversion](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/kubeversion)
-* [kubeoptions](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/kubeoptions)
+* [cluster](https://pkg.go.dev/github.com/ormequ/mks-go/pkg/v1/cluster)
+* [nodegroup](https://pkg.go.dev/github.com/ormequ/mks-go/pkg/v1/nodegroup)
+* [node](https://pkg.go.dev/github.com/ormequ/mks-go/pkg/v1/node)
+* [task](https://pkg.go.dev/github.com/ormequ/mks-go/pkg/v1/task)
+* [kubeversion](https://pkg.go.dev/github.com/ormequ/mks-go/pkg/v1/kubeversion)
+* [kubeoptions](https://pkg.go.dev/github.com/ormequ/mks-go/pkg/v1/kubeoptions)
 
 ## Getting started
 
@@ -28,7 +28,7 @@ You can use this library to work with the following objects of the Selectel Mana
 You can install needed `mks-go` packages via `go get` command:
 
 ```bash
-go get github.com/selectel/mks-go/pkg/v1/cluster github.com/selectel/mks-go/pkg/v1/task
+go get github.com/ormequ/mks-go/pkg/v1/cluster github.com/ormequ/mks-go/pkg/v1/task
 ```
 
 ### Authentication
@@ -65,11 +65,11 @@ import (
 	"fmt"
 	"log"
 
-	v1 "github.com/selectel/mks-go/pkg/v1"
-	"github.com/selectel/mks-go/pkg/v1/cluster"
-	"github.com/selectel/mks-go/pkg/v1/kubeversion"
-	"github.com/selectel/mks-go/pkg/v1/nodegroup"
-	"github.com/selectel/mks-go/pkg/v1/task"
+	v1 "github.com/ormequ/mks-go/pkg/v1"
+	"github.com/ormequ/mks-go/pkg/v1/cluster"
+	"github.com/ormequ/mks-go/pkg/v1/kubeversion"
+	"github.com/ormequ/mks-go/pkg/v1/nodegroup"
+	"github.com/ormequ/mks-go/pkg/v1/task"
 )
 
 func main() {

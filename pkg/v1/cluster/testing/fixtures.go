@@ -3,9 +3,9 @@ package testing
 import (
 	"time"
 
-	"github.com/selectel/mks-go/pkg/testutils"
-	"github.com/selectel/mks-go/pkg/v1/cluster"
-	"github.com/selectel/mks-go/pkg/v1/nodegroup"
+	"github.com/ormequ/mks-go/pkg/testutils"
+	"github.com/ormequ/mks-go/pkg/v1/cluster"
+	"github.com/ormequ/mks-go/pkg/v1/nodegroup"
 )
 
 // testGetClusterResponseRaw represents a raw response from the Get request.

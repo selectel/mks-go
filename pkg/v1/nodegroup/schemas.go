@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/selectel/mks-go/pkg/v1/node"
+	"github.com/ormequ/mks-go/pkg/v1/node"
 )
 
 // Status represents custom type for various nodegroup statuses.
