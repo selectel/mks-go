@@ -54,6 +54,14 @@ type CreateOpts struct {
 	// PrivateKubeAPI specifies if kube API should be available from the Internet or not.
 	// By default false so kube API available from the Internet.
 	PrivateKubeAPI *bool `json:"private_kube_api,omitempty"`
+
+	// CNIType represents type of CNI which is be used in cluster.
+	// Supported CNI types are CALICO and CILIUM.
+	CNIType CNIType `json:"cni_type,omitempty"`
+
+	// CNICiliumSettings represents settings for Cilium CNI if this CNI was chosen as "cni_type",
+	// otherwise settings will be ignored.
+	CNICiliumSettings *CNICiliumSettings `json:"cni_cilium_settings,omitempty"`
 }
 
 // UpdateOpts represents options for the cluster Update request.

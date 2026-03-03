@@ -27,6 +27,13 @@ const (
 	StatusUnknown                            Status = "UNKNOWN"
 )
 
+type CNIType string
+
+const (
+	CNITypeCalico CNIType = "CALICO"
+	CNITypeCilium CNIType = "CILIUM"
+)
+
 func getSupportedStatuses() []Status {
 	return []Status{
 		StatusActive,
@@ -57,8 +64,8 @@ func isStatusSupported(s Status) bool {
 	return false
 }
 
-// View represents an unmarshalled cluster body from an API response.
-type View struct {
+// BaseView represents a base struct of unmarshalled nodegroup body from an API response.
+type BaseView struct {
 	// ID is the identifier of the cluster.
 	ID string `json:"id"`
 
@@ -127,10 +134,26 @@ type View struct {
 	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
 
 	PrivateKubeAPI bool `json:"private_kube_api"`
+
+	// CNIType represents type of CNI which is be used in cluster.
+	// Supported CNI types are CALICO and CILIUM.
+	CNIType CNIType `json:"cni_type"`
 }
 
-func (result *View) UnmarshalJSON(b []byte) error {
-	type tmp View
+type ListView struct {
+	BaseView
+}
+
+type GetView struct {
+	BaseView
+
+	// CNICiliumSettings represents settings for Cilium CNI if this CNI was chosen as "cni_type",
+	// otherwise settings will be ignored.
+	CNICiliumSettings *CNICiliumSettings `json:"cni_cilium_settings,omitempty"`
+}
+
+func (result *ListView) UnmarshalJSON(b []byte) error {
+	type tmp ListView
 	var s struct {
 		tmp
 		Status Status `json:"status"`
@@ -139,7 +162,29 @@ func (result *View) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	*result = View(s.tmp)
+	*result = ListView(s.tmp)
+
+	// Check cluster status.
+	if isStatusSupported(s.Status) {
+		result.Status = s.Status
+	} else {
+		result.Status = StatusUnknown
+	}
+
+	return nil
+}
+
+func (result *GetView) UnmarshalJSON(b []byte) error {
+	type tmp GetView
+	var s struct {
+		tmp
+		Status Status `json:"status"`
+	}
+	if err := json.Unmarshal(b, &s); err != nil {
+		return err
+	}
+
+	*result = GetView(s.tmp)
 
 	// Check cluster status.
 	if isStatusSupported(s.Status) {
@@ -228,4 +273,16 @@ type KubeconfigFields struct {
 	ClientCert    string
 	ClientKey     string
 	KubeconfigRaw string
+}
+
+// CNICiliumSettings represents settings for Cilium CNI if this CNI was chosen as "cni_type",
+// otherwise settings will be ignored.
+type CNICiliumSettings struct {
+	// EnvoyDaemonset Enables Envoy DaemonSet for Cilium CNI.
+	// default: true
+	EnvoyDaemonset *bool `json:"envoy_daemonset,omitempty"`
+
+	// HubbleRelay Enables hubble relay for Cilium CNI.
+	// default: true
+	HubbleRelay *bool `json:"hubble_relay,omitempty"`
 }
