@@ -13,7 +13,7 @@ import (
 )
 
 // Get returns a single cluster by its id.
-func Get(ctx context.Context, client *v1.ServiceClient, clusterID string) (*View, *v1.ResponseResult, error) {
+func Get(ctx context.Context, client *v1.ServiceClient, clusterID string) (*GetView, *v1.ResponseResult, error) {
 	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodGet, url, nil)
 	if err != nil {
@@ -25,7 +25,7 @@ func Get(ctx context.Context, client *v1.ServiceClient, clusterID string) (*View
 
 	// Extract a cluster from the response body.
 	var result struct {
-		Cluster *View `json:"cluster"`
+		Cluster *GetView `json:"cluster"`
 	}
 	err = responseResult.ExtractResult(&result)
 	if err != nil {
@@ -36,7 +36,7 @@ func Get(ctx context.Context, client *v1.ServiceClient, clusterID string) (*View
 }
 
 // List gets a list of all clusters.
-func List(ctx context.Context, client *v1.ServiceClient) ([]*View, *v1.ResponseResult, error) {
+func List(ctx context.Context, client *v1.ServiceClient) ([]*ListView, *v1.ResponseResult, error) {
 	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodGet, url, nil)
 	if err != nil {
@@ -48,7 +48,7 @@ func List(ctx context.Context, client *v1.ServiceClient) ([]*View, *v1.ResponseR
 
 	// Extract clusters from the response body.
 	var result struct {
-		Clusters []*View `json:"clusters"`
+		Clusters []*ListView `json:"clusters"`
 	}
 	err = responseResult.ExtractResult(&result)
 	if err != nil {
@@ -59,7 +59,7 @@ func List(ctx context.Context, client *v1.ServiceClient) ([]*View, *v1.ResponseR
 }
 
 // Create requests a creation of a new cluster.
-func Create(ctx context.Context, client *v1.ServiceClient, opts *CreateOpts) (*View, *v1.ResponseResult, error) {
+func Create(ctx context.Context, client *v1.ServiceClient, opts *CreateOpts) (*GetView, *v1.ResponseResult, error) {
 	createClusterOpts := struct {
 		Cluster *CreateOpts `json:"cluster"`
 	}{
@@ -81,7 +81,7 @@ func Create(ctx context.Context, client *v1.ServiceClient, opts *CreateOpts) (*V
 
 	// Extract cluster from the response body.
 	var result struct {
-		Cluster *View `json:"cluster"`
+		Cluster *GetView `json:"cluster"`
 	}
 	err = responseResult.ExtractResult(&result)
 	if err != nil {
@@ -92,7 +92,7 @@ func Create(ctx context.Context, client *v1.ServiceClient, opts *CreateOpts) (*V
 }
 
 // Update requests an update of an existing cluster.
-func Update(ctx context.Context, client *v1.ServiceClient, clusterID string, opts *UpdateOpts) (*View, *v1.ResponseResult, error) {
+func Update(ctx context.Context, client *v1.ServiceClient, clusterID string, opts *UpdateOpts) (*GetView, *v1.ResponseResult, error) {
 	updateClusterOpts := struct {
 		Cluster *UpdateOpts `json:"cluster"`
 	}{
@@ -114,7 +114,7 @@ func Update(ctx context.Context, client *v1.ServiceClient, clusterID string, opt
 
 	// Extract cluster from the response body.
 	var result struct {
-		Cluster *View `json:"cluster"`
+		Cluster *GetView `json:"cluster"`
 	}
 	err = responseResult.ExtractResult(&result)
 	if err != nil {
@@ -226,7 +226,7 @@ func RotateCerts(ctx context.Context, client *v1.ServiceClient, clusterID string
 }
 
 // UpgradePatchVersion requests a Kubernetes patch version upgrade by cluster id.
-func UpgradePatchVersion(ctx context.Context, client *v1.ServiceClient, clusterID string) (*View, *v1.ResponseResult, error) {
+func UpgradePatchVersion(ctx context.Context, client *v1.ServiceClient, clusterID string) (*GetView, *v1.ResponseResult, error) {
 	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID, v1.ResourceURLUpgradePatchVersion}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodPost, url, nil)
 	if err != nil {
@@ -238,7 +238,7 @@ func UpgradePatchVersion(ctx context.Context, client *v1.ServiceClient, clusterI
 
 	// Extract a cluster from the response body.
 	var result struct {
-		Cluster *View `json:"cluster"`
+		Cluster *GetView `json:"cluster"`
 	}
 	err = responseResult.ExtractResult(&result)
 	if err != nil {
@@ -249,7 +249,7 @@ func UpgradePatchVersion(ctx context.Context, client *v1.ServiceClient, clusterI
 }
 
 // UpgradeMinorVersion requests a Kubernetes minor version upgrade by cluster id.
-func UpgradeMinorVersion(ctx context.Context, client *v1.ServiceClient, clusterID string) (*View, *v1.ResponseResult, error) {
+func UpgradeMinorVersion(ctx context.Context, client *v1.ServiceClient, clusterID string) (*GetView, *v1.ResponseResult, error) {
 	url := strings.Join([]string{client.Endpoint, v1.ResourceURLCluster, clusterID, v1.ResourceURLUpgradeMinorVersion}, "/")
 	responseResult, err := client.DoRequest(ctx, http.MethodPost, url, nil)
 	if err != nil {
@@ -261,7 +261,7 @@ func UpgradeMinorVersion(ctx context.Context, client *v1.ServiceClient, clusterI
 
 	// Extract a cluster from the response body.
 	var result struct {
-		Cluster *View `json:"cluster"`
+		Cluster *GetView `json:"cluster"`
 	}
 	err = responseResult.ExtractResult(&result)
 	if err != nil {
