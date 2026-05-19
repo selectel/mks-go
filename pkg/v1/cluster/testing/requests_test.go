@@ -561,6 +561,90 @@ func TestCreatePrivateKubeAPICluster(t *testing.T) {
 	}
 }
 
+func TestGetMultiAZCluster(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithoutBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters/a1b2c3d4-5678-90ab-cdef-1234567890ab",
+		RawResponse: testGetMultiAZClusterResponseRaw,
+		Method:      http.MethodGet,
+		Status:      http.StatusOK,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+	id := "a1b2c3d4-5678-90ab-cdef-1234567890ab"
+
+	actual, httpResponse, err := cluster.Get(ctx, testClient, id)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Get method")
+	}
+	if httpResponse.StatusCode != http.StatusOK {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusOK, httpResponse.StatusCode)
+	}
+	if !reflect.DeepEqual(expectedGetMultiAZClusterResponse, actual) {
+		t.Fatalf("expected %#v, but got %#v", expectedGetMultiAZClusterResponse, actual)
+	}
+}
+
+func TestCreateMultiAZCluster(t *testing.T) {
+	endpointCalled := false
+	testEnv := testutils.SetupTestEnv()
+	defer testEnv.TearDownTestEnv()
+
+	testutils.HandleReqWithBody(t, &testutils.HandleReqOpts{
+		Mux:         testEnv.Mux,
+		URL:         "/v1/clusters",
+		RawResponse: testCreateMultiAZClusterResponseRaw,
+		RawRequest:  testCreateMultiAZClusterOptsRaw,
+		Method:      http.MethodPost,
+		Status:      http.StatusCreated,
+		CallFlag:    &endpointCalled,
+	})
+
+	ctx := context.Background()
+	testClient := &v1.ServiceClient{
+		HTTPClient: &http.Client{},
+		TokenID:    testutils.TokenID,
+		Endpoint:   testEnv.Server.URL + "/v1",
+		UserAgent:  testutils.UserAgent,
+	}
+
+	actual, httpResponse, err := cluster.Create(ctx, testClient, testCreateMultiAZClusterOpts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !endpointCalled {
+		t.Fatal("endpoint wasn't called")
+	}
+	if httpResponse == nil {
+		t.Fatal("expected an HTTP response from the Create method")
+	}
+	if httpResponse.StatusCode != http.StatusCreated {
+		t.Fatalf("expected %d status in the HTTP response, but got %d",
+			http.StatusCreated, httpResponse.StatusCode)
+	}
+	if !reflect.DeepEqual(expectedCreateMultiAZClusterResponse, actual) {
+		t.Fatalf("expected %#v, but got %#v", expectedCreateMultiAZClusterResponse, actual)
+	}
+}
+
 func TestCreateClusterHTTPError(t *testing.T) {
 	endpointCalled := false
 	testEnv := testutils.SetupTestEnv()

@@ -31,6 +31,7 @@ const testGetClusterResponseRaw = `
         "updated_at": "2020-02-13T09:18:32.05753Z",
         "enable_patch_version_auto_upgrade": true,
         "zonal": false,
+        "cluster_type": "HIGH_AVAILABILITY",
         "kubernetes_options": {
             "enable_pod_security_policy": true,
             "feature_gates": [
@@ -87,6 +88,7 @@ var expectedGetClusterResponse = &cluster.GetView{
 		MaintenanceLastStart:          &clusterResponseTimestamp,
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
+		ClusterType:                   cluster.ClusterTypeHighAvailability,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: true,
 			FeatureGates: []string{
@@ -142,6 +144,7 @@ const testGetZonalClusterResponseRaw = `
         "updated_at": "2020-02-13T09:18:32.05753Z",
         "enable_patch_version_auto_upgrade": false,
         "zonal": true,
+        "cluster_type": "BASIC",
         "kubernetes_options": {
             "enable_pod_security_policy": true,
             "feature_gates": [
@@ -192,6 +195,7 @@ var expectedGetZonalClusterResponse = &cluster.GetView{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
 		Zonal:                         true,
+		ClusterType:                   cluster.ClusterTypeBasic,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: true,
 			FeatureGates: []string{
@@ -241,6 +245,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -281,6 +286,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": false,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -321,6 +327,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -361,6 +368,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": false,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -401,6 +409,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -441,6 +450,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": false,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -481,6 +491,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -521,6 +532,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": false,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -561,6 +573,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -601,6 +614,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -641,6 +655,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -681,6 +696,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -721,6 +737,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -761,6 +778,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": false,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -801,6 +819,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": true,
             "zonal": false,
+            "cluster_type": "HIGH_AVAILABILITY",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -841,6 +860,7 @@ const testListClustersResponseRaw = `
             "updated_at": "2020-02-13T09:18:32.05753Z",
             "enable_patch_version_auto_upgrade": false,
             "zonal": true,
+            "cluster_type": "BASIC",
             "kubernetes_options": {
                 "enable_pod_security_policy": false,
                 "feature_gates": [
@@ -892,6 +912,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: true,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -934,6 +955,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: false,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -976,6 +998,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: true,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1018,6 +1041,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: false,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1060,6 +1084,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: true,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1102,6 +1127,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: false,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1144,6 +1170,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: true,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1186,6 +1213,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: false,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1228,6 +1256,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: true,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1270,6 +1299,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: true,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1312,6 +1342,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: true,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1354,6 +1385,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: true,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1396,6 +1428,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: true,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1438,6 +1471,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: false,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1480,6 +1514,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: true,
 			Zonal:                         false,
+			ClusterType:                   cluster.ClusterTypeHighAvailability,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1522,6 +1557,7 @@ var expectedListClustersResponse = []*cluster.ListView{
 			EnableAutorepair:              true,
 			EnablePatchVersionAutoUpgrade: false,
 			Zonal:                         true,
+			ClusterType:                   cluster.ClusterTypeBasic,
 			KubernetesOptions: &cluster.KubernetesOptions{
 				EnablePodSecurityPolicy: false,
 				FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1678,6 +1714,7 @@ const testCreateClusterResponseRaw = `
         "subnet_id": "",
         "updated_at": null,
         "zonal": false,
+        "cluster_type": "HIGH_AVAILABILITY",
         "private_kube_api": false,
         "kubernetes_options": {
             "enable_pod_security_policy": false,
@@ -1732,6 +1769,7 @@ var expectedCreateClusterResponse = &cluster.GetView{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: true,
 		Zonal:                         false,
+		ClusterType:                   cluster.ClusterTypeHighAvailability,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: false,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
@@ -1893,6 +1931,7 @@ const testCreateClusterDisableBoolsResponseRaw = `
         "subnet_id": "",
         "updated_at": null,
         "zonal": false,
+        "cluster_type": "HIGH_AVAILABILITY",
         "private_kube_api": false,
         "cni_type": "CALICO"
     }
@@ -1922,6 +1961,7 @@ var expectedCreateClusterDisableBoolsResponse = &cluster.GetView{
 		EnableAutorepair:              false,
 		EnablePatchVersionAutoUpgrade: false,
 		Zonal:                         false,
+		ClusterType:                   cluster.ClusterTypeHighAvailability,
 		PrivateKubeAPI:                false,
 		CNIType:                       cluster.CNITypeCalico,
 	},
@@ -2001,6 +2041,7 @@ const testCreateZonalClusterResponseRaw = `
         "subnet_id": "",
         "updated_at": null,
         "zonal": true,
+        "cluster_type": "BASIC",
         "private_kube_api": false,
         "cni_type": "CALICO"
     }
@@ -2029,6 +2070,7 @@ var expectedCreateZonalClusterResponse = &cluster.GetView{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
 		Zonal:                         true,
+		ClusterType:                   cluster.ClusterTypeBasic,
 		CNIType:                       cluster.CNITypeCalico,
 	},
 }
@@ -2113,6 +2155,7 @@ const testCreatePrivateKubeAPIClusterResponseRaw = `
         "subnet_id": "",
         "updated_at": null,
         "zonal": false,
+        "cluster_type": "HIGH_AVAILABILITY",
         "private_kube_api": true,
         "cni_type": "CALICO"
     }
@@ -2141,6 +2184,7 @@ var expectedCreatePrivateKubeAPIClusterResponse = &cluster.GetView{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
 		Zonal:                         false,
+		ClusterType:                   cluster.ClusterTypeHighAvailability,
 		PrivateKubeAPI:                true,
 		CNIType:                       cluster.CNITypeCalico,
 	},
@@ -2346,6 +2390,7 @@ const testUpdateClusterWithEnabledPSPResponseRaw = `
         "subnet_id": "",
         "updated_at": null,
         "zonal": false,
+        "cluster_type": "HIGH_AVAILABILITY",
         "kubernetes_options": {
             "enable_pod_security_policy": true,
             "feature_gates": [
@@ -2381,10 +2426,208 @@ var expectedUpdateClusterWithEnabledPSPResponse = &cluster.GetView{
 		EnableAutorepair:              true,
 		EnablePatchVersionAutoUpgrade: false,
 		Zonal:                         false,
+		ClusterType:                   cluster.ClusterTypeHighAvailability,
 		KubernetesOptions: &cluster.KubernetesOptions{
 			EnablePodSecurityPolicy: true,
 			FeatureGates:            []string{"CSIMigrationOpenStack"},
 			AdmissionControllers:    []string{"LimitRanger"},
 		},
+	},
+}
+
+// testGetMultiAZClusterResponseRaw represents a raw multi-AZ cluster response from the Get request.
+const testGetMultiAZClusterResponseRaw = `
+{
+    "cluster": {
+        "additional_software": null,
+        "created_at": "2020-02-13T09:18:32.05753Z",
+        "enable_autorepair": true,
+        "id": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
+        "kube_api_ip": "203.0.113.150",
+        "kube_version": "1.30.0",
+        "maintenance_last_start": "2020-02-13T09:18:32.05753Z",
+        "maintenance_window_end": "03:00:00",
+        "maintenance_window_start": "01:00:00",
+        "name": "test-multi-az-cluster",
+        "network_id": "74a591be-6be7-4abc-d30f-1614c0f9721c",
+        "pki_tree_updated_at": "2020-02-13T09:18:32.05753Z",
+        "project_id": "65044a03bede4fd0a77e5a4c882e3059",
+        "region": "ru-1",
+        "status": "ACTIVE",
+        "subnet_id": "c872541d-2d83-419f-841d-8288201b8fb9",
+        "updated_at": "2020-02-13T09:18:32.05753Z",
+        "enable_patch_version_auto_upgrade": true,
+        "zonal": false,
+        "cluster_type": "HIGH_AVAILABILITY_MULTI_AZ",
+        "kubernetes_options": {
+            "enable_pod_security_policy": false,
+            "feature_gates": [],
+            "admission_controllers": [],
+            "audit_logs": {
+                "enabled": false,
+                "secret_name": ""
+            },
+            "oidc": {
+                "enabled": false,
+                "provider_name": "",
+                "issuer_url": "",
+                "client_id": "",
+                "username_claim": "",
+                "groups_claim": ""
+            }
+        },
+        "private_kube_api": false,
+        "cni_type": "CALICO"
+    }
+}
+`
+
+// expectedGetMultiAZClusterResponse represents an unmarshalled testGetMultiAZClusterResponseRaw.
+var expectedGetMultiAZClusterResponse = &cluster.GetView{
+	BaseView: cluster.BaseView{
+		ID:                            "a1b2c3d4-5678-90ab-cdef-1234567890ab",
+		CreatedAt:                     &clusterResponseTimestamp,
+		UpdatedAt:                     &clusterResponseTimestamp,
+		Name:                          "test-multi-az-cluster",
+		Status:                        cluster.StatusActive,
+		ProjectID:                     "65044a03bede4fd0a77e5a4c882e3059",
+		NetworkID:                     "74a591be-6be7-4abc-d30f-1614c0f9721c",
+		SubnetID:                      "c872541d-2d83-419f-841d-8288201b8fb9",
+		KubeAPIIP:                     "203.0.113.150",
+		KubeVersion:                   "1.30.0",
+		Region:                        "ru-1",
+		PKITreeUpdatedAt:              &clusterResponseTimestamp,
+		MaintenanceWindowStart:        "01:00:00",
+		MaintenanceWindowEnd:          "03:00:00",
+		MaintenanceLastStart:          &clusterResponseTimestamp,
+		EnableAutorepair:              true,
+		EnablePatchVersionAutoUpgrade: true,
+		Zonal:                         false,
+		ClusterType:                   cluster.ClusterTypeHighAvailabilityMultiAZ,
+		KubernetesOptions: &cluster.KubernetesOptions{
+			EnablePodSecurityPolicy: false,
+			FeatureGates:            []string{},
+			AdmissionControllers:    []string{},
+			AuditLogs: cluster.AuditLogs{
+				Enabled:    false,
+				SecretName: "",
+			},
+			OIDC: cluster.OIDC{
+				Enabled:       false,
+				ProviderName:  "",
+				IssuerURL:     "",
+				ClientID:      "",
+				UsernameClaim: "",
+				GroupsClaim:   "",
+			},
+		},
+		PrivateKubeAPI: false,
+		CNIType:        cluster.CNITypeCalico,
+	},
+}
+
+// testCreateMultiAZClusterOptsRaw represents marshalled options for the Create request
+// with cluster_type attribute set to HIGH_AVAILABILITY_MULTI_AZ.
+const testCreateMultiAZClusterOptsRaw = `
+{
+    "cluster": {
+        "name": "test-multi-az-cluster-0",
+        "kube_version": "1.30.0",
+        "region": "ru-1",
+        "nodegroups": [
+            {
+                "count": 3,
+                "cpus": 2,
+                "ram_mb": 4096,
+                "volume_gb": 20,
+                "volume_type": "fast.ru-1a",
+                "keypair_name": "ssh-key",
+                "availability_zone": "ru-1a",
+                "labels": {},
+                "taints": []
+            }
+        ],
+        "cluster_type": "HIGH_AVAILABILITY_MULTI_AZ"
+    }
+}
+`
+
+// testCreateMultiAZClusterOpts represents options for the Create request with cluster_type set.
+var testCreateMultiAZClusterOpts = &cluster.CreateOpts{
+	Name:        "test-multi-az-cluster-0",
+	KubeVersion: "1.30.0",
+	Region:      "ru-1",
+	Nodegroups: []*nodegroup.CreateOpts{
+		{
+			Count:            3,
+			CPUs:             2,
+			RAMMB:            4096,
+			VolumeGB:         20,
+			VolumeType:       "fast.ru-1a",
+			KeypairName:      "ssh-key",
+			AvailabilityZone: "ru-1a",
+			Labels:           map[string]string{},
+			Taints:           []nodegroup.Taint{},
+		},
+	},
+	ClusterType: func() *cluster.ClusterType {
+		ct := cluster.ClusterTypeHighAvailabilityMultiAZ
+		return &ct
+	}(),
+}
+
+// testCreateMultiAZClusterResponseRaw represents a raw response from the Create multi-AZ cluster request.
+const testCreateMultiAZClusterResponseRaw = `
+{
+    "cluster": {
+        "additional_software": null,
+        "created_at": "2020-02-13T09:18:32.05753Z",
+        "enable_autorepair": true,
+        "enable_patch_version_auto_upgrade": true,
+        "id": "b2c3d4e5-6789-01bc-defg-234567890abc",
+        "kube_api_ip": "",
+        "kube_version": "1.30.0",
+        "maintenance_last_start": "2020-02-13T09:18:32.05753Z",
+        "maintenance_window_end": "03:00:00",
+        "maintenance_window_start": "01:00:00",
+        "name": "test-multi-az-cluster-0",
+        "network_id": "",
+        "pki_tree_updated_at": null,
+        "project_id": "65044a03bede4fd0a77e5a4c882e3059",
+        "region": "ru-1",
+        "status": "PENDING_CREATE",
+        "subnet_id": "",
+        "updated_at": null,
+        "zonal": false,
+        "cluster_type": "HIGH_AVAILABILITY_MULTI_AZ",
+        "private_kube_api": false,
+        "cni_type": "CALICO"
+    }
+}
+`
+
+// expectedCreateMultiAZClusterResponse represents an unmarshalled testCreateMultiAZClusterResponseRaw.
+var expectedCreateMultiAZClusterResponse = &cluster.GetView{
+	BaseView: cluster.BaseView{
+		ID:                            "b2c3d4e5-6789-01bc-defg-234567890abc",
+		CreatedAt:                     &clusterResponseTimestamp,
+		UpdatedAt:                     nil,
+		Name:                          "test-multi-az-cluster-0",
+		Status:                        "PENDING_CREATE",
+		ProjectID:                     "65044a03bede4fd0a77e5a4c882e3059",
+		NetworkID:                     "",
+		SubnetID:                      "",
+		KubeAPIIP:                     "",
+		KubeVersion:                   "1.30.0",
+		Region:                        "ru-1",
+		PKITreeUpdatedAt:              nil,
+		MaintenanceWindowStart:        "01:00:00",
+		MaintenanceWindowEnd:          "03:00:00",
+		MaintenanceLastStart:          &clusterResponseTimestamp,
+		EnableAutorepair:              true,
+		EnablePatchVersionAutoUpgrade: true,
+		Zonal:                         false,
+		ClusterType:                   cluster.ClusterTypeHighAvailabilityMultiAZ,
+		CNIType:                       cluster.CNITypeCalico,
 	},
 }

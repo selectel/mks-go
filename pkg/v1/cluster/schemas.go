@@ -34,6 +34,15 @@ const (
 	CNITypeCilium CNIType = "CILIUM"
 )
 
+// ClusterType represents custom type for various cluster types.
+type ClusterType string //nolint:revive
+
+const (
+	ClusterTypeBasic                   ClusterType = "BASIC"
+	ClusterTypeHighAvailability        ClusterType = "HIGH_AVAILABILITY"
+	ClusterTypeHighAvailabilityMultiAZ ClusterType = "HIGH_AVAILABILITY_MULTI_AZ"
+)
+
 func getSupportedStatuses() []Status {
 	return []Status{
 		StatusActive,
@@ -127,7 +136,13 @@ type BaseView struct {
 
 	// Zonal specifies that cluster has only a single master and that
 	// control-plane is not in highly available mode.
+	//
+	// Deprecated: use ClusterType instead. Will be removed in v2.
 	Zonal bool `json:"zonal"`
+
+	// ClusterType represents the type of the cluster.
+	// Supported types are BASIC, HIGH_AVAILABILITY and HIGH_AVAILABILITY_MULTI_AZ.
+	ClusterType ClusterType `json:"cluster_type"`
 
 	// KubernetesOptions represents additional k8s options such as pod security policy,
 	// feature gates, admission controllers, audit logs and oidc.

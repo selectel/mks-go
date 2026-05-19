@@ -45,7 +45,14 @@ type CreateOpts struct {
 
 	// Zonal specifies that only a single zonal master will be created.
 	// It is needed if highly available control-plane is not required.
+	//
+	// Deprecated: use ClusterType instead. Will be removed in v2.
 	Zonal *bool `json:"zonal,omitempty"`
+
+	// ClusterType represents the type of the cluster to create.
+	// Supported types are BASIC, HIGH_AVAILABILITY and HIGH_AVAILABILITY_MULTI_AZ.
+	// If not specified, it is inferred from Zonal: true -> BASIC, false -> HIGH_AVAILABILITY.
+	ClusterType *ClusterType `json:"cluster_type,omitempty"`
 
 	// KubernetesOptions represents additional k8s options such as pod security policy,
 	// feature gates, admission controllers, audit logs and oidc.
