@@ -6,7 +6,7 @@ Example of getting a single cluster referenced by its id
 
 	mksCluster, err := cluster.Get(ctx, client, clusterID)
 	if err != nil {
-		log.Fatal(err)
+	  log.Fatal(err)
 	}
 	fmt.Printf("%+v\n", mksCluster)
 */

@@ -8,15 +8,21 @@ const (
 	NameNotFound                  = "not found"
 	NameUnknownStatus             = "unknown status"
 	NameHTTPError                 = "http error"
+	NameBadRequest                = "bad request"
+	NameConflict                  = "conflict"
 	NameEmptyFeatureGates         = "empty feature gates"
 	NameEmptyAdmissionControllers = "empty admission controllers"
 	NameEmptyKubeVersions         = "empty kube_versions"
+	NameEmptyNodegroups           = "empty nodegroups"
 )
 
 // Error message constants.
 const (
-	MsgInternalError   = "internal server error"
-	MsgClusterNotFound = "cluster not found"
+	MsgInternalError     = "internal server error"
+	MsgClusterNotFound   = "cluster not found"
+	MsgNodegroupNotFound = "nodegroup not found"
+	MsgBadRequest        = "bad request"
+	MsgConflict          = "conflict"
 )
 
 // Ptr returns a pointer to the given value.
