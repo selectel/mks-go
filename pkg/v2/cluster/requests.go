@@ -66,7 +66,7 @@ func Delete(ctx context.Context, client *v2.ServiceClient, clusterID string) err
 		return err
 	}
 
-	if responseResult.JSON204 != nil {
+	if responseResult.StatusCode() == http.StatusNoContent {
 		return nil
 	}
 
@@ -100,7 +100,7 @@ func RotateCerts(ctx context.Context, client *v2.ServiceClient, clusterID string
 		return err
 	}
 
-	if responseResult.JSON204 != nil {
+	if responseResult.StatusCode() == http.StatusNoContent {
 		return nil
 	}
 
