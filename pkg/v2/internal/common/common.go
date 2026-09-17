@@ -21,9 +21,10 @@ const (
 const (
 	MsgInternalError      = "internal server error"
 	MsgClusterNotFound    = "cluster not found"
-	MsgNodegroupNotFound  = "nodegroup not found"
+	MsgNodeNotFound       = "node not found"
 	MsgBadRequest         = "bad request"
 	MsgConflict           = "conflict"
+	MsgNodegroupNotFound  = "nodegroup not found"
 	MsgRegistriesNotFound = "registries not found"
 	MsgRegistryNotFound   = "registry not found"
 )

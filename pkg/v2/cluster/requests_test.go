@@ -386,7 +386,6 @@ func TestDelete(t *testing.T) {
 					StatusCode: http.StatusNoContent,
 					Status:     http.StatusText(http.StatusNoContent),
 				},
-				JSON204: common.Ptr(any(struct{}{})),
 			},
 		},
 		{
@@ -613,7 +612,6 @@ func TestRotateCerts(t *testing.T) {
 					StatusCode: http.StatusNoContent,
 					Status:     http.StatusText(http.StatusNoContent),
 				},
-				JSON204: common.Ptr(any(struct{}{})),
 			},
 		},
 		{
