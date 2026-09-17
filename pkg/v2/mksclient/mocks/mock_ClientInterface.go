@@ -1074,6 +1074,80 @@ func (_c *MockClientInterface_GetClusterV2_Call) RunAndReturn(run func(context.C
 	return _c
 }
 
+// GetControlPlaneLoggingV2 provides a mock function with given fields: ctx, clusterId, reqEditors
+func (_m *MockClientInterface) GetControlPlaneLoggingV2(ctx context.Context, clusterId mksclient.ClusterId, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, clusterId)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetControlPlaneLoggingV2")
+	}
+
+	var r0 *http.Response
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, clusterId, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, ...mksclient.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, clusterId, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*http.Response)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, ...mksclient.RequestEditorFn) error); ok {
+		r1 = rf(ctx, clusterId, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientInterface_GetControlPlaneLoggingV2_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetControlPlaneLoggingV2'
+type MockClientInterface_GetControlPlaneLoggingV2_Call struct {
+	*mock.Call
+}
+
+// GetControlPlaneLoggingV2 is a helper method to define mock.On call
+//   - ctx context.Context
+//   - clusterId mksclient.ClusterId
+//   - reqEditors ...mksclient.RequestEditorFn
+func (_e *MockClientInterface_Expecter) GetControlPlaneLoggingV2(ctx interface{}, clusterId interface{}, reqEditors ...interface{}) *MockClientInterface_GetControlPlaneLoggingV2_Call {
+	return &MockClientInterface_GetControlPlaneLoggingV2_Call{Call: _e.mock.On("GetControlPlaneLoggingV2",
+		append([]interface{}{ctx, clusterId}, reqEditors...)...)}
+}
+
+func (_c *MockClientInterface_GetControlPlaneLoggingV2_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_GetControlPlaneLoggingV2_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-2)
+		for i, a := range args[2:] {
+			if a != nil {
+				variadicArgs[i] = a.(mksclient.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(mksclient.ClusterId), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientInterface_GetControlPlaneLoggingV2_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_GetControlPlaneLoggingV2_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientInterface_GetControlPlaneLoggingV2_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_GetControlPlaneLoggingV2_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // GetLimitsV2 provides a mock function with given fields: ctx, params, reqEditors
 func (_m *MockClientInterface) GetLimitsV2(ctx context.Context, params *mksclient.GetLimitsV2Params, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
@@ -1598,6 +1672,157 @@ func (_c *MockClientInterface_GetUsageV2_Call) RunAndReturn(run func(context.Con
 	return _c
 }
 
+// InitControlPlaneLoggingV2 provides a mock function with given fields: ctx, clusterId, body, reqEditors
+func (_m *MockClientInterface) InitControlPlaneLoggingV2(ctx context.Context, clusterId mksclient.ClusterId, body mksclient.InitControlPlaneLoggingV2JSONRequestBody, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, clusterId, body)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for InitControlPlaneLoggingV2")
+	}
+
+	var r0 *http.Response
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.InitControlPlaneLoggingV2JSONRequestBody, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, clusterId, body, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.InitControlPlaneLoggingV2JSONRequestBody, ...mksclient.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, clusterId, body, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*http.Response)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, mksclient.InitControlPlaneLoggingV2JSONRequestBody, ...mksclient.RequestEditorFn) error); ok {
+		r1 = rf(ctx, clusterId, body, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientInterface_InitControlPlaneLoggingV2_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'InitControlPlaneLoggingV2'
+type MockClientInterface_InitControlPlaneLoggingV2_Call struct {
+	*mock.Call
+}
+
+// InitControlPlaneLoggingV2 is a helper method to define mock.On call
+//   - ctx context.Context
+//   - clusterId mksclient.ClusterId
+//   - body mksclient.InitControlPlaneLoggingV2JSONRequestBody
+//   - reqEditors ...mksclient.RequestEditorFn
+func (_e *MockClientInterface_Expecter) InitControlPlaneLoggingV2(ctx interface{}, clusterId interface{}, body interface{}, reqEditors ...interface{}) *MockClientInterface_InitControlPlaneLoggingV2_Call {
+	return &MockClientInterface_InitControlPlaneLoggingV2_Call{Call: _e.mock.On("InitControlPlaneLoggingV2",
+		append([]interface{}{ctx, clusterId, body}, reqEditors...)...)}
+}
+
+func (_c *MockClientInterface_InitControlPlaneLoggingV2_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, body mksclient.InitControlPlaneLoggingV2JSONRequestBody, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_InitControlPlaneLoggingV2_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-3)
+		for i, a := range args[3:] {
+			if a != nil {
+				variadicArgs[i] = a.(mksclient.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(mksclient.ClusterId), args[2].(mksclient.InitControlPlaneLoggingV2JSONRequestBody), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientInterface_InitControlPlaneLoggingV2_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_InitControlPlaneLoggingV2_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientInterface_InitControlPlaneLoggingV2_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, mksclient.InitControlPlaneLoggingV2JSONRequestBody, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_InitControlPlaneLoggingV2_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// InitControlPlaneLoggingV2WithBody provides a mock function with given fields: ctx, clusterId, contentType, body, reqEditors
+func (_m *MockClientInterface) InitControlPlaneLoggingV2WithBody(ctx context.Context, clusterId mksclient.ClusterId, contentType string, body io.Reader, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, clusterId, contentType, body)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for InitControlPlaneLoggingV2WithBody")
+	}
+
+	var r0 *http.Response
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, string, io.Reader, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, clusterId, contentType, body, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, string, io.Reader, ...mksclient.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, clusterId, contentType, body, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*http.Response)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, string, io.Reader, ...mksclient.RequestEditorFn) error); ok {
+		r1 = rf(ctx, clusterId, contentType, body, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientInterface_InitControlPlaneLoggingV2WithBody_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'InitControlPlaneLoggingV2WithBody'
+type MockClientInterface_InitControlPlaneLoggingV2WithBody_Call struct {
+	*mock.Call
+}
+
+// InitControlPlaneLoggingV2WithBody is a helper method to define mock.On call
+//   - ctx context.Context
+//   - clusterId mksclient.ClusterId
+//   - contentType string
+//   - body io.Reader
+//   - reqEditors ...mksclient.RequestEditorFn
+func (_e *MockClientInterface_Expecter) InitControlPlaneLoggingV2WithBody(ctx interface{}, clusterId interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientInterface_InitControlPlaneLoggingV2WithBody_Call {
+	return &MockClientInterface_InitControlPlaneLoggingV2WithBody_Call{Call: _e.mock.On("InitControlPlaneLoggingV2WithBody",
+		append([]interface{}{ctx, clusterId, contentType, body}, reqEditors...)...)}
+}
+
+func (_c *MockClientInterface_InitControlPlaneLoggingV2WithBody_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, contentType string, body io.Reader, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_InitControlPlaneLoggingV2WithBody_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-4)
+		for i, a := range args[4:] {
+			if a != nil {
+				variadicArgs[i] = a.(mksclient.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(mksclient.ClusterId), args[2].(string), args[3].(io.Reader), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientInterface_InitControlPlaneLoggingV2WithBody_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_InitControlPlaneLoggingV2WithBody_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientInterface_InitControlPlaneLoggingV2WithBody_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, string, io.Reader, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_InitControlPlaneLoggingV2WithBody_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // ListAdmissionControllersV2 provides a mock function with given fields: ctx, reqEditors
 func (_m *MockClientInterface) ListAdmissionControllersV2(ctx context.Context, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
@@ -1890,6 +2115,80 @@ func (_c *MockClientInterface_ListKubeVersionsV2_Call) RunAndReturn(run func(con
 	return _c
 }
 
+// ListLogComponentsV2 provides a mock function with given fields: ctx, params, reqEditors
+func (_m *MockClientInterface) ListLogComponentsV2(ctx context.Context, params *mksclient.ListLogComponentsV2Params, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, params)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for ListLogComponentsV2")
+	}
+
+	var r0 *http.Response
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, *mksclient.ListLogComponentsV2Params, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, params, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, *mksclient.ListLogComponentsV2Params, ...mksclient.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, params, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*http.Response)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, *mksclient.ListLogComponentsV2Params, ...mksclient.RequestEditorFn) error); ok {
+		r1 = rf(ctx, params, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientInterface_ListLogComponentsV2_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ListLogComponentsV2'
+type MockClientInterface_ListLogComponentsV2_Call struct {
+	*mock.Call
+}
+
+// ListLogComponentsV2 is a helper method to define mock.On call
+//   - ctx context.Context
+//   - params *mksclient.ListLogComponentsV2Params
+//   - reqEditors ...mksclient.RequestEditorFn
+func (_e *MockClientInterface_Expecter) ListLogComponentsV2(ctx interface{}, params interface{}, reqEditors ...interface{}) *MockClientInterface_ListLogComponentsV2_Call {
+	return &MockClientInterface_ListLogComponentsV2_Call{Call: _e.mock.On("ListLogComponentsV2",
+		append([]interface{}{ctx, params}, reqEditors...)...)}
+}
+
+func (_c *MockClientInterface_ListLogComponentsV2_Call) Run(run func(ctx context.Context, params *mksclient.ListLogComponentsV2Params, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_ListLogComponentsV2_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-2)
+		for i, a := range args[2:] {
+			if a != nil {
+				variadicArgs[i] = a.(mksclient.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(*mksclient.ListLogComponentsV2Params), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientInterface_ListLogComponentsV2_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_ListLogComponentsV2_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientInterface_ListLogComponentsV2_Call) RunAndReturn(run func(context.Context, *mksclient.ListLogComponentsV2Params, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListLogComponentsV2_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // ListNodegroupsV2 provides a mock function with given fields: ctx, clusterId, reqEditors
 func (_m *MockClientInterface) ListNodegroupsV2(ctx context.Context, clusterId mksclient.ClusterId, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
@@ -2035,6 +2334,463 @@ func (_c *MockClientInterface_ListTasksV2_Call) Return(_a0 *http.Response, _a1 e
 }
 
 func (_c *MockClientInterface_ListTasksV2_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, *mksclient.ListTasksV2Params, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_ListTasksV2_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// PatchClusterV2 provides a mock function with given fields: ctx, clusterId, body, reqEditors
+func (_m *MockClientInterface) PatchClusterV2(ctx context.Context, clusterId mksclient.ClusterId, body mksclient.PatchClusterV2JSONRequestBody, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, clusterId, body)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for PatchClusterV2")
+	}
+
+	var r0 *http.Response
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.PatchClusterV2JSONRequestBody, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, clusterId, body, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.PatchClusterV2JSONRequestBody, ...mksclient.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, clusterId, body, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*http.Response)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, mksclient.PatchClusterV2JSONRequestBody, ...mksclient.RequestEditorFn) error); ok {
+		r1 = rf(ctx, clusterId, body, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientInterface_PatchClusterV2_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PatchClusterV2'
+type MockClientInterface_PatchClusterV2_Call struct {
+	*mock.Call
+}
+
+// PatchClusterV2 is a helper method to define mock.On call
+//   - ctx context.Context
+//   - clusterId mksclient.ClusterId
+//   - body mksclient.PatchClusterV2JSONRequestBody
+//   - reqEditors ...mksclient.RequestEditorFn
+func (_e *MockClientInterface_Expecter) PatchClusterV2(ctx interface{}, clusterId interface{}, body interface{}, reqEditors ...interface{}) *MockClientInterface_PatchClusterV2_Call {
+	return &MockClientInterface_PatchClusterV2_Call{Call: _e.mock.On("PatchClusterV2",
+		append([]interface{}{ctx, clusterId, body}, reqEditors...)...)}
+}
+
+func (_c *MockClientInterface_PatchClusterV2_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, body mksclient.PatchClusterV2JSONRequestBody, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_PatchClusterV2_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-3)
+		for i, a := range args[3:] {
+			if a != nil {
+				variadicArgs[i] = a.(mksclient.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(mksclient.ClusterId), args[2].(mksclient.PatchClusterV2JSONRequestBody), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientInterface_PatchClusterV2_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_PatchClusterV2_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientInterface_PatchClusterV2_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, mksclient.PatchClusterV2JSONRequestBody, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_PatchClusterV2_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// PatchClusterV2WithBody provides a mock function with given fields: ctx, clusterId, contentType, body, reqEditors
+func (_m *MockClientInterface) PatchClusterV2WithBody(ctx context.Context, clusterId mksclient.ClusterId, contentType string, body io.Reader, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, clusterId, contentType, body)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for PatchClusterV2WithBody")
+	}
+
+	var r0 *http.Response
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, string, io.Reader, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, clusterId, contentType, body, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, string, io.Reader, ...mksclient.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, clusterId, contentType, body, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*http.Response)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, string, io.Reader, ...mksclient.RequestEditorFn) error); ok {
+		r1 = rf(ctx, clusterId, contentType, body, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientInterface_PatchClusterV2WithBody_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PatchClusterV2WithBody'
+type MockClientInterface_PatchClusterV2WithBody_Call struct {
+	*mock.Call
+}
+
+// PatchClusterV2WithBody is a helper method to define mock.On call
+//   - ctx context.Context
+//   - clusterId mksclient.ClusterId
+//   - contentType string
+//   - body io.Reader
+//   - reqEditors ...mksclient.RequestEditorFn
+func (_e *MockClientInterface_Expecter) PatchClusterV2WithBody(ctx interface{}, clusterId interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientInterface_PatchClusterV2WithBody_Call {
+	return &MockClientInterface_PatchClusterV2WithBody_Call{Call: _e.mock.On("PatchClusterV2WithBody",
+		append([]interface{}{ctx, clusterId, contentType, body}, reqEditors...)...)}
+}
+
+func (_c *MockClientInterface_PatchClusterV2WithBody_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, contentType string, body io.Reader, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_PatchClusterV2WithBody_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-4)
+		for i, a := range args[4:] {
+			if a != nil {
+				variadicArgs[i] = a.(mksclient.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(mksclient.ClusterId), args[2].(string), args[3].(io.Reader), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientInterface_PatchClusterV2WithBody_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_PatchClusterV2WithBody_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientInterface_PatchClusterV2WithBody_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, string, io.Reader, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_PatchClusterV2WithBody_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// PatchNodegroupV2 provides a mock function with given fields: ctx, clusterId, nodegroupId, body, reqEditors
+func (_m *MockClientInterface) PatchNodegroupV2(ctx context.Context, clusterId mksclient.ClusterId, nodegroupId mksclient.NodegroupId, body mksclient.PatchNodegroupV2JSONRequestBody, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, clusterId, nodegroupId, body)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for PatchNodegroupV2")
+	}
+
+	var r0 *http.Response
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, mksclient.PatchNodegroupV2JSONRequestBody, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, clusterId, nodegroupId, body, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, mksclient.PatchNodegroupV2JSONRequestBody, ...mksclient.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, clusterId, nodegroupId, body, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*http.Response)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, mksclient.PatchNodegroupV2JSONRequestBody, ...mksclient.RequestEditorFn) error); ok {
+		r1 = rf(ctx, clusterId, nodegroupId, body, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientInterface_PatchNodegroupV2_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PatchNodegroupV2'
+type MockClientInterface_PatchNodegroupV2_Call struct {
+	*mock.Call
+}
+
+// PatchNodegroupV2 is a helper method to define mock.On call
+//   - ctx context.Context
+//   - clusterId mksclient.ClusterId
+//   - nodegroupId mksclient.NodegroupId
+//   - body mksclient.PatchNodegroupV2JSONRequestBody
+//   - reqEditors ...mksclient.RequestEditorFn
+func (_e *MockClientInterface_Expecter) PatchNodegroupV2(ctx interface{}, clusterId interface{}, nodegroupId interface{}, body interface{}, reqEditors ...interface{}) *MockClientInterface_PatchNodegroupV2_Call {
+	return &MockClientInterface_PatchNodegroupV2_Call{Call: _e.mock.On("PatchNodegroupV2",
+		append([]interface{}{ctx, clusterId, nodegroupId, body}, reqEditors...)...)}
+}
+
+func (_c *MockClientInterface_PatchNodegroupV2_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, nodegroupId mksclient.NodegroupId, body mksclient.PatchNodegroupV2JSONRequestBody, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_PatchNodegroupV2_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-4)
+		for i, a := range args[4:] {
+			if a != nil {
+				variadicArgs[i] = a.(mksclient.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(mksclient.ClusterId), args[2].(mksclient.NodegroupId), args[3].(mksclient.PatchNodegroupV2JSONRequestBody), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientInterface_PatchNodegroupV2_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_PatchNodegroupV2_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientInterface_PatchNodegroupV2_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, mksclient.PatchNodegroupV2JSONRequestBody, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_PatchNodegroupV2_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// PatchNodegroupV2WithBody provides a mock function with given fields: ctx, clusterId, nodegroupId, contentType, body, reqEditors
+func (_m *MockClientInterface) PatchNodegroupV2WithBody(ctx context.Context, clusterId mksclient.ClusterId, nodegroupId mksclient.NodegroupId, contentType string, body io.Reader, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, clusterId, nodegroupId, contentType, body)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for PatchNodegroupV2WithBody")
+	}
+
+	var r0 *http.Response
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, string, io.Reader, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, clusterId, nodegroupId, contentType, body, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, string, io.Reader, ...mksclient.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, clusterId, nodegroupId, contentType, body, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*http.Response)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, string, io.Reader, ...mksclient.RequestEditorFn) error); ok {
+		r1 = rf(ctx, clusterId, nodegroupId, contentType, body, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientInterface_PatchNodegroupV2WithBody_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PatchNodegroupV2WithBody'
+type MockClientInterface_PatchNodegroupV2WithBody_Call struct {
+	*mock.Call
+}
+
+// PatchNodegroupV2WithBody is a helper method to define mock.On call
+//   - ctx context.Context
+//   - clusterId mksclient.ClusterId
+//   - nodegroupId mksclient.NodegroupId
+//   - contentType string
+//   - body io.Reader
+//   - reqEditors ...mksclient.RequestEditorFn
+func (_e *MockClientInterface_Expecter) PatchNodegroupV2WithBody(ctx interface{}, clusterId interface{}, nodegroupId interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientInterface_PatchNodegroupV2WithBody_Call {
+	return &MockClientInterface_PatchNodegroupV2WithBody_Call{Call: _e.mock.On("PatchNodegroupV2WithBody",
+		append([]interface{}{ctx, clusterId, nodegroupId, contentType, body}, reqEditors...)...)}
+}
+
+func (_c *MockClientInterface_PatchNodegroupV2WithBody_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, nodegroupId mksclient.NodegroupId, contentType string, body io.Reader, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_PatchNodegroupV2WithBody_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-5)
+		for i, a := range args[5:] {
+			if a != nil {
+				variadicArgs[i] = a.(mksclient.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(mksclient.ClusterId), args[2].(mksclient.NodegroupId), args[3].(string), args[4].(io.Reader), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientInterface_PatchNodegroupV2WithBody_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_PatchNodegroupV2WithBody_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientInterface_PatchNodegroupV2WithBody_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, string, io.Reader, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_PatchNodegroupV2WithBody_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// PutNodegroupV2 provides a mock function with given fields: ctx, clusterId, nodegroupId, body, reqEditors
+func (_m *MockClientInterface) PutNodegroupV2(ctx context.Context, clusterId mksclient.ClusterId, nodegroupId mksclient.NodegroupId, body mksclient.PutNodegroupV2JSONRequestBody, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, clusterId, nodegroupId, body)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for PutNodegroupV2")
+	}
+
+	var r0 *http.Response
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, mksclient.PutNodegroupV2JSONRequestBody, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, clusterId, nodegroupId, body, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, mksclient.PutNodegroupV2JSONRequestBody, ...mksclient.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, clusterId, nodegroupId, body, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*http.Response)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, mksclient.PutNodegroupV2JSONRequestBody, ...mksclient.RequestEditorFn) error); ok {
+		r1 = rf(ctx, clusterId, nodegroupId, body, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientInterface_PutNodegroupV2_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PutNodegroupV2'
+type MockClientInterface_PutNodegroupV2_Call struct {
+	*mock.Call
+}
+
+// PutNodegroupV2 is a helper method to define mock.On call
+//   - ctx context.Context
+//   - clusterId mksclient.ClusterId
+//   - nodegroupId mksclient.NodegroupId
+//   - body mksclient.PutNodegroupV2JSONRequestBody
+//   - reqEditors ...mksclient.RequestEditorFn
+func (_e *MockClientInterface_Expecter) PutNodegroupV2(ctx interface{}, clusterId interface{}, nodegroupId interface{}, body interface{}, reqEditors ...interface{}) *MockClientInterface_PutNodegroupV2_Call {
+	return &MockClientInterface_PutNodegroupV2_Call{Call: _e.mock.On("PutNodegroupV2",
+		append([]interface{}{ctx, clusterId, nodegroupId, body}, reqEditors...)...)}
+}
+
+func (_c *MockClientInterface_PutNodegroupV2_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, nodegroupId mksclient.NodegroupId, body mksclient.PutNodegroupV2JSONRequestBody, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_PutNodegroupV2_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-4)
+		for i, a := range args[4:] {
+			if a != nil {
+				variadicArgs[i] = a.(mksclient.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(mksclient.ClusterId), args[2].(mksclient.NodegroupId), args[3].(mksclient.PutNodegroupV2JSONRequestBody), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientInterface_PutNodegroupV2_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_PutNodegroupV2_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientInterface_PutNodegroupV2_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, mksclient.PutNodegroupV2JSONRequestBody, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_PutNodegroupV2_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// PutNodegroupV2WithBody provides a mock function with given fields: ctx, clusterId, nodegroupId, contentType, body, reqEditors
+func (_m *MockClientInterface) PutNodegroupV2WithBody(ctx context.Context, clusterId mksclient.ClusterId, nodegroupId mksclient.NodegroupId, contentType string, body io.Reader, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, clusterId, nodegroupId, contentType, body)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for PutNodegroupV2WithBody")
+	}
+
+	var r0 *http.Response
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, string, io.Reader, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, clusterId, nodegroupId, contentType, body, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, string, io.Reader, ...mksclient.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, clusterId, nodegroupId, contentType, body, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*http.Response)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, string, io.Reader, ...mksclient.RequestEditorFn) error); ok {
+		r1 = rf(ctx, clusterId, nodegroupId, contentType, body, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientInterface_PutNodegroupV2WithBody_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'PutNodegroupV2WithBody'
+type MockClientInterface_PutNodegroupV2WithBody_Call struct {
+	*mock.Call
+}
+
+// PutNodegroupV2WithBody is a helper method to define mock.On call
+//   - ctx context.Context
+//   - clusterId mksclient.ClusterId
+//   - nodegroupId mksclient.NodegroupId
+//   - contentType string
+//   - body io.Reader
+//   - reqEditors ...mksclient.RequestEditorFn
+func (_e *MockClientInterface_Expecter) PutNodegroupV2WithBody(ctx interface{}, clusterId interface{}, nodegroupId interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientInterface_PutNodegroupV2WithBody_Call {
+	return &MockClientInterface_PutNodegroupV2WithBody_Call{Call: _e.mock.On("PutNodegroupV2WithBody",
+		append([]interface{}{ctx, clusterId, nodegroupId, contentType, body}, reqEditors...)...)}
+}
+
+func (_c *MockClientInterface_PutNodegroupV2WithBody_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, nodegroupId mksclient.NodegroupId, contentType string, body io.Reader, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_PutNodegroupV2WithBody_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-5)
+		for i, a := range args[5:] {
+			if a != nil {
+				variadicArgs[i] = a.(mksclient.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(mksclient.ClusterId), args[2].(mksclient.NodegroupId), args[3].(string), args[4].(io.Reader), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientInterface_PutNodegroupV2WithBody_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_PutNodegroupV2WithBody_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientInterface_PutNodegroupV2WithBody_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, string, io.Reader, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_PutNodegroupV2WithBody_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -2493,36 +3249,36 @@ func (_c *MockClientInterface_UpdateClusterV2WithBody_Call) RunAndReturn(run fun
 	return _c
 }
 
-// UpdateNodegroupV2 provides a mock function with given fields: ctx, clusterId, nodegroupId, body, reqEditors
-func (_m *MockClientInterface) UpdateNodegroupV2(ctx context.Context, clusterId mksclient.ClusterId, nodegroupId mksclient.NodegroupId, body mksclient.UpdateNodegroupV2JSONRequestBody, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
+// UpdateControlPlaneLoggingV2 provides a mock function with given fields: ctx, clusterId, body, reqEditors
+func (_m *MockClientInterface) UpdateControlPlaneLoggingV2(ctx context.Context, clusterId mksclient.ClusterId, body mksclient.UpdateControlPlaneLoggingV2JSONRequestBody, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
 	_va := make([]interface{}, len(reqEditors))
 	for _i := range reqEditors {
 		_va[_i] = reqEditors[_i]
 	}
 	var _ca []interface{}
-	_ca = append(_ca, ctx, clusterId, nodegroupId, body)
+	_ca = append(_ca, ctx, clusterId, body)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
 
 	if len(ret) == 0 {
-		panic("no return value specified for UpdateNodegroupV2")
+		panic("no return value specified for UpdateControlPlaneLoggingV2")
 	}
 
 	var r0 *http.Response
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, mksclient.UpdateNodegroupV2JSONRequestBody, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
-		return rf(ctx, clusterId, nodegroupId, body, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.UpdateControlPlaneLoggingV2JSONRequestBody, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, clusterId, body, reqEditors...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, mksclient.UpdateNodegroupV2JSONRequestBody, ...mksclient.RequestEditorFn) *http.Response); ok {
-		r0 = rf(ctx, clusterId, nodegroupId, body, reqEditors...)
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.UpdateControlPlaneLoggingV2JSONRequestBody, ...mksclient.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, clusterId, body, reqEditors...)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*http.Response)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, mksclient.UpdateNodegroupV2JSONRequestBody, ...mksclient.RequestEditorFn) error); ok {
-		r1 = rf(ctx, clusterId, nodegroupId, body, reqEditors...)
+	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, mksclient.UpdateControlPlaneLoggingV2JSONRequestBody, ...mksclient.RequestEditorFn) error); ok {
+		r1 = rf(ctx, clusterId, body, reqEditors...)
 	} else {
 		r1 = ret.Error(1)
 	}
@@ -2530,23 +3286,98 @@ func (_m *MockClientInterface) UpdateNodegroupV2(ctx context.Context, clusterId 
 	return r0, r1
 }
 
-// MockClientInterface_UpdateNodegroupV2_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'UpdateNodegroupV2'
-type MockClientInterface_UpdateNodegroupV2_Call struct {
+// MockClientInterface_UpdateControlPlaneLoggingV2_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'UpdateControlPlaneLoggingV2'
+type MockClientInterface_UpdateControlPlaneLoggingV2_Call struct {
 	*mock.Call
 }
 
-// UpdateNodegroupV2 is a helper method to define mock.On call
+// UpdateControlPlaneLoggingV2 is a helper method to define mock.On call
 //   - ctx context.Context
 //   - clusterId mksclient.ClusterId
-//   - nodegroupId mksclient.NodegroupId
-//   - body mksclient.UpdateNodegroupV2JSONRequestBody
+//   - body mksclient.UpdateControlPlaneLoggingV2JSONRequestBody
 //   - reqEditors ...mksclient.RequestEditorFn
-func (_e *MockClientInterface_Expecter) UpdateNodegroupV2(ctx interface{}, clusterId interface{}, nodegroupId interface{}, body interface{}, reqEditors ...interface{}) *MockClientInterface_UpdateNodegroupV2_Call {
-	return &MockClientInterface_UpdateNodegroupV2_Call{Call: _e.mock.On("UpdateNodegroupV2",
-		append([]interface{}{ctx, clusterId, nodegroupId, body}, reqEditors...)...)}
+func (_e *MockClientInterface_Expecter) UpdateControlPlaneLoggingV2(ctx interface{}, clusterId interface{}, body interface{}, reqEditors ...interface{}) *MockClientInterface_UpdateControlPlaneLoggingV2_Call {
+	return &MockClientInterface_UpdateControlPlaneLoggingV2_Call{Call: _e.mock.On("UpdateControlPlaneLoggingV2",
+		append([]interface{}{ctx, clusterId, body}, reqEditors...)...)}
 }
 
-func (_c *MockClientInterface_UpdateNodegroupV2_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, nodegroupId mksclient.NodegroupId, body mksclient.UpdateNodegroupV2JSONRequestBody, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_UpdateNodegroupV2_Call {
+func (_c *MockClientInterface_UpdateControlPlaneLoggingV2_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, body mksclient.UpdateControlPlaneLoggingV2JSONRequestBody, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_UpdateControlPlaneLoggingV2_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-3)
+		for i, a := range args[3:] {
+			if a != nil {
+				variadicArgs[i] = a.(mksclient.RequestEditorFn)
+			}
+		}
+		run(args[0].(context.Context), args[1].(mksclient.ClusterId), args[2].(mksclient.UpdateControlPlaneLoggingV2JSONRequestBody), variadicArgs...)
+	})
+	return _c
+}
+
+func (_c *MockClientInterface_UpdateControlPlaneLoggingV2_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_UpdateControlPlaneLoggingV2_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *MockClientInterface_UpdateControlPlaneLoggingV2_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, mksclient.UpdateControlPlaneLoggingV2JSONRequestBody, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_UpdateControlPlaneLoggingV2_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// UpdateControlPlaneLoggingV2WithBody provides a mock function with given fields: ctx, clusterId, contentType, body, reqEditors
+func (_m *MockClientInterface) UpdateControlPlaneLoggingV2WithBody(ctx context.Context, clusterId mksclient.ClusterId, contentType string, body io.Reader, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
+	_va := make([]interface{}, len(reqEditors))
+	for _i := range reqEditors {
+		_va[_i] = reqEditors[_i]
+	}
+	var _ca []interface{}
+	_ca = append(_ca, ctx, clusterId, contentType, body)
+	_ca = append(_ca, _va...)
+	ret := _m.Called(_ca...)
+
+	if len(ret) == 0 {
+		panic("no return value specified for UpdateControlPlaneLoggingV2WithBody")
+	}
+
+	var r0 *http.Response
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, string, io.Reader, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
+		return rf(ctx, clusterId, contentType, body, reqEditors...)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, string, io.Reader, ...mksclient.RequestEditorFn) *http.Response); ok {
+		r0 = rf(ctx, clusterId, contentType, body, reqEditors...)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*http.Response)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, string, io.Reader, ...mksclient.RequestEditorFn) error); ok {
+		r1 = rf(ctx, clusterId, contentType, body, reqEditors...)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// MockClientInterface_UpdateControlPlaneLoggingV2WithBody_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'UpdateControlPlaneLoggingV2WithBody'
+type MockClientInterface_UpdateControlPlaneLoggingV2WithBody_Call struct {
+	*mock.Call
+}
+
+// UpdateControlPlaneLoggingV2WithBody is a helper method to define mock.On call
+//   - ctx context.Context
+//   - clusterId mksclient.ClusterId
+//   - contentType string
+//   - body io.Reader
+//   - reqEditors ...mksclient.RequestEditorFn
+func (_e *MockClientInterface_Expecter) UpdateControlPlaneLoggingV2WithBody(ctx interface{}, clusterId interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientInterface_UpdateControlPlaneLoggingV2WithBody_Call {
+	return &MockClientInterface_UpdateControlPlaneLoggingV2WithBody_Call{Call: _e.mock.On("UpdateControlPlaneLoggingV2WithBody",
+		append([]interface{}{ctx, clusterId, contentType, body}, reqEditors...)...)}
+}
+
+func (_c *MockClientInterface_UpdateControlPlaneLoggingV2WithBody_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, contentType string, body io.Reader, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_UpdateControlPlaneLoggingV2WithBody_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-4)
 		for i, a := range args[4:] {
@@ -2554,94 +3385,17 @@ func (_c *MockClientInterface_UpdateNodegroupV2_Call) Run(run func(ctx context.C
 				variadicArgs[i] = a.(mksclient.RequestEditorFn)
 			}
 		}
-		run(args[0].(context.Context), args[1].(mksclient.ClusterId), args[2].(mksclient.NodegroupId), args[3].(mksclient.UpdateNodegroupV2JSONRequestBody), variadicArgs...)
+		run(args[0].(context.Context), args[1].(mksclient.ClusterId), args[2].(string), args[3].(io.Reader), variadicArgs...)
 	})
 	return _c
 }
 
-func (_c *MockClientInterface_UpdateNodegroupV2_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_UpdateNodegroupV2_Call {
+func (_c *MockClientInterface_UpdateControlPlaneLoggingV2WithBody_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_UpdateControlPlaneLoggingV2WithBody_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockClientInterface_UpdateNodegroupV2_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, mksclient.UpdateNodegroupV2JSONRequestBody, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_UpdateNodegroupV2_Call {
-	_c.Call.Return(run)
-	return _c
-}
-
-// UpdateNodegroupV2WithBody provides a mock function with given fields: ctx, clusterId, nodegroupId, contentType, body, reqEditors
-func (_m *MockClientInterface) UpdateNodegroupV2WithBody(ctx context.Context, clusterId mksclient.ClusterId, nodegroupId mksclient.NodegroupId, contentType string, body io.Reader, reqEditors ...mksclient.RequestEditorFn) (*http.Response, error) {
-	_va := make([]interface{}, len(reqEditors))
-	for _i := range reqEditors {
-		_va[_i] = reqEditors[_i]
-	}
-	var _ca []interface{}
-	_ca = append(_ca, ctx, clusterId, nodegroupId, contentType, body)
-	_ca = append(_ca, _va...)
-	ret := _m.Called(_ca...)
-
-	if len(ret) == 0 {
-		panic("no return value specified for UpdateNodegroupV2WithBody")
-	}
-
-	var r0 *http.Response
-	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, string, io.Reader, ...mksclient.RequestEditorFn) (*http.Response, error)); ok {
-		return rf(ctx, clusterId, nodegroupId, contentType, body, reqEditors...)
-	}
-	if rf, ok := ret.Get(0).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, string, io.Reader, ...mksclient.RequestEditorFn) *http.Response); ok {
-		r0 = rf(ctx, clusterId, nodegroupId, contentType, body, reqEditors...)
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*http.Response)
-		}
-	}
-
-	if rf, ok := ret.Get(1).(func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, string, io.Reader, ...mksclient.RequestEditorFn) error); ok {
-		r1 = rf(ctx, clusterId, nodegroupId, contentType, body, reqEditors...)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
-// MockClientInterface_UpdateNodegroupV2WithBody_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'UpdateNodegroupV2WithBody'
-type MockClientInterface_UpdateNodegroupV2WithBody_Call struct {
-	*mock.Call
-}
-
-// UpdateNodegroupV2WithBody is a helper method to define mock.On call
-//   - ctx context.Context
-//   - clusterId mksclient.ClusterId
-//   - nodegroupId mksclient.NodegroupId
-//   - contentType string
-//   - body io.Reader
-//   - reqEditors ...mksclient.RequestEditorFn
-func (_e *MockClientInterface_Expecter) UpdateNodegroupV2WithBody(ctx interface{}, clusterId interface{}, nodegroupId interface{}, contentType interface{}, body interface{}, reqEditors ...interface{}) *MockClientInterface_UpdateNodegroupV2WithBody_Call {
-	return &MockClientInterface_UpdateNodegroupV2WithBody_Call{Call: _e.mock.On("UpdateNodegroupV2WithBody",
-		append([]interface{}{ctx, clusterId, nodegroupId, contentType, body}, reqEditors...)...)}
-}
-
-func (_c *MockClientInterface_UpdateNodegroupV2WithBody_Call) Run(run func(ctx context.Context, clusterId mksclient.ClusterId, nodegroupId mksclient.NodegroupId, contentType string, body io.Reader, reqEditors ...mksclient.RequestEditorFn)) *MockClientInterface_UpdateNodegroupV2WithBody_Call {
-	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]mksclient.RequestEditorFn, len(args)-5)
-		for i, a := range args[5:] {
-			if a != nil {
-				variadicArgs[i] = a.(mksclient.RequestEditorFn)
-			}
-		}
-		run(args[0].(context.Context), args[1].(mksclient.ClusterId), args[2].(mksclient.NodegroupId), args[3].(string), args[4].(io.Reader), variadicArgs...)
-	})
-	return _c
-}
-
-func (_c *MockClientInterface_UpdateNodegroupV2WithBody_Call) Return(_a0 *http.Response, _a1 error) *MockClientInterface_UpdateNodegroupV2WithBody_Call {
-	_c.Call.Return(_a0, _a1)
-	return _c
-}
-
-func (_c *MockClientInterface_UpdateNodegroupV2WithBody_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, mksclient.NodegroupId, string, io.Reader, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_UpdateNodegroupV2WithBody_Call {
+func (_c *MockClientInterface_UpdateControlPlaneLoggingV2WithBody_Call) RunAndReturn(run func(context.Context, mksclient.ClusterId, string, io.Reader, ...mksclient.RequestEditorFn) (*http.Response, error)) *MockClientInterface_UpdateControlPlaneLoggingV2WithBody_Call {
 	_c.Call.Return(run)
 	return _c
 }

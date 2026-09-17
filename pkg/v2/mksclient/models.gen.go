@@ -7,6 +7,31 @@ import (
 	"time"
 )
 
+const (
+	Iam_token_project_scopedScopes = "iam_token_project_scoped.Scopes"
+)
+
+// Defines values for ClusterClusterType.
+const (
+	ClusterClusterTypeBASIC                   ClusterClusterType = "BASIC"
+	ClusterClusterTypeHIGHAVAILABILITY        ClusterClusterType = "HIGH_AVAILABILITY"
+	ClusterClusterTypeHIGHAVAILABILITYMULTIAZ ClusterClusterType = "HIGH_AVAILABILITY_MULTI_AZ"
+)
+
+// Valid indicates whether the value is a known member of the ClusterClusterType enum.
+func (e ClusterClusterType) Valid() bool {
+	switch e {
+	case ClusterClusterTypeBASIC:
+		return true
+	case ClusterClusterTypeHIGHAVAILABILITY:
+		return true
+	case ClusterClusterTypeHIGHAVAILABILITYMULTIAZ:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ClusterCniType.
 const (
 	ClusterCniTypeCALICO ClusterCniType = "CALICO"
@@ -61,6 +86,48 @@ func (e ClusterStatus) Valid() bool {
 	case ClusterStatusDELETED:
 		return true
 	case ClusterStatusERROR:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ClusterCreateStructClusterType.
+const (
+	ClusterCreateStructClusterTypeBASIC                   ClusterCreateStructClusterType = "BASIC"
+	ClusterCreateStructClusterTypeHIGHAVAILABILITY        ClusterCreateStructClusterType = "HIGH_AVAILABILITY"
+	ClusterCreateStructClusterTypeHIGHAVAILABILITYMULTIAZ ClusterCreateStructClusterType = "HIGH_AVAILABILITY_MULTI_AZ"
+)
+
+// Valid indicates whether the value is a known member of the ClusterCreateStructClusterType enum.
+func (e ClusterCreateStructClusterType) Valid() bool {
+	switch e {
+	case ClusterCreateStructClusterTypeBASIC:
+		return true
+	case ClusterCreateStructClusterTypeHIGHAVAILABILITY:
+		return true
+	case ClusterCreateStructClusterTypeHIGHAVAILABILITYMULTIAZ:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ClusterDetailedClusterType.
+const (
+	BASIC                   ClusterDetailedClusterType = "BASIC"
+	HIGHAVAILABILITY        ClusterDetailedClusterType = "HIGH_AVAILABILITY"
+	HIGHAVAILABILITYMULTIAZ ClusterDetailedClusterType = "HIGH_AVAILABILITY_MULTI_AZ"
+)
+
+// Valid indicates whether the value is a known member of the ClusterDetailedClusterType enum.
+func (e ClusterDetailedClusterType) Valid() bool {
+	switch e {
+	case BASIC:
+		return true
+	case HIGHAVAILABILITY:
+		return true
+	case HIGHAVAILABILITYMULTIAZ:
 		return true
 	default:
 		return false
@@ -187,69 +254,6 @@ func (e DedicatedNodegroupConfigCurrency) Valid() bool {
 	}
 }
 
-// Defines values for NodegroupNodegroupType.
-const (
-	NodegroupNodegroupTypeDEDICATED    NodegroupNodegroupType = "DEDICATED"
-	NodegroupNodegroupTypeDEDICATEDGPU NodegroupNodegroupType = "DEDICATED_GPU"
-	NodegroupNodegroupTypeGPU          NodegroupNodegroupType = "GPU"
-	NodegroupNodegroupTypeSTANDARD     NodegroupNodegroupType = "STANDARD"
-)
-
-// Valid indicates whether the value is a known member of the NodegroupNodegroupType enum.
-func (e NodegroupNodegroupType) Valid() bool {
-	switch e {
-	case NodegroupNodegroupTypeDEDICATED:
-		return true
-	case NodegroupNodegroupTypeDEDICATEDGPU:
-		return true
-	case NodegroupNodegroupTypeGPU:
-		return true
-	case NodegroupNodegroupTypeSTANDARD:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for NodegroupStatus.
-const (
-	NodegroupStatusACTIVE               NodegroupStatus = "ACTIVE"
-	NodegroupStatusERROR                NodegroupStatus = "ERROR"
-	NodegroupStatusPENDINGCREATE        NodegroupStatus = "PENDING_CREATE"
-	NodegroupStatusPENDINGDELETE        NodegroupStatus = "PENDING_DELETE"
-	NodegroupStatusPENDINGNODEREINSTALL NodegroupStatus = "PENDING_NODE_REINSTALL"
-	NodegroupStatusPENDINGNODESUNSHELVE NodegroupStatus = "PENDING_NODES_UNSHELVE"
-	NodegroupStatusPENDINGSCALEDOWN     NodegroupStatus = "PENDING_SCALE_DOWN"
-	NodegroupStatusPENDINGSCALEUP       NodegroupStatus = "PENDING_SCALE_UP"
-	NodegroupStatusPENDINGUPDATE        NodegroupStatus = "PENDING_UPDATE"
-)
-
-// Valid indicates whether the value is a known member of the NodegroupStatus enum.
-func (e NodegroupStatus) Valid() bool {
-	switch e {
-	case NodegroupStatusACTIVE:
-		return true
-	case NodegroupStatusERROR:
-		return true
-	case NodegroupStatusPENDINGCREATE:
-		return true
-	case NodegroupStatusPENDINGDELETE:
-		return true
-	case NodegroupStatusPENDINGNODEREINSTALL:
-		return true
-	case NodegroupStatusPENDINGNODESUNSHELVE:
-		return true
-	case NodegroupStatusPENDINGSCALEDOWN:
-		return true
-	case NodegroupStatusPENDINGSCALEUP:
-		return true
-	case NodegroupStatusPENDINGUPDATE:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for NodegroupDetailedNodegroupType.
 const (
 	NodegroupDetailedNodegroupTypeDEDICATED    NodegroupDetailedNodegroupType = "DEDICATED"
@@ -307,6 +311,69 @@ func (e NodegroupDetailedStatus) Valid() bool {
 	case NodegroupDetailedStatusPENDINGSCALEUP:
 		return true
 	case NodegroupDetailedStatusPENDINGUPDATE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for NodegroupInfoNodegroupType.
+const (
+	NodegroupInfoNodegroupTypeDEDICATED    NodegroupInfoNodegroupType = "DEDICATED"
+	NodegroupInfoNodegroupTypeDEDICATEDGPU NodegroupInfoNodegroupType = "DEDICATED_GPU"
+	NodegroupInfoNodegroupTypeGPU          NodegroupInfoNodegroupType = "GPU"
+	NodegroupInfoNodegroupTypeSTANDARD     NodegroupInfoNodegroupType = "STANDARD"
+)
+
+// Valid indicates whether the value is a known member of the NodegroupInfoNodegroupType enum.
+func (e NodegroupInfoNodegroupType) Valid() bool {
+	switch e {
+	case NodegroupInfoNodegroupTypeDEDICATED:
+		return true
+	case NodegroupInfoNodegroupTypeDEDICATEDGPU:
+		return true
+	case NodegroupInfoNodegroupTypeGPU:
+		return true
+	case NodegroupInfoNodegroupTypeSTANDARD:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for NodegroupInfoStatus.
+const (
+	NodegroupInfoStatusACTIVE               NodegroupInfoStatus = "ACTIVE"
+	NodegroupInfoStatusERROR                NodegroupInfoStatus = "ERROR"
+	NodegroupInfoStatusPENDINGCREATE        NodegroupInfoStatus = "PENDING_CREATE"
+	NodegroupInfoStatusPENDINGDELETE        NodegroupInfoStatus = "PENDING_DELETE"
+	NodegroupInfoStatusPENDINGNODEREINSTALL NodegroupInfoStatus = "PENDING_NODE_REINSTALL"
+	NodegroupInfoStatusPENDINGNODESUNSHELVE NodegroupInfoStatus = "PENDING_NODES_UNSHELVE"
+	NodegroupInfoStatusPENDINGSCALEDOWN     NodegroupInfoStatus = "PENDING_SCALE_DOWN"
+	NodegroupInfoStatusPENDINGSCALEUP       NodegroupInfoStatus = "PENDING_SCALE_UP"
+	NodegroupInfoStatusPENDINGUPDATE        NodegroupInfoStatus = "PENDING_UPDATE"
+)
+
+// Valid indicates whether the value is a known member of the NodegroupInfoStatus enum.
+func (e NodegroupInfoStatus) Valid() bool {
+	switch e {
+	case NodegroupInfoStatusACTIVE:
+		return true
+	case NodegroupInfoStatusERROR:
+		return true
+	case NodegroupInfoStatusPENDINGCREATE:
+		return true
+	case NodegroupInfoStatusPENDINGDELETE:
+		return true
+	case NodegroupInfoStatusPENDINGNODEREINSTALL:
+		return true
+	case NodegroupInfoStatusPENDINGNODESUNSHELVE:
+		return true
+	case NodegroupInfoStatusPENDINGSCALEDOWN:
+		return true
+	case NodegroupInfoStatusPENDINGSCALEUP:
+		return true
+	case NodegroupInfoStatusPENDINGUPDATE:
 		return true
 	default:
 		return false
@@ -391,6 +458,24 @@ func (e NodegroupTaintEffect) Valid() bool {
 	case NoSchedule:
 		return true
 	case PreferNoSchedule:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for NodegroupUpdateStrategyMethod.
+const (
+	InPlace NodegroupUpdateStrategyMethod = "in_place"
+	Replace NodegroupUpdateStrategyMethod = "replace"
+)
+
+// Valid indicates whether the value is a known member of the NodegroupUpdateStrategyMethod enum.
+func (e NodegroupUpdateStrategyMethod) Valid() bool {
+	switch e {
+	case InPlace:
+		return true
+	case Replace:
 		return true
 	default:
 		return false
@@ -498,16 +583,34 @@ func (e GetClusterActionsV2ParamsLang) Valid() bool {
 
 // Defines values for GetNodegroupActionsV2ParamsLang.
 const (
-	En GetNodegroupActionsV2ParamsLang = "en"
-	Ru GetNodegroupActionsV2ParamsLang = "ru"
+	GetNodegroupActionsV2ParamsLangEn GetNodegroupActionsV2ParamsLang = "en"
+	GetNodegroupActionsV2ParamsLangRu GetNodegroupActionsV2ParamsLang = "ru"
 )
 
 // Valid indicates whether the value is a known member of the GetNodegroupActionsV2ParamsLang enum.
 func (e GetNodegroupActionsV2ParamsLang) Valid() bool {
 	switch e {
-	case En:
+	case GetNodegroupActionsV2ParamsLangEn:
 		return true
-	case Ru:
+	case GetNodegroupActionsV2ParamsLangRu:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListLogComponentsV2ParamsLang.
+const (
+	ListLogComponentsV2ParamsLangEn ListLogComponentsV2ParamsLang = "en"
+	ListLogComponentsV2ParamsLangRu ListLogComponentsV2ParamsLang = "ru"
+)
+
+// Valid indicates whether the value is a known member of the ListLogComponentsV2ParamsLang enum.
+func (e ListLogComponentsV2ParamsLang) Valid() bool {
+	switch e {
+	case ListLogComponentsV2ParamsLangEn:
+		return true
+	case ListLogComponentsV2ParamsLangRu:
 		return true
 	default:
 		return false
@@ -530,16 +633,16 @@ type AdmissionControllersList struct {
 
 // AuditLogs defines model for AuditLogs.
 type AuditLogs struct {
-	// Enabled If `enabled` kubernetes audit logs should be collected
-	// and pushed into SIEM system (e.g. logstash).
+	// Enabled If `true`, Kubernetes audit logs are collected.
+	// and pushed into the SIEM system (e.g. logstash).
 	// False by default.
 	Enabled bool `json:"enabled"`
 
-	// SecretName Contains name of the kubernetes secret in namespace kube-system with credentials of SIEM system where logs should be pushed. Fields of the secret: host, port, username (optional), password (optional), ca.crt (optional). This field is optional. By default, used mks-audit-logs. Secret name should be as a DNS subdomain name as defined in RFC 1123. [More Information.](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names)
+	// SecretName Contains the name of the Kubernetes secret in namespace kube-system with credentials of the SIEM system where logs should be pushed. Fields of the secret: host, port, username (optional), password (optional), ca.crt (optional). This field is optional. By default, used mks-audit-logs is used. Secret name should be as a DNS subdomain name as defined in RFC 1123. [More Information.](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-subdomain-names)
 	SecretName string `json:"secret_name"`
 }
 
-// AvailableAdmissionControllers AvailableAdmissionControllers represents detailed info about available admission controllers
+// AvailableAdmissionControllers Detailed info about available admission controllers
 // for every k8s minor version.
 type AvailableAdmissionControllers struct {
 	// KubeVersionMinor Kubernetes minor version.
@@ -549,7 +652,7 @@ type AvailableAdmissionControllers struct {
 	Names *OptionNamesAC `json:"names,omitempty"`
 }
 
-// AvailableFeatureGates AvailableFeatureGates represents detailed info about available feature gates
+// AvailableFeatureGates Detailed info about available feature gates
 // for every k8s minor version.
 type AvailableFeatureGates struct {
 	// KubeVersionMinor Kubernetes minor version.
@@ -559,7 +662,7 @@ type AvailableFeatureGates struct {
 	Names *OptionNamesFG `json:"names,omitempty"`
 }
 
-// CNICiliumSettings Represents settings for Cilium CNI if this CNI was chosen as "cni_type".
+// CNICiliumSettings Settings for Cilium CNI if this CNI was chosen as "cni_type".
 // Otherwise settings will be ignored.
 type CNICiliumSettings struct {
 	// EnvoyDaemonset Enables Envoy DaemonSet for Cilium CNI.
@@ -569,14 +672,41 @@ type CNICiliumSettings struct {
 	HubbleRelay *bool `json:"hubble_relay,omitempty"`
 }
 
-// CloudNodegroupConfig Represents configuration for cloud based nodegroups.
+// CloudNodegroupConfig Configuration of cloud-based node groups.
 type CloudNodegroupConfig struct {
 	// AffinityPolicy An optional parameter to tune nodes affinity.
 	AffinityPolicy string `json:"affinity_policy,omitempty"`
 
-	// Cpus Represents CPU count for each node.
-	// It can be omitted only in cases when flavor_id is set.
+	// Cpus CPU count for each node.
+	// It can be omitted only when `flavor_id` is set.
 	Cpus int64 `json:"cpus,omitempty"`
+
+	// FlavorId Contains reference to a pre-created flavor. It can be omitted in most cases.
+	FlavorId string `json:"flavor_id,omitempty"`
+
+	// KeypairName Name of an SSH key added to all nodes.
+	KeypairName string `json:"keypair_name,omitempty"`
+
+	// LocalVolume Indicates whether nodes will use a local volume.
+	LocalVolume bool `json:"local_volume,omitempty"`
+
+	// RamMb RAM count in MB for each node.
+	// It can be omitted only when `flavor_id` is set.
+	RamMb int64 `json:"ram_mb,omitempty"`
+
+	// VolumeGb Volume size in GB for each node.
+	// It can be omitted only when `flavor_id` is set and volume is local.
+	VolumeGb int64 `json:"volume_gb,omitempty"`
+
+	// VolumeType Block storage volume type for each node.
+	// It can be omitted only in cases when `flavor_id` is set and `local_volume` is true.
+	VolumeType string `json:"volume_type,omitempty"`
+}
+
+// CloudNodegroupConfigInfo Configuration of cloud-based node groups in response.
+type CloudNodegroupConfigInfo struct {
+	// AffinityPolicy An optional parameter to tune nodes affinity.
+	AffinityPolicy string `json:"affinity_policy,omitempty"`
 
 	// FlavorId Contains reference to a pre-created flavor. It can be omitted in most cases.
 	FlavorId string `json:"flavor_id,omitempty"`
@@ -584,26 +714,25 @@ type CloudNodegroupConfig struct {
 	// KeypairName Contains name of the SSH key that will be added to all nodes.
 	KeypairName string `json:"keypair_name,omitempty"`
 
-	// LocalVolume Represents if nodes will use local volume.
+	// LocalVolume Indicates whether nodes will use a local volume.
 	LocalVolume bool `json:"local_volume,omitempty"`
 
-	// RamMb Represents RAM count in MB for each node.
-	// It can be omitted only in cases when flavor_id is set.
-	RamMb int64 `json:"ram_mb,omitempty"`
-
-	// VolumeGb Represents volume size in GB for each node.
-	// It can be omitted only in cases when flavor_id is set and volume is local.
+	// VolumeGb Volume size in GB for each node.
+	// It can be omitted only in cases when `flavor_id` is set and `local_volume` is true.
 	VolumeGb int64 `json:"volume_gb,omitempty"`
 
-	// VolumeType Represents blockstorage volume type for each node.
-	// It can be omitted only in cases when flavor_id is set and volume is local.
+	// VolumeType Block storage volume type for each node.
+	// It can be omitted only in cases when `flavor_id` is set and `local_volume` is true.
 	VolumeType string `json:"volume_type,omitempty"`
 }
 
 // Cluster Provides information about cluster.
 type Cluster struct {
-	// Basic Specifies that cluster has only a single master and that control-plane is not in highly available mode.
+	// Basic Specifies that cluster has only a single master and that control plane is not in highly available mode.
 	Basic bool `json:"basic"`
+
+	// ClusterType The type of the cluster.
+	ClusterType ClusterClusterType `json:"cluster_type"`
 
 	// CniType CNI type represents type of CNI which is used in cluster.
 	CniType ClusterCniType `json:"cni_type"`
@@ -611,44 +740,44 @@ type Cluster struct {
 	// CreatedAt Timestamp in UTC timezone of when the cluster has been created.
 	CreatedAt time.Time `json:"created_at"`
 
-	// EnableAutorepair Reflects if worker nodes are allowed to be reinstalled automatically in case of their unavailability or unhealthiness.
+	// EnableAutorepair Reflects whether worker nodes are allowed to be reinstalled automatically in case of their unavailability or unhealthiness.
 	EnableAutorepair bool `json:"enable_autorepair"`
 
-	// EnablePatchVersionAutoUpgrade Specifies if Kubernetes version of the cluster is allowed to be upgraded automatically.
+	// EnablePatchVersionAutoUpgrade Specifies whether the Kubernetes version of the cluster is allowed to be upgraded automatically.
 	EnablePatchVersionAutoUpgrade bool `json:"enable_patch_version_auto_upgrade"`
 
-	// Id Uniq identifier of the cluster.
+	// Id Unique identifier of the cluster.
 	Id string `json:"id"`
 
-	// KubeApiIp Represents the IP of the Kubernetes API.
+	// KubeApiIp The IP of the Kubernetes API.
 	KubeApiIp string `json:"kube_api_ip"`
 
-	// KubeVersion Represents the current Kubernetes version of the cluster.
+	// KubeVersion The current Kubernetes version of the cluster.
 	KubeVersion string `json:"kube_version"`
 
-	// KubernetesOptions Represents additional k8s options such as pod security policy,
-	// feature gates and etc.
+	// KubernetesOptions Additional k8s options such as pod security policy,
+	// feature gates, etc.
 	KubernetesOptions KubernetesOptions `json:"kubernetes_options"`
 
-	// Name Represents the name of the cluster.
+	// Name The name of the cluster.
 	Name string `json:"name"`
 
 	// NetworkId Contains reference to the network of the cluster.
 	NetworkId string `json:"network_id"`
 
-	// NetworkType Represents type of network l3vpn or default.
+	// NetworkType Type of network l3vpn or default.
 	NetworkType ClusterNetworkType `json:"network_type"`
 
-	// Pool Represents the pool of where the cluster master nodes are located.
+	// Pool Pool represents the pool where the cluster master nodes are located.
 	Pool string `json:"pool"`
 
-	// PrivateKubeApi Represents if kube API is available from the Internet or not.
+	// PrivateKubeApi Whether kube API is available from the Internet or not.
 	PrivateKubeApi bool `json:"private_kube_api"`
 
 	// ProjectId Contains reference to the project of the cluster.
 	ProjectId string `json:"project_id"`
 
-	// Status Represents current status of the cluster.
+	// Status Current status of the cluster.
 	Status ClusterStatus `json:"status"`
 
 	// SubnetId Contains reference to the subnet of the cluster.
@@ -658,13 +787,16 @@ type Cluster struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
+// ClusterClusterType The type of the cluster.
+type ClusterClusterType string
+
 // ClusterCniType CNI type represents type of CNI which is used in cluster.
 type ClusterCniType string
 
-// ClusterNetworkType Represents type of network l3vpn or default.
+// ClusterNetworkType Type of network l3vpn or default.
 type ClusterNetworkType string
 
-// ClusterStatus Represents current status of the cluster.
+// ClusterStatus Current status of the cluster.
 type ClusterStatus string
 
 // ClusterActions defines model for ClusterActions.
@@ -696,17 +828,19 @@ type ClusterCreateBody struct {
 
 // ClusterCreateStruct defines model for ClusterCreateStruct.
 type ClusterCreateStruct struct {
-	// AdditionalSoftware AdditionalSoftware represents information about additional software installed in the cluster.
-	// Deprecated: do not use.
-	AdditionalSoftware map[string]interface{} `json:"additional_software"`
-
 	// Basic Basic specifies that only a single zonal master will be created.
-	// It is needed if highly available control-plane is not required.
+	// It is needed if a highly available control plane is not required.
 	// False by default.
 	Basic           bool   `json:"basic"`
 	CloudSubnetCidr string `json:"cloud_subnet_cidr,omitempty"`
 
-	// CniCiliumSettings Represents settings for Cilium CNI if this CNI was chosen as "cni_type".
+	// ClusterType The type of the cluster. If not specified,
+	// defaults based on the 'basic' field: basic=true → BASIC,
+	// basic=false → HIGH_AVAILABILITY. For HIGH_AVAILABILITY_MULTI_AZ
+	// clusters this field is required.
+	ClusterType *ClusterCreateStructClusterType `json:"cluster_type,omitempty"`
+
+	// CniCiliumSettings Settings for Cilium CNI if this CNI was chosen as "cni_type".
 	// Otherwise settings will be ignored.
 	CniCiliumSettings *CNICiliumSettings `json:"cni_cilium_settings,omitempty"`
 
@@ -714,10 +848,10 @@ type ClusterCreateStruct struct {
 	// Supported CNI types are CALICO and CILIUM. CALICO by default.
 	CniType *string `json:"cni_type,omitempty"`
 
-	// EnableAutorepair EnableAutorepair reflects if worker nodes are allowed to be reinstalled  automatically in case of their unavailability or unhealthiness.
+	// EnableAutorepair EnableAutorepair reflects whether worker nodes are allowed to be reinstalled  automatically in case of their unavailability or unhealthiness.
 	EnableAutorepair *bool `json:"enable_autorepair,omitempty"`
 
-	// EnablePatchVersionAutoUpgrade EnablePatchVersionAutoUpgrade specifies if Kubernetes version of the cluster is allowed to be upgraded
+	// EnablePatchVersionAutoUpgrade EnablePatchVersionAutoUpgrade specifies whether the Kubernetes version of the cluster is allowed to be upgraded
 	// automatically.
 	// Enabled by default for regional clusters and disabled for zonal clusters.
 	EnablePatchVersionAutoUpgrade *bool `json:"enable_patch_version_auto_upgrade,omitempty"`
@@ -726,47 +860,54 @@ type ClusterCreateStruct struct {
 	// It should be in x.y.z format.
 	KubeVersion string `json:"kube_version"`
 
-	// KubernetesOptions Represents additional k8s options such as pod security policy,
-	// feature gates and etc.
+	// KubernetesOptions Additional k8s options such as pod security policy,
+	// feature gates, etc.
 	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
 
 	// MaintenanceWindowStart MaintenanceWindowStart represents UTC time of when the cluster will start its maintenance tasks.
 	// It should be in hh:mm:ss format if provided.
 	MaintenanceWindowStart string `json:"maintenance_window_start"`
 
-	// Name Name represent the needed name of the cluster.
-	// It shouldn't contain more than 32 symbols and can contain latin letters
-	// with numbers and hyphens and start with a letter or a number.
+	// Name Name represents the desired name of the cluster.
+	// It must not exceed 32 characters and can contain Latin letters,
+	// with digits and hyphens. Must start with a letter or a digit.
 	Name string `json:"name"`
 
 	// NetworkId NetworkID contains a reference to the network of the cluster.
-	// It can be set in cases where network is pre-created.
+	// It can be set in cases where the network is pre-created.
 	NetworkId string `json:"network_id"`
 
-	// NetworkType NetworkType represents which network will be used for master-node connection.
+	// NetworkType NetworkType indicates which network will be used for master-node
+	// connection.
 	NetworkType string `json:"network_type"`
 
-	// Pool Pool represents the pool of where the cluster master nodes are located.
+	// Pool Pool where the cluster master nodes are located.
 	Pool string `json:"pool"`
 
-	// PrivateKubeApi PrivateKubeAPI specifies if kube API should be available from the Internet or not.
+	// PrivateKubeApi PrivateKubeAPI specifies whether kube API should be available from the Internet or not.
 	// False by default.
 	PrivateKubeApi bool `json:"private_kube_api"`
 
 	// SubnetId SubnetID contains a reference to the subnet of the cluster.
-	// It can be set in cases where subnet is pre-created.
+	// It can be set in cases where the subnet is pre-created.
 	SubnetId string `json:"subnet_id"`
 }
 
+// ClusterCreateStructClusterType The type of the cluster. If not specified,
+// defaults based on the 'basic' field: basic=true → BASIC,
+// basic=false → HIGH_AVAILABILITY. For HIGH_AVAILABILITY_MULTI_AZ
+// clusters this field is required.
+type ClusterCreateStructClusterType string
+
 // ClusterDetailed Provides detailed information about cluster.
 type ClusterDetailed struct {
-	// AdditionalSoftware AdditionalSoftware represents information about additional software installed in the cluster.
-	AdditionalSoftware map[string]interface{} `json:"additional_software"`
-
-	// Basic Specifies that cluster has only a single master and that control-plane is not in highly available mode.
+	// Basic Specifies that cluster has only a single master and that control plane is not in highly available mode.
 	Basic bool `json:"basic"`
 
-	// CniCiliumSettings Represents settings for Cilium CNI if this CNI was chosen as "cni_type".
+	// ClusterType The type of the cluster.
+	ClusterType ClusterDetailedClusterType `json:"cluster_type"`
+
+	// CniCiliumSettings Settings for Cilium CNI if this CNI was chosen as "cni_type".
 	// Otherwise settings will be ignored.
 	CniCiliumSettings *CNICiliumSettings `json:"cni_cilium_settings,omitempty"`
 
@@ -776,59 +917,56 @@ type ClusterDetailed struct {
 	// CreatedAt Timestamp in UTC timezone of when the cluster has been created.
 	CreatedAt time.Time `json:"created_at"`
 
-	// EnableAutorepair Reflects if worker nodes are allowed to be reinstalled automatically in case of their unavailability or unhealthiness.
+	// EnableAutorepair Reflects whether worker nodes are allowed to be reinstalled automatically in case of their unavailability or unhealthiness.
 	EnableAutorepair bool `json:"enable_autorepair"`
 
-	// EnablePatchVersionAutoUpgrade Specifies if Kubernetes version of the cluster is allowed to be upgraded automatically.
+	// EnablePatchVersionAutoUpgrade Specifies whether Kubernetes version of the cluster is allowed to be upgraded automatically.
 	EnablePatchVersionAutoUpgrade bool `json:"enable_patch_version_auto_upgrade"`
 
-	// Id Uniq identifier of the cluster.
+	// Id Unique identifier of the cluster.
 	Id string `json:"id"`
 
-	// KubeApiIp Represents the IP of the Kubernetes API.
+	// KubeApiIp The IP of the Kubernetes API.
 	KubeApiIp string `json:"kube_api_ip"`
 
-	// KubeVersion Represents the current Kubernetes version of the cluster.
+	// KubeVersion The current Kubernetes version of the cluster.
 	KubeVersion string `json:"kube_version"`
 
-	// KubernetesOptions Represents additional k8s options such as pod security policy,
-	// feature gates and etc.
+	// KubernetesOptions Additional k8s options such as pod security policy,
+	// feature gates, etc.
 	KubernetesOptions KubernetesOptions `json:"kubernetes_options"`
 
 	// MaintenanceLastStart MaintenanceLastStart is the timestamp in UTC timezone of the last cluster maintenance start.
 	MaintenanceLastStart time.Time `json:"maintenance_last_start"`
 
-	// MaintenanceWindowEnd MaintenanceWindowEnd represents UTC time in "hh:mm:ss" format of when the cluster will end its
-	// maintenance tasks.
+	// MaintenanceWindowEnd MaintenanceWindowEnd represents the UTC time in the "hh:mm:ss"  format indicating when the cluster maintenance window ends.
 	MaintenanceWindowEnd string `json:"maintenance_window_end"`
 
-	// MaintenanceWindowStart MaintenanceWindowStart represents UTC time in "hh:mm:ss" format of when the cluster will start its
-	// maintenance tasks.
+	// MaintenanceWindowStart MaintenanceWindowStart represents the UTC time in the "hh:mm:ss"  format indicating when the cluster maintenance window starts.
 	MaintenanceWindowStart string `json:"maintenance_window_start"`
 
-	// Name Represents the name of the cluster.
+	// Name The name of the cluster.
 	Name string `json:"name"`
 
 	// NetworkId Contains reference to the network of the cluster.
 	NetworkId string `json:"network_id"`
 
-	// NetworkType Represents type of network l3vpn or default.
+	// NetworkType Type of network l3vpn or standard.
 	NetworkType ClusterDetailedNetworkType `json:"network_type"`
 
-	// PkiTreeUpdatedAt PKITreeUpdatedAt represents the timestamp in UTC timezone of when the PKI-tree of the cluster
-	// has been updated.
+	// PkiTreeUpdatedAt PKITreeUpdatedAt represents the timestamp in UTC timezone of when the PKI-tree of the cluster was updated.
 	PkiTreeUpdatedAt time.Time `json:"pki_tree_updated_at"`
 
-	// Pool Represents the pool of where the cluster master nodes are located.
+	// Pool The pool of where the cluster master nodes are located.
 	Pool string `json:"pool"`
 
-	// PrivateKubeApi Represents if kube API is available from the Internet or not.
+	// PrivateKubeApi Whether kube API is available from the Internet or not.
 	PrivateKubeApi bool `json:"private_kube_api"`
 
 	// ProjectId Contains reference to the project of the cluster.
 	ProjectId string `json:"project_id"`
 
-	// Status Represents current status of the cluster.
+	// Status Current status of the cluster.
 	Status ClusterDetailedStatus `json:"status"`
 
 	// SubnetId Contains reference to the subnet of the cluster.
@@ -838,13 +976,16 @@ type ClusterDetailed struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
+// ClusterDetailedClusterType The type of the cluster.
+type ClusterDetailedClusterType string
+
 // ClusterDetailedCniType CNI type represents type of CNI which is used in cluster.
 type ClusterDetailedCniType string
 
-// ClusterDetailedNetworkType Represents type of network l3vpn or default.
+// ClusterDetailedNetworkType Type of network l3vpn or standard.
 type ClusterDetailedNetworkType string
 
-// ClusterDetailedStatus Represents current status of the cluster.
+// ClusterDetailedStatus Current status of the cluster.
 type ClusterDetailedStatus string
 
 // ClusterList List of clusters.
@@ -866,11 +1007,11 @@ type ClusterUpdateBody struct {
 
 // ClusterUpdateStruct defines model for ClusterUpdateStruct.
 type ClusterUpdateStruct struct {
-	// CniCiliumSettings Represents settings for Cilium CNI if this CNI was chosen as "cni_type".
+	// CniCiliumSettings Settings for Cilium CNI if this CNI was chosen as "cni_type".
 	// Otherwise settings will be ignored.
 	CniCiliumSettings *CNICiliumSettings `json:"cni_cilium_settings,omitempty"`
 
-	// EnableAutorepair EnableAutorepair reflects if worker nodes are allowed to be reinstalled  automatically in case of their unavailability or unhealthiness.
+	// EnableAutorepair EnableAutorepair reflects whether worker nodes are allowed to be reinstalled  automatically in case of their unavailability or unhealthiness.
 	EnableAutorepair *bool `json:"enable_autorepair,omitempty"`
 
 	// EnablePatchVersionAutoUpgrade EnablePatchVersionAutoUpgrade specifies if Kubernetes version of the cluster is allowed to be upgraded
@@ -878,8 +1019,8 @@ type ClusterUpdateStruct struct {
 	// Enabled by default for regional clusters and disabled for zonal clusters.
 	EnablePatchVersionAutoUpgrade *bool `json:"enable_patch_version_auto_upgrade,omitempty"`
 
-	// KubernetesOptions Represents additional k8s options such as pod security policy,
-	// feature gates and etc.
+	// KubernetesOptions Additional k8s options such as pod security policy,
+	// feature gates, etc.
 	KubernetesOptions *KubernetesOptions `json:"kubernetes_options,omitempty"`
 
 	// MaintenanceWindowStart MaintenanceWindowStart represents UTC time of when the cluster will start its maintenance tasks.
@@ -889,19 +1030,37 @@ type ClusterUpdateStruct struct {
 
 // ClustersLimits defines model for ClustersLimits.
 type ClustersLimits struct {
-	// BasicClustersLimit Represents the minimum number of basic clusters in project.
+	// BasicClustersLimit The minimum number of basic clusters in project.
 	BasicClustersLimit int `json:"basic_clusters_limit"`
 
-	// HighAvailabilityClustersLimit Represents the maximum number of high-availability clusters in project.
+	// HighAvailabilityClustersLimit The maximum number of high-availability clusters in project.
 	HighAvailabilityClustersLimit int `json:"high_availability_clusters_limit"`
+
+	// HighAvailabilityMultiAzClustersLimit Represents the maximum number of high-availability multi-AZ clusters in project.
+	HighAvailabilityMultiAzClustersLimit int `json:"high_availability_multi_az_clusters_limit"`
 }
 
-// DedicatedNodegroupConfig Represents configuration for dedicated based nodegroups.
+// ControlPlaneLogging Control plane logging settings.
+type ControlPlaneLogging struct {
+	// Components Control plane components from which logs collection should be enabled.
+	Components *[]string `json:"components,omitempty"`
+
+	// Group Cloud logging group name. The s/mks/ prefix will be automatically prepended to the specified value.
+	Group *string `json:"group,omitempty"`
+}
+
+// ControlPlaneLoggingUpdateBody Control plane logging settings which should be updated.
+type ControlPlaneLoggingUpdateBody struct {
+	// Components Control plane components from which logs collection should be enabled.
+	Components *[]string `json:"components,omitempty"`
+}
+
+// DedicatedNodegroupConfig Configuration for dedicated based node groups.
 type DedicatedNodegroupConfig struct {
 	// CreateStoragePartition Determines is storage partition should be created on fastest disk.
 	CreateStoragePartition *bool `json:"create_storage_partition,omitempty"`
 
-	// Currency Represents which balance will be used to order new servers.
+	// Currency Which balance will be used to order new servers.
 	// ## Note 💡
 	// ```
 	// main - to use main balance. This option will be used as default.
@@ -915,7 +1074,7 @@ type DedicatedNodegroupConfig struct {
 	ServiceUuid string `json:"service_uuid"`
 }
 
-// DedicatedNodegroupConfigCurrency Represents which balance will be used to order new servers.
+// DedicatedNodegroupConfigCurrency Which balance will be used to order new servers.
 // ## Note 💡
 // ```
 // main - to use main balance. This option will be used as default.
@@ -925,26 +1084,26 @@ type DedicatedNodegroupConfigCurrency string
 
 // ExtendedWorkerNodeLimits defines model for ExtendedWorkerNodeLimits.
 type ExtendedWorkerNodeLimits struct {
-	// CpuDriveCoefficient Represents calculation coefficient for local drives relative to the number of CPUs.
+	// CpuDriveCoefficient Calculation coefficient for local drives relative to the number of CPUs.
 	// The final limit will be calculated using the formula: cpu_number * cpu_drive_coefficient
 	CpuDriveCoefficient *int `json:"cpu_drive_coefficient,omitempty"`
 
-	// CpuRamCoefficient Represents calculation coefficient for RAM size relative to the number of CPUs.
-	// The final limit will be calculated using the formula: cpu_number * cpu_ram_coefficient
+	// CpuRamCoefficient Calculation coefficient for RAM size relative to the number of CPUs.
+	// The final limit is calculated by the formula: cpu_number * cpu_ram_coefficient
 	CpuRamCoefficient *int `json:"cpu_ram_coefficient,omitempty"`
 
-	// MaxLocalDriveGbPerNode Represents maximum local volume size in Gigabytes for each worker-node.
-	// For network-attached volumes will be used default limits.
+	// MaxLocalDriveGbPerNode Maximum local volume size in gigabytes for each worker node.
+	// For network volumes, the default limits will be used.
 	MaxLocalDriveGbPerNode *int `json:"max_local_drive_gb_per_node,omitempty"`
 
-	// MaxRamMbPerNode Represents maximum RAM size in Megabytes for each worker-node.
+	// MaxRamMbPerNode Maximum RAM size for each worker node in megabytes.
 	MaxRamMbPerNode *int `json:"max_ram_mb_per_node,omitempty"`
 
-	// MinLocalDriveGbPerNode Represents minimum local volume size in Gigabytes for each worker-node.
-	// For network-attached volumes will be used default limits.
+	// MinLocalDriveGbPerNode Minimum local volume size in gigabytes for each worker node.
+	// For network volumes, the default limits will be used.
 	MinLocalDriveGbPerNode *int `json:"min_local_drive_gb_per_node,omitempty"`
 
-	// MinRamMbPerNode Represents minimum RAM size in Megabytes for each worker-node.
+	// MinRamMbPerNode Minimum RAM size in megabytes for each worker node.
 	MinRamMbPerNode *int `json:"min_ram_mb_per_node,omitempty"`
 }
 
@@ -958,7 +1117,7 @@ type KubeVersionInfo struct {
 	// Version Supported Kubernetes version in format: "X.Y.Z"
 	Version *string `json:"version,omitempty"`
 
-	// IsDefault Flag indicates if kubernetes version is default.
+	// IsDefault Flag indicates whether the Kubernetes version is default.
 	IsDefault *bool `json:"is_default,omitempty"`
 }
 
@@ -967,20 +1126,20 @@ type KubeVersionsList struct {
 	KubeVersions *[]KubeVersionInfo `json:"kube_versions,omitempty"`
 }
 
-// KubernetesOptions Represents additional k8s options such as pod security policy,
-// feature gates and etc.
+// KubernetesOptions Additional k8s options such as pod security policy,
+// feature gates, etc.
 type KubernetesOptions struct {
-	// AdmissionControllers Represents turned on admission controllers for the cluster.
+	// AdmissionControllers Turned on admission controllers for the cluster.
 	AdmissionControllers []string  `json:"admission_controllers"`
 	AuditLogs            AuditLogs `json:"audit_logs"`
 
-	// FeatureGates Represents turned on feature gates
+	// FeatureGates Turned on feature gates
 	FeatureGates []string `json:"feature_gates"`
 
-	// Oidc OIDC represents parameters to connect client's OIDC provider with kubernetes.
+	// Oidc OIDC represents parameters to connect client's OIDC provider with Kubernetes.
 	Oidc OIDC `json:"oidc"`
 
-	// X509CaCertificates Represent custom X509 CA certs which can be used for cluster components. Certificates should be encoded to base64 format. Note 💡 ``` X509CaCertificates can be disabled for some pools. ```
+	// X509CaCertificates Represent custom X509 CA certificates which can be used for cluster components. Certificates should be encoded to base64 format. Note 💡 ``` X509CaCertificates can be disabled for some pools. ```
 	X509CaCertificates string `json:"x509_ca_certificates,omitempty"`
 }
 
@@ -988,10 +1147,24 @@ type KubernetesOptions struct {
 type LimitsList struct {
 	Cluster ClustersLimits `json:"cluster"`
 
-	// ExtendedLimits Represents flexible limits rules.
+	// ExtendedLimits Flexible limits rules.
 	ExtendedLimits *map[string]ExtendedWorkerNodeLimits `json:"extended_limits,omitempty"`
 	Nodegroup      NodegroupLimits                      `json:"nodegroup"`
 	WorkerNode     WorkerNodeLimits                     `json:"worker_node"`
+}
+
+// LogComponent Available component for control plane logs collection.
+type LogComponent struct {
+	// Description Reason explains the purpose of the component.
+	Description string `json:"description"`
+
+	// Name Component name.
+	Name string `json:"name"`
+}
+
+// LogComponentsList List of available log components.
+type LogComponentsList struct {
+	Components *[]LogComponent `json:"components,omitempty"`
 }
 
 // Node Provides information about node.
@@ -999,16 +1172,16 @@ type Node struct {
 	// CreatedAt Timestamp in UTC timezone of when the node has been created.
 	CreatedAt time.Time `json:"created_at"`
 
-	// Hostname Represents a hostname of the node.
+	// Hostname A hostname of the node.
 	Hostname string `json:"hostname"`
 
-	// Id Uniq identifier of the node.
+	// Id Unique identifier of the node.
 	Id string `json:"id"`
 
-	// Ip Represents IP address of the node.
+	// Ip IP address of the node.
 	Ip string `json:"ip"`
 
-	// NodegroupId Contains nodegroup identifier.
+	// NodegroupId Contains node group identifier.
 	NodegroupId string `json:"nodegroup_id"`
 
 	// ProviderServerId Contains server identifier in external provider (OpenStack, dedicated resource).
@@ -1023,75 +1196,6 @@ type NodeResp struct {
 	// Node Provides information about node.
 	Node Node `json:"node"`
 }
-
-// NodegorupAdditionalInfo Provides additional information about nodegroup like userdata, etc.
-type NodegorupAdditionalInfo struct {
-	// UserData True when nodegroup has user_data field filled.
-	UserData bool `json:"user_data"`
-}
-
-// Nodegroup Provides information about nodegroup.
-type Nodegroup struct {
-	// AutoscaleMaxNodes Represents maximum possible number of worker nodes in the nodegroup.
-	AutoscaleMaxNodes *int64 `json:"autoscale_max_nodes,omitempty"`
-
-	// AutoscaleMinNodes Represents minimum possible number of worker nodes in the nodegroup.
-	AutoscaleMinNodes *int64 `json:"autoscale_min_nodes,omitempty"`
-
-	// Cidr Represents a CIDR for nodegroup specified by client.
-	Cidr *string `json:"cidr,omitempty"`
-
-	// CloudNodegroupConfig Represents configuration for cloud based nodegroups.
-	CloudNodegroupConfig *CloudNodegroupConfig `json:"cloud_nodegroup_config,omitempty"`
-
-	// ClusterId Uniq identifier of the cluster.
-	ClusterId string `json:"cluster_id"`
-
-	// CreatedAt Timestamp in UTC timezone of when the nodegroup has been created.
-	CreatedAt time.Time `json:"created_at"`
-
-	// DedicatedNodegroupConfig Represents configuration for dedicated based nodegroups.
-	DedicatedNodegroupConfig *DedicatedNodegroupConfig `json:"dedicated_nodegroup_config,omitempty"`
-
-	// EnableAutoscale Reflects if the nodegroup is allowed to be scaled automatically.
-	EnableAutoscale bool `json:"enable_autoscale"`
-
-	// Id Uniq identifier of the nodegroup.
-	Id string `json:"id"`
-
-	// InstallNvidiaDevicePlugin Indicates if nvidia device plugin installation was requested. Applicable only for nodegroups with GPU nodes.
-	InstallNvidiaDevicePlugin bool `json:"install_nvidia_device_plugin"`
-
-	// Labels Represents an object containing a set of Kubernetes labels that will be applied for each node in the group. The keys must be user-defined.
-	Labels map[string]string `json:"labels"`
-
-	// NodegroupType Represents type of nodes in nodegroup. ## Note 💡 ` STANDARD      -- for all nodes from configs: standard line, cpu line, memory line; GPU           -- for nodes from gpu line; DEDICATED     -- for dedicated nodes; DEDICATED_GPU -- for dedicated nodes from gpu line; `
-	NodegroupType NodegroupNodegroupType `json:"nodegroup_type"`
-
-	// Nodes Contains list of all nodes in the nodegroup.
-	Nodes []Node `json:"nodes"`
-
-	// Preemptible Represents if nodes in the nodegroup are preemptible.
-	Preemptible bool `json:"preemptible"`
-
-	// Segment Represents segment for all nodes in the nodegroup.
-	Segment string `json:"segment"`
-
-	// Status Represents current status of the nodegroup.
-	Status NodegroupStatus `json:"status"`
-
-	// Taints Represents a list of nodegroup taints.
-	Taints []NodegroupTaint `json:"taints"`
-
-	// UpdatedAt Timestamp in UTC timezone of when the nodegroup has been updated.
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
-}
-
-// NodegroupNodegroupType Represents type of nodes in nodegroup. ## Note 💡 ` STANDARD      -- for all nodes from configs: standard line, cpu line, memory line; GPU           -- for nodes from gpu line; DEDICATED     -- for dedicated nodes; DEDICATED_GPU -- for dedicated nodes from gpu line; `
-type NodegroupNodegroupType string
-
-// NodegroupStatus Represents current status of the nodegroup.
-type NodegroupStatus string
 
 // NodegroupActions defines model for NodegroupActions.
 type NodegroupActions struct {
@@ -1109,218 +1213,296 @@ type NodegroupActionsResp struct {
 	Actions *NodegroupActions `json:"actions,omitempty"`
 }
 
+// NodegroupAdditionalInfo Provides additional information about node group like userdata, etc.
+type NodegroupAdditionalInfo struct {
+	// UserData True when node group has user_data field filled.
+	UserData bool `json:"user_data"`
+}
+
 // NodegroupCreateStruct defines model for NodegroupCreateStruct.
 type NodegroupCreateStruct struct {
-	// AutoscaleMaxNodes Represents maximum possible number of worker nodes in the nodegroup.
+	// AutoscaleMaxNodes Maximum possible number of worker nodes in the node group.
 	AutoscaleMaxNodes *int64 `json:"autoscale_max_nodes,omitempty"`
 
-	// AutoscaleMinNodes Represents minimum possible number of worker nodes in the nodegroup.
+	// AutoscaleMinNodes Minimum possible number of worker nodes in the node group.
 	AutoscaleMinNodes *int64 `json:"autoscale_min_nodes,omitempty"`
 
-	// Cidr Represents a CIDR for nodegroup specified by client.
+	// Cidr CIDR for node group specified by client.
 	Cidr string `json:"cidr,omitempty"`
 
-	// CloudNodegroupConfig Represents configuration for cloud based nodegroups.
+	// CloudNodegroupConfig Configuration of cloud-based node groups.
 	CloudNodegroupConfig *CloudNodegroupConfig `json:"cloud_nodegroup_config,omitempty"`
 
-	// Count Count represents nodes count for this nodegroup.
+	// Count Node count for this node group.
 	Count int64 `json:"count"`
 
-	// DedicatedNodegroupConfig Represents configuration for dedicated based nodegroups.
+	// DedicatedNodegroupConfig Configuration for dedicated based node groups.
 	DedicatedNodegroupConfig *DedicatedNodegroupConfig `json:"dedicated_nodegroup_config,omitempty"`
 
-	// EnableAutoscale Reflects if the nodegroup is allowed to be scaled automatically.
+	// EnableAutoscale Indicates whether the node group is allowed to be scaled automatically.
 	EnableAutoscale *bool `json:"enable_autoscale,omitempty"`
 
-	// InstallNvidiaDevicePlugin Indicates if nvidia device plugin installation was requested. Applicable only for nodegroups with GPU nodes.
+	// InstallNvidiaDevicePlugin Indicates whether NVIDIA device plugin installation was requested. Applicable only for node groups with GPU nodes.
 	InstallNvidiaDevicePlugin *bool `json:"install_nvidia_device_plugin,omitempty"`
 
-	// Labels Represents an object containing a set of Kubernetes labels that will be applied for each node in the group. The keys must be user-defined.
+	// Labels An object containing a set of Kubernetes labels that will be applied for each node in the group. The keys must be user-defined.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Pool Should contain the valid pool name where nodegroup nodes will be created.
-	Pool string `json:"pool"`
-
-	// Preemptible Represents if nodes in the nodegroup are preemptible.
+	// Preemptible Indicates whether nodes in the node group are preemptible.
 	Preemptible bool `json:"preemptible,omitempty"`
 
-	// Taints Represents a list of nodegroup taints.
+	// Segment Should contain the valid segment name where node group nodes will be created.
+	Segment string `json:"segment"`
+
+	// Taints List of node group taints.
 	Taints *[]NodegroupTaint `json:"taints,omitempty"`
 
-	// UserData Represents base64 data which is used to pass a script that worker nodes run on boot.
+	// UserData Base64 data which is used to pass a script that worker nodes run on boot.
 	UserData string `json:"user_data,omitempty"`
 }
 
 // NodegroupDetailed defines model for NodegroupDetailed.
 type NodegroupDetailed struct {
-	// AutoscaleMaxNodes Represents maximum possible number of worker nodes in the nodegroup.
+	// AutoscaleMaxNodes Maximum number of worker nodes in the node group.
 	AutoscaleMaxNodes *int64 `json:"autoscale_max_nodes,omitempty"`
 
-	// AutoscaleMinNodes Represents minimum possible number of worker nodes in the nodegroup.
+	// AutoscaleMinNodes Minimum number of worker nodes in the node group.
 	AutoscaleMinNodes *int64 `json:"autoscale_min_nodes,omitempty"`
 
-	// Cidr Represents a CIDR for nodegroup specified by client.
+	// Cidr A CIDR for node group specified by client.
 	Cidr *string `json:"cidr,omitempty"`
 
-	// CloudNodegroupConfig Represents configuration for cloud based nodegroups.
-	CloudNodegroupConfig *CloudNodegroupConfig `json:"cloud_nodegroup_config,omitempty"`
+	// CloudNodegroupConfig Configuration of cloud-based node groups in response.
+	CloudNodegroupConfig *CloudNodegroupConfigInfo `json:"cloud_nodegroup_config,omitempty"`
 
-	// ClusterId Uniq identifier of the cluster.
+	// ClusterId Unique identifier of the cluster.
 	ClusterId string `json:"cluster_id"`
 
-	// CreatedAt Timestamp in UTC timezone of when the nodegroup has been created.
+	// CreatedAt Timestamp in UTC timezone of when the node group has been created.
 	CreatedAt time.Time `json:"created_at"`
 
-	// DedicatedNodegroupConfig Represents configuration for dedicated based nodegroups.
+	// DedicatedNodegroupConfig Configuration for dedicated based node groups.
 	DedicatedNodegroupConfig *DedicatedNodegroupConfig `json:"dedicated_nodegroup_config,omitempty"`
 
-	// EnableAutoscale Reflects if the nodegroup is allowed to be scaled automatically.
+	// EnableAutoscale Indicates whether the node group is allowed to be scaled automatically.
 	EnableAutoscale bool `json:"enable_autoscale"`
 
-	// Id Uniq identifier of the nodegroup.
+	// Id Unique identifier of the node group.
 	Id string `json:"id"`
 
-	// InstallNvidiaDevicePlugin Indicates if nvidia device plugin installation was requested. Applicable only for nodegroups with GPU nodes.
+	// InstallNvidiaDevicePlugin Indicates whether NVIDIA device plugin installation was requested. Applicable only for node groups with GPU nodes.
 	InstallNvidiaDevicePlugin bool `json:"install_nvidia_device_plugin"`
 
-	// Labels Represents an object containing a set of Kubernetes labels that will be applied for each node in the group. The keys must be user-defined.
+	// Labels An object containing a set of Kubernetes labels that will be applied for each node in the group. The keys must be user-defined.
 	Labels map[string]string `json:"labels"`
 
-	// NodegroupType Represents type of nodes in nodegroup. ## Note 💡 ` STANDARD      -- for all nodes from configs: standard line, cpu line, memory line; GPU           -- for nodes from gpu line; DEDICATED     -- for dedicated nodes; DEDICATED_GPU -- for dedicated nodes from gpu line; `
+	// NodegroupType Type of the nodes in node group. ## Note 💡 ` STANDARD      -- for all nodes from configs: Standard line, CPU line and Memory line; GPU           -- for cloud nodes from GPU line; DEDICATED     -- for dedicated nodes; DEDICATED_GPU -- for dedicated nodes from GPU line; `
 	NodegroupType NodegroupDetailedNodegroupType `json:"nodegroup_type"`
 
-	// Nodes Contains list of all nodes in the nodegroup.
+	// Nodes List of all nodes in the node group.
 	Nodes []Node `json:"nodes"`
 
-	// Preemptible Represents if nodes in the nodegroup are preemptible.
+	// Preemptible Indicates whether nodes in the node group are preemptible.
 	Preemptible bool `json:"preemptible"`
 
-	// Segment Represents segment for all nodes in the nodegroup.
+	// Segment Pool segment for all nodes in the node group.
 	Segment string `json:"segment"`
 
-	// Status Represents current status of the nodegroup.
+	// Status Current status of the node group.
 	Status NodegroupDetailedStatus `json:"status"`
 
-	// Taints Represents a list of nodegroup taints.
+	// Taints A list of node group taints.
 	Taints []NodegroupTaint `json:"taints"`
 
-	// UpdatedAt Timestamp in UTC timezone of when the nodegroup has been updated.
+	// UpdateStrategy Update strategy for worker nodes in the node group.
+	UpdateStrategy NodegroupUpdateStrategy `json:"update_strategy"`
+
+	// UpdatedAt Timestamp in UTC timezone of when the node group has been updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 
-	// UserData Represents base64 data which is used to pass a script that worker nodes run on boot.
+	// UserData Base64 data which is used to pass a script that worker nodes run on boot.
 	UserData string `json:"user_data,omitempty"`
 }
 
-// NodegroupDetailedNodegroupType Represents type of nodes in nodegroup. ## Note 💡 ` STANDARD      -- for all nodes from configs: standard line, cpu line, memory line; GPU           -- for nodes from gpu line; DEDICATED     -- for dedicated nodes; DEDICATED_GPU -- for dedicated nodes from gpu line; `
+// NodegroupDetailedNodegroupType Type of the nodes in node group. ## Note 💡 ` STANDARD      -- for all nodes from configs: Standard line, CPU line and Memory line; GPU           -- for cloud nodes from GPU line; DEDICATED     -- for dedicated nodes; DEDICATED_GPU -- for dedicated nodes from GPU line; `
 type NodegroupDetailedNodegroupType string
 
-// NodegroupDetailedStatus Represents current status of the nodegroup.
+// NodegroupDetailedStatus Current status of the node group.
 type NodegroupDetailedStatus string
+
+// NodegroupInfo Provides detailed information about node group.
+type NodegroupInfo struct {
+	// AutoscaleMaxNodes Maximum number of worker nodes in the node group.
+	AutoscaleMaxNodes *int64 `json:"autoscale_max_nodes,omitempty"`
+
+	// AutoscaleMinNodes Minimum number of worker nodes in the node group.
+	AutoscaleMinNodes *int64 `json:"autoscale_min_nodes,omitempty"`
+
+	// Cidr A CIDR for node group specified by client.
+	Cidr *string `json:"cidr,omitempty"`
+
+	// CloudNodegroupConfig Configuration of cloud-based node groups in response.
+	CloudNodegroupConfig *CloudNodegroupConfigInfo `json:"cloud_nodegroup_config,omitempty"`
+
+	// ClusterId Unique identifier of the cluster.
+	ClusterId string `json:"cluster_id"`
+
+	// CreatedAt Timestamp in UTC timezone of when the node group has been created.
+	CreatedAt time.Time `json:"created_at"`
+
+	// DedicatedNodegroupConfig Configuration for dedicated based node groups.
+	DedicatedNodegroupConfig *DedicatedNodegroupConfig `json:"dedicated_nodegroup_config,omitempty"`
+
+	// EnableAutoscale Indicates whether the node group is allowed to be scaled automatically.
+	EnableAutoscale bool `json:"enable_autoscale"`
+
+	// Id Unique identifier of the node group.
+	Id string `json:"id"`
+
+	// InstallNvidiaDevicePlugin Indicates whether NVIDIA device plugin installation was requested. Applicable only for node groups with GPU nodes.
+	InstallNvidiaDevicePlugin bool `json:"install_nvidia_device_plugin"`
+
+	// Labels An object containing a set of Kubernetes labels that will be applied for each node in the group. The keys must be user-defined.
+	Labels map[string]string `json:"labels"`
+
+	// NodegroupType Type of the nodes in node group. ## Note 💡 ` STANDARD      -- for all nodes from configs: Standard line, CPU line and Memory line; GPU           -- for cloud nodes from GPU line; DEDICATED     -- for dedicated nodes; DEDICATED_GPU -- for dedicated nodes from GPU line; `
+	NodegroupType NodegroupInfoNodegroupType `json:"nodegroup_type"`
+
+	// Nodes List of all nodes in the node group.
+	Nodes []Node `json:"nodes"`
+
+	// Preemptible Indicates whether nodes in the node group are preemptible.
+	Preemptible bool `json:"preemptible"`
+
+	// Segment Pool segment for all nodes in the node group.
+	Segment string `json:"segment"`
+
+	// Status Current status of the node group.
+	Status NodegroupInfoStatus `json:"status"`
+
+	// Taints A list of node group taints.
+	Taints []NodegroupTaint `json:"taints"`
+
+	// UpdateStrategy Update strategy for worker nodes in the node group.
+	UpdateStrategy NodegroupUpdateStrategy `json:"update_strategy"`
+
+	// UpdatedAt Timestamp in UTC timezone of when the node group has been updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
+}
+
+// NodegroupInfoNodegroupType Type of the nodes in node group. ## Note 💡 ` STANDARD      -- for all nodes from configs: Standard line, CPU line and Memory line; GPU           -- for cloud nodes from GPU line; DEDICATED     -- for dedicated nodes; DEDICATED_GPU -- for dedicated nodes from GPU line; `
+type NodegroupInfoNodegroupType string
+
+// NodegroupInfoStatus Current status of the node group.
+type NodegroupInfoStatus string
 
 // NodegroupLimits defines model for NodegroupLimits.
 type NodegroupLimits struct {
-	// MaxNodegroupsPerPool Represents maximum number of nodegroups in the pool.
+	// MaxNodegroupsPerPool Maximum number of nodegroups in the pool.
 	MaxNodegroupsPerPool int `json:"max_nodegroups_per_pool"`
 
-	// MaxNodesPerNodegroup Represents the maximum number of nodes in nodegroup.
+	// MaxNodesPerNodegroup The maximum number of nodes in nodegroup.
 	MaxNodesPerNodegroup int `json:"max_nodes_per_nodegroup"`
 
-	// MinNodesPerDedicatedNodegroup Represents the minimum number of nodes in dedicated nodegroup.
+	// MinNodesPerDedicatedNodegroup The minimum number of nodes in dedicated nodegroup.
 	MinNodesPerDedicatedNodegroup int `json:"min_nodes_per_dedicated_nodegroup"`
 
-	// MinNodesPerNodegroup Represents the minimum number of nodes in nodegroup.
+	// MinNodesPerNodegroup The minimum number of nodes in nodegroup.
 	MinNodesPerNodegroup int `json:"min_nodes_per_nodegroup"`
 }
 
-// NodegroupList List of nodegroups of the cluster.
+// NodegroupList List of node groups in the cluster.
 type NodegroupList struct {
 	Nodegroups []NodegroupListItem `json:"nodegroups"`
 }
 
 // NodegroupListItem defines model for NodegroupListItem.
 type NodegroupListItem struct {
-	// AutoscaleMaxNodes Represents maximum possible number of worker nodes in the nodegroup.
+	// AutoscaleMaxNodes Maximum number of worker nodes in the node group.
 	AutoscaleMaxNodes *int64 `json:"autoscale_max_nodes,omitempty"`
 
-	// AutoscaleMinNodes Represents minimum possible number of worker nodes in the nodegroup.
+	// AutoscaleMinNodes Minimum number of worker nodes in the node group.
 	AutoscaleMinNodes *int64 `json:"autoscale_min_nodes,omitempty"`
 
-	// AvailableAdditionalInfo Provides additional information about nodegroup like userdata, etc.
-	AvailableAdditionalInfo NodegorupAdditionalInfo `json:"available_additional_info"`
+	// AvailableAdditionalInfo Provides additional information about node group like userdata, etc.
+	AvailableAdditionalInfo NodegroupAdditionalInfo `json:"available_additional_info"`
 
-	// Cidr Represents a CIDR for nodegroup specified by client.
+	// Cidr A CIDR for node group specified by client.
 	Cidr *string `json:"cidr,omitempty"`
 
-	// CloudNodegroupConfig Represents configuration for cloud based nodegroups.
-	CloudNodegroupConfig *CloudNodegroupConfig `json:"cloud_nodegroup_config,omitempty"`
+	// CloudNodegroupConfig Configuration of cloud-based node groups in response.
+	CloudNodegroupConfig *CloudNodegroupConfigInfo `json:"cloud_nodegroup_config,omitempty"`
 
-	// ClusterId Uniq identifier of the cluster.
+	// ClusterId Unique identifier of the cluster.
 	ClusterId string `json:"cluster_id"`
 
-	// CreatedAt Timestamp in UTC timezone of when the nodegroup has been created.
+	// CreatedAt Timestamp in UTC timezone of when the node group has been created.
 	CreatedAt time.Time `json:"created_at"`
 
-	// DedicatedNodegroupConfig Represents configuration for dedicated based nodegroups.
+	// DedicatedNodegroupConfig Configuration for dedicated based node groups.
 	DedicatedNodegroupConfig *DedicatedNodegroupConfig `json:"dedicated_nodegroup_config,omitempty"`
 
-	// EnableAutoscale Reflects if the nodegroup is allowed to be scaled automatically.
+	// EnableAutoscale Indicates whether the node group is allowed to be scaled automatically.
 	EnableAutoscale bool `json:"enable_autoscale"`
 
-	// Id Uniq identifier of the nodegroup.
+	// Id Unique identifier of the node group.
 	Id string `json:"id"`
 
-	// InstallNvidiaDevicePlugin Indicates if nvidia device plugin installation was requested. Applicable only for nodegroups with GPU nodes.
+	// InstallNvidiaDevicePlugin Indicates whether NVIDIA device plugin installation was requested. Applicable only for node groups with GPU nodes.
 	InstallNvidiaDevicePlugin bool `json:"install_nvidia_device_plugin"`
 
-	// Labels Represents an object containing a set of Kubernetes labels that will be applied for each node in the group. The keys must be user-defined.
+	// Labels An object containing a set of Kubernetes labels that will be applied for each node in the group. The keys must be user-defined.
 	Labels map[string]string `json:"labels"`
 
-	// NodegroupType Represents type of nodes in nodegroup. ## Note 💡 ` STANDARD      -- for all nodes from configs: standard line, cpu line, memory line; GPU           -- for nodes from gpu line; DEDICATED     -- for dedicated nodes; DEDICATED_GPU -- for dedicated nodes from gpu line; `
+	// NodegroupType Type of the nodes in node group. ## Note 💡 ` STANDARD      -- for all nodes from configs: Standard line, CPU line and Memory line; GPU           -- for cloud nodes from GPU line; DEDICATED     -- for dedicated nodes; DEDICATED_GPU -- for dedicated nodes from GPU line; `
 	NodegroupType NodegroupListItemNodegroupType `json:"nodegroup_type"`
 
-	// Nodes Contains list of all nodes in the nodegroup.
+	// Nodes List of all nodes in the node group.
 	Nodes []Node `json:"nodes"`
 
-	// Preemptible Represents if nodes in the nodegroup are preemptible.
+	// Preemptible Indicates whether nodes in the node group are preemptible.
 	Preemptible bool `json:"preemptible"`
 
-	// Segment Represents segment for all nodes in the nodegroup.
+	// Segment Pool segment for all nodes in the node group.
 	Segment string `json:"segment"`
 
-	// Status Represents current status of the nodegroup.
+	// Status Current status of the node group.
 	Status NodegroupListItemStatus `json:"status"`
 
-	// Taints Represents a list of nodegroup taints.
+	// Taints A list of node group taints.
 	Taints []NodegroupTaint `json:"taints"`
 
-	// UpdatedAt Timestamp in UTC timezone of when the nodegroup has been updated.
+	// UpdateStrategy Update strategy for worker nodes in the node group.
+	UpdateStrategy NodegroupUpdateStrategy `json:"update_strategy"`
+
+	// UpdatedAt Timestamp in UTC timezone of when the node group has been updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
-// NodegroupListItemNodegroupType Represents type of nodes in nodegroup. ## Note 💡 ` STANDARD      -- for all nodes from configs: standard line, cpu line, memory line; GPU           -- for nodes from gpu line; DEDICATED     -- for dedicated nodes; DEDICATED_GPU -- for dedicated nodes from gpu line; `
+// NodegroupListItemNodegroupType Type of the nodes in node group. ## Note 💡 ` STANDARD      -- for all nodes from configs: Standard line, CPU line and Memory line; GPU           -- for cloud nodes from GPU line; DEDICATED     -- for dedicated nodes; DEDICATED_GPU -- for dedicated nodes from GPU line; `
 type NodegroupListItemNodegroupType string
 
-// NodegroupListItemStatus Represents current status of the nodegroup.
+// NodegroupListItemStatus Current status of the node group.
 type NodegroupListItemStatus string
 
-// NodegroupResizeBody Represents body content.
+// NodegroupResizeBody Request Body schema.
 type NodegroupResizeBody struct {
 	Nodegroup NodegroupResizeStruct `json:"nodegroup"`
 }
 
 // NodegroupResizeStruct defines model for NodegroupResizeStruct.
 type NodegroupResizeStruct struct {
-	// Desired Desired represents desired amount of nodes for this nodegroup.
+	// Desired Desired number of nodes in the node group.
 	Desired int64 `json:"desired"`
 }
 
-// NodegroupResp Nodegroup response.
+// NodegroupResp Node group response.
 type NodegroupResp struct {
-	// Nodegroup Provides detailed information about nodegroup.
+	// Nodegroup Provides detailed information about node group.
 	Nodegroup NodegroupDetailed `json:"nodegroup"`
 }
 
-// NodegroupTaint Represents k8s nodegroup taint that applies for every node in the group.
+// NodegroupTaint K8s node group taint that applies for every node in the group.
 type NodegroupTaint struct {
 	// Effect Effect for taint.
 	Effect NodegroupTaintEffect `json:"effect"`
@@ -1335,35 +1517,44 @@ type NodegroupTaint struct {
 // NodegroupTaintEffect Effect for taint.
 type NodegroupTaintEffect string
 
-// NodegroupUpdateBody Represents body content.
+// NodegroupUpdateBody Request Body schema.
 type NodegroupUpdateBody struct {
 	Nodegroup NodegroupUpdateStruct `json:"nodegroup"`
 }
 
+// NodegroupUpdateStrategy Update strategy for worker nodes in the node group.
+type NodegroupUpdateStrategy struct {
+	// Method Mechanism used to update worker nodes.
+	Method NodegroupUpdateStrategyMethod `json:"method"`
+}
+
+// NodegroupUpdateStrategyMethod Mechanism used to update worker nodes.
+type NodegroupUpdateStrategyMethod string
+
 // NodegroupUpdateStruct defines model for NodegroupUpdateStruct.
 type NodegroupUpdateStruct struct {
-	// AutoscaleMaxNodes Represents maximum possible number of worker nodes in the cloud nodegroup.
+	// AutoscaleMaxNodes Maximum number of worker nodes in the cloud-based node group.
 	AutoscaleMaxNodes *int `json:"autoscale_max_nodes,omitempty"`
 
-	// AutoscaleMinNodes Represents minimum possible number of worker nodes in the cloud nodegroup.
+	// AutoscaleMinNodes Minimum number of worker nodes in the cloud-based node group.
 	AutoscaleMinNodes *int `json:"autoscale_min_nodes,omitempty"`
 
-	// EnableAutoscale Reflects if the cloud nodegroup is allowed to be scaled automatically.
+	// EnableAutoscale Indicates whether the cloud node group is allowed to be scaled automatically.
 	EnableAutoscale *bool `json:"enable_autoscale,omitempty"`
 
-	// Labels Represents an object containing a set of Kubernetes labels that will be applied for each node in the group. The keys must be user-defined.
+	// Labels An object containing a set of Kubernetes labels that will be applied for each node in the group. The keys must be user-defined.
 	Labels *map[string]string `json:"labels,omitempty"`
 
-	// Taints Represents a list of nodegroup taints.
+	// Taints List of node group taints.
 	Taints *[]NodegroupTaint `json:"taints,omitempty"`
 }
 
-// NodegroupsCreateBody Represents body content for creating multiple nodegroups.
+// NodegroupsCreateBody Request Body schema for creating multiple node groups.
 type NodegroupsCreateBody struct {
 	Nodegroups []NodegroupCreateStruct `json:"nodegroups"`
 }
 
-// OIDC OIDC represents parameters to connect client's OIDC provider with kubernetes.
+// OIDC OIDC represents parameters to connect client's OIDC provider with Kubernetes.
 type OIDC struct {
 	// CaCerts CACerts represent optional custom CA certs chain in X509 PEM format of provider's SSL certificate.
 	// Will be written to file on masters which will be passed in `--oidc-ca-file` kube-apiserver flag.
@@ -1372,23 +1563,23 @@ type OIDC struct {
 	// CaCertsExpiration CACertsExpiration represents date and time when the first of provided CA certificates will be expired.
 	CaCertsExpiration *time.Time `json:"ca_certs_expiration,omitempty"`
 
-	// ClientId Represents required client id that all tokens must be issued for. Will be placed in `--oidc-client-id` flag. It is required when enabled = true.
+	// ClientId Required client id that all tokens must be issued for. Will be placed in `--oidc-client-id` flag. It is required when enabled = true.
 	ClientId string `json:"client_id"`
 
 	// Enabled If `enabled` OIDC should be turned on in the cluster.
 	// False by default.
 	Enabled bool `json:"enabled"`
 
-	// GroupsClaim Represents optional JWT claim to use as the user's group. By default, `groups`. Will be placed in `--oidc-groups-claim` flag.
+	// GroupsClaim Optional JWT claim to use as the user's group. By default, `groups`. Will be placed in `--oidc-groups-claim` flag.
 	GroupsClaim string `json:"groups_claim"`
 
-	// IssuerUrl Represents URL of the provider that allows the API server to discover public signing keys. Will be placed in `--oidc-issuer-url` flag. It is required when enabled = true.
+	// IssuerUrl URL of the provider that allows the API server to discover public signing keys. Will be placed in `--oidc-issuer-url` flag. It is required when enabled = true.
 	IssuerUrl string `json:"issuer_url"`
 
-	// ProviderName Represents custom user defined name of the provider. It is not used in the cluster directly. It is required when enabled = true.
+	// ProviderName Custom user defined name of the provider. It is not used in the cluster directly. It is required when enabled = true.
 	ProviderName string `json:"provider_name"`
 
-	// UsernameClaim Represents optional JWT claim to use as the username. By default, `sub`. Will be placed in `--oidc-username-claim` flag.
+	// UsernameClaim Optional JWT claim to use as the username. By default, `sub`. Will be placed in `--oidc-username-claim` flag.
 	UsernameClaim string `json:"username_claim"`
 }
 
@@ -1409,34 +1600,34 @@ type RegistriesIntegration struct {
 // RegistriesIntegrationStatus Status represents status of the registries' integration.
 type RegistriesIntegrationStatus string
 
-// RegistriesIntergrationCreateBody Represents body content.
-type RegistriesIntergrationCreateBody struct {
-	Registries []RegistriesIntergrationCreateStruct `json:"registries"`
+// RegistriesIntegrationCreateBody Body content.
+type RegistriesIntegrationCreateBody struct {
+	Registries []RegistriesIntegrationCreateStruct `json:"registries"`
 }
 
-// RegistriesIntergrationCreateStruct defines model for RegistriesIntergrationCreateStruct.
-type RegistriesIntergrationCreateStruct struct {
-	// Id Represents unique identifier of the registry.
+// RegistriesIntegrationCreateStruct defines model for RegistriesIntegrationCreateStruct.
+type RegistriesIntegrationCreateStruct struct {
+	// Id Unique identifier of the registry.
 	Id string `json:"id"`
 }
 
-// RegistriesIntergrationUpdateBody Represents body content.
-type RegistriesIntergrationUpdateBody struct {
-	Registries []RegistriesIntergrationUpdateStruct `json:"registries"`
+// RegistriesIntegrationUpdateBody Body content.
+type RegistriesIntegrationUpdateBody struct {
+	Registries []RegistriesIntegrationUpdateStruct `json:"registries"`
 }
 
-// RegistriesIntergrationUpdateStruct defines model for RegistriesIntergrationUpdateStruct.
-type RegistriesIntergrationUpdateStruct struct {
-	// Id Represents unique identifier of the registry.
+// RegistriesIntegrationUpdateStruct defines model for RegistriesIntegrationUpdateStruct.
+type RegistriesIntegrationUpdateStruct struct {
+	// Id Unique identifier of the registry.
 	Id string `json:"id"`
 }
 
 // RegistryWithMeta Registry integration with metadata.
 type RegistryWithMeta struct {
-	// Id Represents unique identifier of the registry.
+	// Id Unique identifier of the registry.
 	Id string `json:"id"`
 
-	// Name Represents name of the registry.
+	// Name Name of the registry.
 	Name string `json:"name"`
 }
 
@@ -1445,7 +1636,7 @@ type ResourceUsage struct {
 	// ClustersCount Amount of clusters in the project
 	ClustersCount *int64 `json:"clusters_count,omitempty"`
 
-	// NodegroupsCount Amount of nodegroups in the project
+	// NodegroupsCount Number of node groups in the project.
 	NodegroupsCount *int64 `json:"nodegroups_count,omitempty"`
 }
 
@@ -1460,34 +1651,34 @@ type Task struct {
 	// Id The identifier of the task.
 	Id string `json:"id"`
 
-	// NodegroupId Contains nodegroup identifier.
+	// NodegroupId Contains node group identifier.
 	NodegroupId *string `json:"nodegroup_id,omitempty"`
 
 	// StartedAt The timestamp in UTC timezone of when the task has been started.
 	StartedAt time.Time `json:"started_at"`
 
-	// Status Represents current status of the task.
+	// Status Current status of the task.
 	Status TaskStatus `json:"status"`
 
-	// Type Represents task's type.
+	// Type Task's type.
 	Type string `json:"type"`
 
 	// UpdatedAt The timestamp in UTC timezone of when the task has been updated.
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
-// TaskStatus Represents current status of the task.
+// TaskStatus Current status of the task.
 type TaskStatus string
 
 // TaskErrorDetails Provides information about error details of the task. Disabled by default, to enable use query parameter 'withErrorDetails=true'.
 type TaskErrorDetails struct {
-	// Code Represents task's error code.
+	// Code Task's error code.
 	Code int64 `json:"code"`
 
 	// Details Contains task's error helpful information.
 	Details *string `json:"details,omitempty"`
 
-	// Name Represents task's error short description.
+	// Name Task's error short description.
 	Name string `json:"name"`
 }
 
@@ -1506,22 +1697,22 @@ type TaskResp struct {
 
 // WorkerNodeLimits defines model for WorkerNodeLimits.
 type WorkerNodeLimits struct {
-	// MaxCpusPerNode Represents the maximum number of CPUs for each worker-node.
+	// MaxCpusPerNode The maximum number of CPUs for each worker node.
 	MaxCpusPerNode int `json:"max_cpus_per_node"`
 
-	// MaxRamMbPerNode Represents maximum RAM size in Megabytes for each worker-node.
+	// MaxRamMbPerNode Maximum RAM size in megabytes for each worker node.
 	MaxRamMbPerNode int `json:"max_ram_mb_per_node"`
 
-	// MaxVolumeGbPerNode Represents maximum volume size in Gigabytes for each worker-node.
+	// MaxVolumeGbPerNode Maximum volume size in gigabytes for each worker node.
 	MaxVolumeGbPerNode int `json:"max_volume_gb_per_node"`
 
-	// MinCpusPerNode Represents the minimum number of CPUs for each worker-node.
+	// MinCpusPerNode The minimum number of CPUs for each worker node.
 	MinCpusPerNode int `json:"min_cpus_per_node"`
 
-	// MinRamMbPerNode Represents minimum RAM size in Megabytes for each worker-node.
+	// MinRamMbPerNode Minimum RAM size in megabytes for each worker node.
 	MinRamMbPerNode int `json:"min_ram_mb_per_node"`
 
-	// MinVolumeGbPerNode Represents minimum volume size in Gigabytes for each worker-node.
+	// MinVolumeGbPerNode Minimum volume size in gigabytes for each worker node.
 	MinVolumeGbPerNode int `json:"min_volume_gb_per_node"`
 }
 
@@ -1532,9 +1723,6 @@ type GenericError struct {
 		Message string `json:"message"`
 	} `json:"error"`
 }
-
-// GenericNoContent Generic no content response.
-type GenericNoContent = interface{}
 
 // GenericNotFoundError Generic message about not found error for any object.
 type GenericNotFoundError struct {
@@ -1619,23 +1807,44 @@ type GetLimitsV2Params struct {
 	KubeVersion *KubeVersion `form:"kube_version,omitempty" json:"kube_version,omitempty"`
 }
 
+// ListLogComponentsV2Params defines parameters for ListLogComponentsV2.
+type ListLogComponentsV2Params struct {
+	// Lang Language on which response should be returned.
+	Lang *ListLogComponentsV2ParamsLang `form:"lang,omitempty" json:"lang,omitempty"`
+}
+
+// ListLogComponentsV2ParamsLang defines parameters for ListLogComponentsV2.
+type ListLogComponentsV2ParamsLang string
+
 // CreateClusterV2JSONRequestBody defines body for CreateClusterV2 for application/json ContentType.
 type CreateClusterV2JSONRequestBody = ClusterCreateBody
+
+// PatchClusterV2JSONRequestBody defines body for PatchClusterV2 for application/json ContentType.
+type PatchClusterV2JSONRequestBody = ClusterUpdateBody
 
 // UpdateClusterV2JSONRequestBody defines body for UpdateClusterV2 for application/json ContentType.
 type UpdateClusterV2JSONRequestBody = ClusterUpdateBody
 
+// InitControlPlaneLoggingV2JSONRequestBody defines body for InitControlPlaneLoggingV2 for application/json ContentType.
+type InitControlPlaneLoggingV2JSONRequestBody = ControlPlaneLogging
+
+// UpdateControlPlaneLoggingV2JSONRequestBody defines body for UpdateControlPlaneLoggingV2 for application/json ContentType.
+type UpdateControlPlaneLoggingV2JSONRequestBody = ControlPlaneLoggingUpdateBody
+
 // CreateNodegroupsV2JSONRequestBody defines body for CreateNodegroupsV2 for application/json ContentType.
 type CreateNodegroupsV2JSONRequestBody = NodegroupsCreateBody
 
-// UpdateNodegroupV2JSONRequestBody defines body for UpdateNodegroupV2 for application/json ContentType.
-type UpdateNodegroupV2JSONRequestBody = NodegroupUpdateBody
+// PatchNodegroupV2JSONRequestBody defines body for PatchNodegroupV2 for application/json ContentType.
+type PatchNodegroupV2JSONRequestBody = NodegroupUpdateBody
+
+// PutNodegroupV2JSONRequestBody defines body for PutNodegroupV2 for application/json ContentType.
+type PutNodegroupV2JSONRequestBody = NodegroupUpdateBody
 
 // ResizeNodegroupV2JSONRequestBody defines body for ResizeNodegroupV2 for application/json ContentType.
 type ResizeNodegroupV2JSONRequestBody = NodegroupResizeBody
 
 // CreateRegistriesV2JSONRequestBody defines body for CreateRegistriesV2 for application/json ContentType.
-type CreateRegistriesV2JSONRequestBody = RegistriesIntergrationCreateBody
+type CreateRegistriesV2JSONRequestBody = RegistriesIntegrationCreateBody
 
 // UpdateRegistriesV2JSONRequestBody defines body for UpdateRegistriesV2 for application/json ContentType.
-type UpdateRegistriesV2JSONRequestBody = RegistriesIntergrationUpdateBody
+type UpdateRegistriesV2JSONRequestBody = RegistriesIntegrationUpdateBody
