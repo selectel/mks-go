@@ -9,9 +9,11 @@ const (
 	NameUnknownStatus             = "unknown status"
 	NameHTTPError                 = "http error"
 	NameBadRequest                = "bad request"
+	NameConflict                  = "conflict"
 	NameEmptyFeatureGates         = "empty feature gates"
 	NameEmptyAdmissionControllers = "empty admission controllers"
 	NameEmptyKubeVersions         = "empty kube_versions"
+	NameEmptyNodegroups           = "empty nodegroups"
 	NameEmptyRegistries           = "empty registries"
 )
 
@@ -19,9 +21,11 @@ const (
 const (
 	MsgInternalError      = "internal server error"
 	MsgClusterNotFound    = "cluster not found"
+	MsgNodegroupNotFound  = "nodegroup not found"
+	MsgBadRequest         = "bad request"
+	MsgConflict           = "conflict"
 	MsgRegistriesNotFound = "registries not found"
 	MsgRegistryNotFound   = "registry not found"
-	MsgBadRequest         = "bad request"
 )
 
 // Ptr returns a pointer to the given value.
