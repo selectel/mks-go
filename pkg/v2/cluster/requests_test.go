@@ -17,11 +17,9 @@ import (
 )
 
 const (
-	testClusterName        = "test-cluster"
-	testKubeVersion        = "1.28.0"
-	testKubeAPIIP          = "10.0.0.1"
-	testAdditionalSoftware = "enabled"
-	testSoftwareKey        = "nginx-ingress"
+	testClusterName = "test-cluster"
+	testKubeVersion = "1.28.0"
+	testKubeAPIIP   = "10.0.0.1"
 )
 
 func TestGet(t *testing.T) {
@@ -55,7 +53,6 @@ func TestGet(t *testing.T) {
 						CniType:                       mksclient.ClusterDetailedCniType("cilium"),
 						NetworkType:                   mksclient.ClusterDetailedNetworkType("default"),
 						Status:                        mksclient.ClusterDetailedStatus("active"),
-						AdditionalSoftware:            map[string]any{testSoftwareKey: testAdditionalSoftware},
 					},
 				},
 			},
@@ -185,7 +182,6 @@ func TestCreate(t *testing.T) {
 						CniType:                       mksclient.ClusterDetailedCniType("cilium"),
 						NetworkType:                   mksclient.ClusterDetailedNetworkType("default"),
 						Status:                        mksclient.ClusterDetailedStatus("active"),
-						AdditionalSoftware:            map[string]any{testSoftwareKey: testAdditionalSoftware},
 					},
 				},
 			},
@@ -292,7 +288,6 @@ func TestUpdate(t *testing.T) {
 						CniType:                       mksclient.ClusterDetailedCniType("cilium"),
 						NetworkType:                   mksclient.ClusterDetailedNetworkType("default"),
 						Status:                        mksclient.ClusterDetailedStatus("active"),
-						AdditionalSoftware:            map[string]any{testSoftwareKey: testAdditionalSoftware},
 					},
 				},
 			},
@@ -736,7 +731,6 @@ func TestUpgradePatchVersion(t *testing.T) {
 						CniType:                       mksclient.ClusterDetailedCniType("cilium"),
 						NetworkType:                   mksclient.ClusterDetailedNetworkType("default"),
 						Status:                        mksclient.ClusterDetailedStatus("active"),
-						AdditionalSoftware:            map[string]any{testSoftwareKey: testAdditionalSoftware},
 					},
 				},
 			},
@@ -865,7 +859,6 @@ func TestUpgradeMinorVersion(t *testing.T) {
 						CniType:                       mksclient.ClusterDetailedCniType("cilium"),
 						NetworkType:                   mksclient.ClusterDetailedNetworkType("default"),
 						Status:                        mksclient.ClusterDetailedStatus("active"),
-						AdditionalSoftware:            map[string]any{testSoftwareKey: testAdditionalSoftware},
 					},
 				},
 			},

@@ -167,14 +167,14 @@ func TestCreate(t *testing.T) {
 	tests := []struct {
 		name           string
 		clientResponse *mksclient.CreateRegistriesV2Response
-		requestBody    mksclient.RegistriesIntergrationCreateBody
+		requestBody    mksclient.RegistriesIntegrationCreateBody
 		clientError    error
 		errExpected    error
 	}{
 		{
 			name: common.NameSuccess,
-			requestBody: mksclient.RegistriesIntergrationCreateBody{
-				Registries: []mksclient.RegistriesIntergrationCreateStruct{{Id: testRegistryID}},
+			requestBody: mksclient.RegistriesIntegrationCreateBody{
+				Registries: []mksclient.RegistriesIntegrationCreateStruct{{Id: testRegistryID}},
 			},
 			clientResponse: &mksclient.CreateRegistriesV2Response{
 				HTTPResponse: &http.Response{
@@ -194,8 +194,8 @@ func TestCreate(t *testing.T) {
 		},
 		{
 			name: common.NameNotFound,
-			requestBody: mksclient.RegistriesIntergrationCreateBody{
-				Registries: []mksclient.RegistriesIntergrationCreateStruct{{Id: testRegistryID}},
+			requestBody: mksclient.RegistriesIntegrationCreateBody{
+				Registries: []mksclient.RegistriesIntegrationCreateStruct{{Id: testRegistryID}},
 			},
 			clientResponse: &mksclient.CreateRegistriesV2Response{
 				HTTPResponse: &http.Response{
@@ -217,8 +217,8 @@ func TestCreate(t *testing.T) {
 		},
 		{
 			name: common.NameBadRequest,
-			requestBody: mksclient.RegistriesIntergrationCreateBody{
-				Registries: []mksclient.RegistriesIntergrationCreateStruct{{Id: testRegistryID}},
+			requestBody: mksclient.RegistriesIntegrationCreateBody{
+				Registries: []mksclient.RegistriesIntegrationCreateStruct{{Id: testRegistryID}},
 			},
 			clientResponse: &mksclient.CreateRegistriesV2Response{
 				HTTPResponse: &http.Response{
@@ -240,8 +240,8 @@ func TestCreate(t *testing.T) {
 		},
 		{
 			name: common.NameInternalError,
-			requestBody: mksclient.RegistriesIntergrationCreateBody{
-				Registries: []mksclient.RegistriesIntergrationCreateStruct{{Id: testRegistryID}},
+			requestBody: mksclient.RegistriesIntegrationCreateBody{
+				Registries: []mksclient.RegistriesIntegrationCreateStruct{{Id: testRegistryID}},
 			},
 			clientResponse: &mksclient.CreateRegistriesV2Response{
 				HTTPResponse: &http.Response{
@@ -263,8 +263,8 @@ func TestCreate(t *testing.T) {
 		},
 		{
 			name: common.NameUnknownStatus,
-			requestBody: mksclient.RegistriesIntergrationCreateBody{
-				Registries: []mksclient.RegistriesIntergrationCreateStruct{{Id: testRegistryID}},
+			requestBody: mksclient.RegistriesIntegrationCreateBody{
+				Registries: []mksclient.RegistriesIntegrationCreateStruct{{Id: testRegistryID}},
 			},
 			clientResponse: &mksclient.CreateRegistriesV2Response{
 				HTTPResponse: &http.Response{
@@ -279,8 +279,8 @@ func TestCreate(t *testing.T) {
 		},
 		{
 			name: common.NameHTTPError,
-			requestBody: mksclient.RegistriesIntergrationCreateBody{
-				Registries: []mksclient.RegistriesIntergrationCreateStruct{{Id: testRegistryID}},
+			requestBody: mksclient.RegistriesIntegrationCreateBody{
+				Registries: []mksclient.RegistriesIntegrationCreateStruct{{Id: testRegistryID}},
 			},
 			clientError: httpError,
 			errExpected: httpError,
@@ -335,14 +335,14 @@ func TestUpdate(t *testing.T) {
 	tests := []struct {
 		name           string
 		clientResponse *mksclient.UpdateRegistriesV2Response
-		requestBody    mksclient.RegistriesIntergrationUpdateBody
+		requestBody    mksclient.RegistriesIntegrationUpdateBody
 		clientError    error
 		errExpected    error
 	}{
 		{
 			name: common.NameSuccess,
-			requestBody: mksclient.RegistriesIntergrationUpdateBody{
-				Registries: []mksclient.RegistriesIntergrationUpdateStruct{{Id: testRegistryID}},
+			requestBody: mksclient.RegistriesIntegrationUpdateBody{
+				Registries: []mksclient.RegistriesIntegrationUpdateStruct{{Id: testRegistryID}},
 			},
 			clientResponse: &mksclient.UpdateRegistriesV2Response{
 				HTTPResponse: &http.Response{
@@ -362,8 +362,8 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameNotFound,
-			requestBody: mksclient.RegistriesIntergrationUpdateBody{
-				Registries: []mksclient.RegistriesIntergrationUpdateStruct{{Id: testRegistryID}},
+			requestBody: mksclient.RegistriesIntegrationUpdateBody{
+				Registries: []mksclient.RegistriesIntegrationUpdateStruct{{Id: testRegistryID}},
 			},
 			clientResponse: &mksclient.UpdateRegistriesV2Response{
 				HTTPResponse: &http.Response{
@@ -385,8 +385,8 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameBadRequest,
-			requestBody: mksclient.RegistriesIntergrationUpdateBody{
-				Registries: []mksclient.RegistriesIntergrationUpdateStruct{{Id: testRegistryID}},
+			requestBody: mksclient.RegistriesIntegrationUpdateBody{
+				Registries: []mksclient.RegistriesIntegrationUpdateStruct{{Id: testRegistryID}},
 			},
 			clientResponse: &mksclient.UpdateRegistriesV2Response{
 				HTTPResponse: &http.Response{
@@ -408,8 +408,8 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameInternalError,
-			requestBody: mksclient.RegistriesIntergrationUpdateBody{
-				Registries: []mksclient.RegistriesIntergrationUpdateStruct{{Id: testRegistryID}},
+			requestBody: mksclient.RegistriesIntegrationUpdateBody{
+				Registries: []mksclient.RegistriesIntegrationUpdateStruct{{Id: testRegistryID}},
 			},
 			clientResponse: &mksclient.UpdateRegistriesV2Response{
 				HTTPResponse: &http.Response{
@@ -431,8 +431,8 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameUnknownStatus,
-			requestBody: mksclient.RegistriesIntergrationUpdateBody{
-				Registries: []mksclient.RegistriesIntergrationUpdateStruct{{Id: testRegistryID}},
+			requestBody: mksclient.RegistriesIntegrationUpdateBody{
+				Registries: []mksclient.RegistriesIntegrationUpdateStruct{{Id: testRegistryID}},
 			},
 			clientResponse: &mksclient.UpdateRegistriesV2Response{
 				HTTPResponse: &http.Response{
@@ -447,8 +447,8 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameHTTPError,
-			requestBody: mksclient.RegistriesIntergrationUpdateBody{
-				Registries: []mksclient.RegistriesIntergrationUpdateStruct{{Id: testRegistryID}},
+			requestBody: mksclient.RegistriesIntegrationUpdateBody{
+				Registries: []mksclient.RegistriesIntegrationUpdateStruct{{Id: testRegistryID}},
 			},
 			clientError: httpError,
 			errExpected: httpError,

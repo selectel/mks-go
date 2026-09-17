@@ -42,13 +42,11 @@ func TestGet(t *testing.T) {
 						AutoscaleMaxNodes: common.Ptr(int64(10)),
 						AutoscaleMinNodes: common.Ptr(int64(1)),
 						Cidr:              common.Ptr("192.168.1.0/24"),
-						CloudNodegroupConfig: &mksclient.CloudNodegroupConfig{
+						CloudNodegroupConfig: &mksclient.CloudNodegroupConfigInfo{
 							AffinityPolicy: "anti-affinity",
-							Cpus:           4,
 							FlavorId:       "test-flavor",
 							KeypairName:    "test-key",
 							LocalVolume:    false,
-							RamMb:          8192,
 							VolumeGb:       100,
 							VolumeType:     "standard",
 						},
@@ -199,15 +197,13 @@ func TestList(t *testing.T) {
 						{
 							AutoscaleMaxNodes:       common.Ptr(int64(10)),
 							AutoscaleMinNodes:       common.Ptr(int64(1)),
-							AvailableAdditionalInfo: mksclient.NodegorupAdditionalInfo{UserData: true},
+							AvailableAdditionalInfo: mksclient.NodegroupAdditionalInfo{UserData: true},
 							Cidr:                    common.Ptr("192.168.1.0/24"),
-							CloudNodegroupConfig: &mksclient.CloudNodegroupConfig{
+							CloudNodegroupConfig: &mksclient.CloudNodegroupConfigInfo{
 								AffinityPolicy: "anti-affinity",
-								Cpus:           4,
 								FlavorId:       "test-flavor",
 								KeypairName:    "test-key",
 								LocalVolume:    false,
-								RamMb:          8192,
 								VolumeGb:       100,
 								VolumeType:     "standard",
 							},
@@ -831,13 +827,13 @@ func TestUpdate(t *testing.T) {
 
 	tests := []struct {
 		name           string
-		clientResponse *mksclient.UpdateNodegroupV2Response
+		clientResponse *mksclient.PutNodegroupV2Response
 		clientError    error
 		errExpected    error
 	}{
 		{
 			name: common.NameSuccess,
-			clientResponse: &mksclient.UpdateNodegroupV2Response{
+			clientResponse: &mksclient.PutNodegroupV2Response{
 				HTTPResponse: &http.Response{
 					StatusCode: http.StatusNoContent,
 					Status:     http.StatusText(http.StatusNoContent),
@@ -846,7 +842,7 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameNotFound,
-			clientResponse: &mksclient.UpdateNodegroupV2Response{
+			clientResponse: &mksclient.PutNodegroupV2Response{
 				HTTPResponse: &http.Response{
 					StatusCode: http.StatusNotFound,
 					Status:     http.StatusText(http.StatusNotFound),
@@ -866,7 +862,7 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameBadRequest,
-			clientResponse: &mksclient.UpdateNodegroupV2Response{
+			clientResponse: &mksclient.PutNodegroupV2Response{
 				HTTPResponse: &http.Response{
 					StatusCode: http.StatusBadRequest,
 					Status:     http.StatusText(http.StatusBadRequest),
@@ -886,7 +882,7 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameConflict,
-			clientResponse: &mksclient.UpdateNodegroupV2Response{
+			clientResponse: &mksclient.PutNodegroupV2Response{
 				HTTPResponse: &http.Response{
 					StatusCode: http.StatusConflict,
 					Status:     http.StatusText(http.StatusConflict),
@@ -906,7 +902,7 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameInternalError,
-			clientResponse: &mksclient.UpdateNodegroupV2Response{
+			clientResponse: &mksclient.PutNodegroupV2Response{
 				HTTPResponse: &http.Response{
 					StatusCode: http.StatusInternalServerError,
 					Status:     http.StatusText(http.StatusInternalServerError),
@@ -926,7 +922,7 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameUnknownStatus,
-			clientResponse: &mksclient.UpdateNodegroupV2Response{
+			clientResponse: &mksclient.PutNodegroupV2Response{
 				HTTPResponse: &http.Response{
 					StatusCode: http.StatusServiceUnavailable,
 					Status:     http.StatusText(http.StatusServiceUnavailable),
@@ -947,7 +943,7 @@ func TestUpdate(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			mksClient := mksmock.NewMockClientWithResponsesInterface(t)
-			mksClient.EXPECT().UpdateNodegroupV2WithResponse(mock.Anything, clusterID, nodegroupID, mock.Anything).Return(test.clientResponse, test.clientError)
+			mksClient.EXPECT().PutNodegroupV2WithResponse(mock.Anything, clusterID, nodegroupID, mock.Anything).Return(test.clientResponse, test.clientError)
 
 			err := Update(context.Background(), &v2.ServiceClient{MKSClient: mksClient}, clusterID, nodegroupID, mksclient.NodegroupUpdateStruct{})
 
