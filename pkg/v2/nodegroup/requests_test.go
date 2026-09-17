@@ -80,6 +80,26 @@ func TestGet(t *testing.T) {
 			},
 		},
 		{
+			name: common.NameBadRequest,
+			clientResponse: &mksclient.GetNodegroupV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusBadRequest,
+					Status:     http.StatusText(http.StatusBadRequest),
+				},
+				JSON400: &mksclient.GenericError{
+					Error: struct {
+						Message string `json:"message"`
+					}{
+						Message: common.MsgBadRequest,
+					},
+				},
+			},
+			errExpected: &mksclient.MKSError{
+				StatusCode: http.StatusBadRequest,
+				Message:    common.MsgBadRequest,
+			},
+		},
+		{
 			name: common.NameNotFound,
 			clientResponse: &mksclient.GetNodegroupV2Response{
 				HTTPResponse: &http.Response{
