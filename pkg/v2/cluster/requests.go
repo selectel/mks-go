@@ -55,7 +55,7 @@ func Update(ctx context.Context, client *v2.ServiceClient, clusterID string, opt
 
 	return nil, mksclient.HandleAPIErrors(
 		responseResult.StatusCode(), responseResult.Status(),
-		responseResult.JSON500,
+		responseResult.JSON404, responseResult.JSON500,
 	)
 }
 
@@ -89,7 +89,7 @@ func GetKubeconfig(ctx context.Context, client *v2.ServiceClient, clusterID stri
 
 	return nil, mksclient.HandleAPIErrors(
 		responseResult.StatusCode(), responseResult.Status(),
-		responseResult.JSON404, responseResult.JSON500,
+		responseResult.JSON403, responseResult.JSON404, responseResult.JSON500,
 	)
 }
 
@@ -106,7 +106,7 @@ func RotateCerts(ctx context.Context, client *v2.ServiceClient, clusterID string
 
 	return mksclient.HandleAPIErrors(
 		responseResult.StatusCode(), responseResult.Status(),
-		responseResult.JSON404, responseResult.JSON500,
+		responseResult.JSON403, responseResult.JSON404, responseResult.JSON500,
 	)
 }
 

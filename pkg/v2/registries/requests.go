@@ -28,10 +28,10 @@ func Get(ctx context.Context, client *v2.ServiceClient, clusterID string) (*mksc
 // Create creates new registries integration in provided cluster.
 func Create(
 	ctx context.Context, client *v2.ServiceClient,
-	clusterID string, registries []mksclient.RegistriesIntergrationCreateStruct,
+	clusterID string, registries []mksclient.RegistriesIntegrationCreateStruct,
 ) (*mksclient.RegistriesIntegration, error) {
 	responseResult, err := client.MKSClient.CreateRegistriesV2WithResponse(
-		ctx, clusterID, mksclient.RegistriesIntergrationCreateBody{Registries: registries})
+		ctx, clusterID, mksclient.RegistriesIntegrationCreateBody{Registries: registries})
 	if err != nil {
 		return nil, err
 	}
@@ -49,10 +49,10 @@ func Create(
 // Update updates registries integration in provided cluster.
 func Update(
 	ctx context.Context, client *v2.ServiceClient,
-	clusterID string, registries []mksclient.RegistriesIntergrationUpdateStruct,
+	clusterID string, registries []mksclient.RegistriesIntegrationUpdateStruct,
 ) (*mksclient.RegistriesIntegration, error) {
 	responseResult, err := client.MKSClient.UpdateRegistriesV2WithResponse(
-		ctx, clusterID, mksclient.RegistriesIntergrationUpdateBody{Registries: registries})
+		ctx, clusterID, mksclient.RegistriesIntegrationUpdateBody{Registries: registries})
 	if err != nil {
 		return nil, err
 	}

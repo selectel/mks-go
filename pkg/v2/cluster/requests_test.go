@@ -17,11 +17,9 @@ import (
 )
 
 const (
-	testClusterName        = "test-cluster"
-	testKubeVersion        = "1.28.0"
-	testKubeAPIIP          = "10.0.0.1"
-	testAdditionalSoftware = "enabled"
-	testSoftwareKey        = "nginx-ingress"
+	testClusterName = "test-cluster"
+	testKubeVersion = "1.28.0"
+	testKubeAPIIP   = "10.0.0.1"
 )
 
 func TestGet(t *testing.T) {
@@ -55,7 +53,6 @@ func TestGet(t *testing.T) {
 						CniType:                       mksclient.ClusterDetailedCniType("cilium"),
 						NetworkType:                   mksclient.ClusterDetailedNetworkType("default"),
 						Status:                        mksclient.ClusterDetailedStatus("active"),
-						AdditionalSoftware:            map[string]any{testSoftwareKey: testAdditionalSoftware},
 					},
 				},
 			},
@@ -185,7 +182,6 @@ func TestCreate(t *testing.T) {
 						CniType:                       mksclient.ClusterDetailedCniType("cilium"),
 						NetworkType:                   mksclient.ClusterDetailedNetworkType("default"),
 						Status:                        mksclient.ClusterDetailedStatus("active"),
-						AdditionalSoftware:            map[string]any{testSoftwareKey: testAdditionalSoftware},
 					},
 				},
 			},
@@ -292,9 +288,30 @@ func TestUpdate(t *testing.T) {
 						CniType:                       mksclient.ClusterDetailedCniType("cilium"),
 						NetworkType:                   mksclient.ClusterDetailedNetworkType("default"),
 						Status:                        mksclient.ClusterDetailedStatus("active"),
-						AdditionalSoftware:            map[string]any{testSoftwareKey: testAdditionalSoftware},
 					},
 				},
+			},
+		},
+		{
+			name: common.NameNotFound,
+			clientResponse: &mksclient.UpdateClusterV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusNotFound,
+					Status:     http.StatusText(http.StatusNotFound),
+				},
+				JSON404: &mksclient.GenericNotFoundError{
+					Error: struct {
+						Id      string `json:"id"` //nolint:revive // it's generated struct
+						Message string `json:"message"`
+					}{
+						Id:      clusterID,
+						Message: common.MsgClusterNotFound,
+					},
+				},
+			},
+			errExpected: &mksclient.MKSError{
+				StatusCode: http.StatusNotFound,
+				Message:    common.MsgClusterNotFound,
 			},
 		},
 		{
@@ -503,6 +520,26 @@ func TestGetKubeconfig(t *testing.T) {
 			},
 		},
 		{
+			name: common.NameAccessDenied,
+			clientResponse: &mksclient.GetClusterKubeconfigV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusForbidden,
+					Status:     http.StatusText(http.StatusForbidden),
+				},
+				JSON403: &mksclient.GenericError{
+					Error: struct {
+						Message string `json:"message"`
+					}{
+						Message: common.MsgAccessDenied,
+					},
+				},
+			},
+			errExpected: &mksclient.MKSError{
+				StatusCode: http.StatusForbidden,
+				Message:    common.MsgAccessDenied,
+			},
+		},
+		{
 			name: common.NameNotFound,
 			clientResponse: &mksclient.GetClusterKubeconfigV2Response{
 				HTTPResponse: &http.Response{
@@ -612,6 +649,26 @@ func TestRotateCerts(t *testing.T) {
 					StatusCode: http.StatusNoContent,
 					Status:     http.StatusText(http.StatusNoContent),
 				},
+			},
+		},
+		{
+			name: common.NameAccessDenied,
+			clientResponse: &mksclient.RotateClusterCertsV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusForbidden,
+					Status:     http.StatusText(http.StatusForbidden),
+				},
+				JSON403: &mksclient.GenericError{
+					Error: struct {
+						Message string `json:"message"`
+					}{
+						Message: common.MsgAccessDenied,
+					},
+				},
+			},
+			errExpected: &mksclient.MKSError{
+				StatusCode: http.StatusForbidden,
+				Message:    common.MsgAccessDenied,
 			},
 		},
 		{
@@ -736,7 +793,6 @@ func TestUpgradePatchVersion(t *testing.T) {
 						CniType:                       mksclient.ClusterDetailedCniType("cilium"),
 						NetworkType:                   mksclient.ClusterDetailedNetworkType("default"),
 						Status:                        mksclient.ClusterDetailedStatus("active"),
-						AdditionalSoftware:            map[string]any{testSoftwareKey: testAdditionalSoftware},
 					},
 				},
 			},
@@ -865,7 +921,6 @@ func TestUpgradeMinorVersion(t *testing.T) {
 						CniType:                       mksclient.ClusterDetailedCniType("cilium"),
 						NetworkType:                   mksclient.ClusterDetailedNetworkType("default"),
 						Status:                        mksclient.ClusterDetailedStatus("active"),
-						AdditionalSoftware:            map[string]any{testSoftwareKey: testAdditionalSoftware},
 					},
 				},
 			},

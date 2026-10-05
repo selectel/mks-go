@@ -105,9 +105,9 @@ func Resize(ctx context.Context, client *v2.ServiceClient, clusterID, nodegroupI
 	)
 }
 
-// Update requests an update of a cluster nodegroup by its id.
+// Update requests a full update (method PUT) of a cluster nodegroup by its id.
 func Update(ctx context.Context, client *v2.ServiceClient, clusterID, nodegroupID string, nodegroup mksclient.NodegroupUpdateStruct) error {
-	responseResult, err := client.MKSClient.UpdateNodegroupV2WithResponse(
+	responseResult, err := client.MKSClient.PutNodegroupV2WithResponse(
 		ctx, clusterID, nodegroupID,
 		mksclient.NodegroupUpdateBody{Nodegroup: nodegroup},
 	)

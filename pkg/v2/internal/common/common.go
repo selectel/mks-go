@@ -4,6 +4,7 @@ package common
 // Test case name constants.
 const (
 	NameSuccess                   = "success"
+	NameAccessDenied              = "access denied"
 	NameInternalError             = "internal server error"
 	NameNotFound                  = "not found"
 	NameUnknownStatus             = "unknown status"
@@ -20,6 +21,7 @@ const (
 // Error message constants.
 const (
 	MsgInternalError      = "internal server error"
+	MsgAccessDenied       = "access denied"
 	MsgClusterNotFound    = "cluster not found"
 	MsgNodeNotFound       = "node not found"
 	MsgBadRequest         = "bad request"

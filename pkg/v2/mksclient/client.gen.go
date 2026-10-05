@@ -106,6 +106,11 @@ type ClientInterface interface {
 	// GetClusterV2 request
 	GetClusterV2(ctx context.Context, clusterId ClusterId, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// PatchClusterV2WithBody request with any body
+	PatchClusterV2WithBody(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	PatchClusterV2(ctx context.Context, clusterId ClusterId, body PatchClusterV2JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// UpdateClusterV2WithBody request with any body
 	UpdateClusterV2WithBody(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -113,6 +118,19 @@ type ClientInterface interface {
 
 	// GetClusterActionsV2 request
 	GetClusterActionsV2(ctx context.Context, clusterId ClusterId, params *GetClusterActionsV2Params, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetControlPlaneLoggingV2 request
+	GetControlPlaneLoggingV2(ctx context.Context, clusterId ClusterId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// InitControlPlaneLoggingV2WithBody request with any body
+	InitControlPlaneLoggingV2WithBody(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	InitControlPlaneLoggingV2(ctx context.Context, clusterId ClusterId, body InitControlPlaneLoggingV2JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateControlPlaneLoggingV2WithBody request with any body
+	UpdateControlPlaneLoggingV2WithBody(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateControlPlaneLoggingV2(ctx context.Context, clusterId ClusterId, body UpdateControlPlaneLoggingV2JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetClusterKubeconfigV2 request
 	GetClusterKubeconfigV2(ctx context.Context, clusterId ClusterId, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -131,10 +149,15 @@ type ClientInterface interface {
 	// GetNodegroupV2 request
 	GetNodegroupV2(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// UpdateNodegroupV2WithBody request with any body
-	UpdateNodegroupV2WithBody(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// PatchNodegroupV2WithBody request with any body
+	PatchNodegroupV2WithBody(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	UpdateNodegroupV2(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, body UpdateNodegroupV2JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	PatchNodegroupV2(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, body PatchNodegroupV2JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PutNodegroupV2WithBody request with any body
+	PutNodegroupV2WithBody(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	PutNodegroupV2(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, body PutNodegroupV2JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetNodegroupActionsV2 request
 	GetNodegroupActionsV2(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, params *GetNodegroupActionsV2Params, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -198,6 +221,9 @@ type ClientInterface interface {
 
 	// ListKubeVersionsV2 request
 	ListKubeVersionsV2(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListLogComponentsV2 request
+	ListLogComponentsV2(ctx context.Context, params *ListLogComponentsV2Params, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
 func (c *Client) ListAdmissionControllersV2(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -272,6 +298,30 @@ func (c *Client) GetClusterV2(ctx context.Context, clusterId ClusterId, reqEdito
 	return c.Client.Do(req)
 }
 
+func (c *Client) PatchClusterV2WithBody(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPatchClusterV2RequestWithBody(c.Server, clusterId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PatchClusterV2(ctx context.Context, clusterId ClusterId, body PatchClusterV2JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPatchClusterV2Request(c.Server, clusterId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) UpdateClusterV2WithBody(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateClusterV2RequestWithBody(c.Server, clusterId, contentType, body)
 	if err != nil {
@@ -298,6 +348,66 @@ func (c *Client) UpdateClusterV2(ctx context.Context, clusterId ClusterId, body 
 
 func (c *Client) GetClusterActionsV2(ctx context.Context, clusterId ClusterId, params *GetClusterActionsV2Params, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetClusterActionsV2Request(c.Server, clusterId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetControlPlaneLoggingV2(ctx context.Context, clusterId ClusterId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetControlPlaneLoggingV2Request(c.Server, clusterId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) InitControlPlaneLoggingV2WithBody(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewInitControlPlaneLoggingV2RequestWithBody(c.Server, clusterId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) InitControlPlaneLoggingV2(ctx context.Context, clusterId ClusterId, body InitControlPlaneLoggingV2JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewInitControlPlaneLoggingV2Request(c.Server, clusterId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateControlPlaneLoggingV2WithBody(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateControlPlaneLoggingV2RequestWithBody(c.Server, clusterId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateControlPlaneLoggingV2(ctx context.Context, clusterId ClusterId, body UpdateControlPlaneLoggingV2JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateControlPlaneLoggingV2Request(c.Server, clusterId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -380,8 +490,8 @@ func (c *Client) GetNodegroupV2(ctx context.Context, clusterId ClusterId, nodegr
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateNodegroupV2WithBody(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateNodegroupV2RequestWithBody(c.Server, clusterId, nodegroupId, contentType, body)
+func (c *Client) PatchNodegroupV2WithBody(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPatchNodegroupV2RequestWithBody(c.Server, clusterId, nodegroupId, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -392,8 +502,32 @@ func (c *Client) UpdateNodegroupV2WithBody(ctx context.Context, clusterId Cluste
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateNodegroupV2(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, body UpdateNodegroupV2JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateNodegroupV2Request(c.Server, clusterId, nodegroupId, body)
+func (c *Client) PatchNodegroupV2(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, body PatchNodegroupV2JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPatchNodegroupV2Request(c.Server, clusterId, nodegroupId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PutNodegroupV2WithBody(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPutNodegroupV2RequestWithBody(c.Server, clusterId, nodegroupId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PutNodegroupV2(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, body PutNodegroupV2JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPutNodegroupV2Request(c.Server, clusterId, nodegroupId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -668,6 +802,18 @@ func (c *Client) ListKubeVersionsV2(ctx context.Context, reqEditors ...RequestEd
 	return c.Client.Do(req)
 }
 
+func (c *Client) ListLogComponentsV2(ctx context.Context, params *ListLogComponentsV2Params, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListLogComponentsV2Request(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // NewListAdmissionControllersV2Request generates requests for ListAdmissionControllersV2
 func NewListAdmissionControllersV2Request(server string) (*http.Request, error) {
 	var err error
@@ -830,6 +976,53 @@ func NewGetClusterV2Request(server string, clusterId ClusterId) (*http.Request, 
 	return req, nil
 }
 
+// NewPatchClusterV2Request calls the generic PatchClusterV2 builder with application/json body
+func NewPatchClusterV2Request(server string, clusterId ClusterId, body PatchClusterV2JSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPatchClusterV2RequestWithBody(server, clusterId, "application/json", bodyReader)
+}
+
+// NewPatchClusterV2RequestWithBody generates requests for PatchClusterV2 with any type of body
+func NewPatchClusterV2RequestWithBody(server string, clusterId ClusterId, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "cluster_id", clusterId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v2/clusters/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewUpdateClusterV2Request calls the generic UpdateClusterV2 builder with application/json body
 func NewUpdateClusterV2Request(server string, clusterId ClusterId, body UpdateClusterV2JSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -929,6 +1122,134 @@ func NewGetClusterActionsV2Request(server string, clusterId ClusterId, params *G
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewGetControlPlaneLoggingV2Request generates requests for GetControlPlaneLoggingV2
+func NewGetControlPlaneLoggingV2Request(server string, clusterId ClusterId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "cluster_id", clusterId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v2/clusters/%s/control-plane-logging", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewInitControlPlaneLoggingV2Request calls the generic InitControlPlaneLoggingV2 builder with application/json body
+func NewInitControlPlaneLoggingV2Request(server string, clusterId ClusterId, body InitControlPlaneLoggingV2JSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewInitControlPlaneLoggingV2RequestWithBody(server, clusterId, "application/json", bodyReader)
+}
+
+// NewInitControlPlaneLoggingV2RequestWithBody generates requests for InitControlPlaneLoggingV2 with any type of body
+func NewInitControlPlaneLoggingV2RequestWithBody(server string, clusterId ClusterId, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "cluster_id", clusterId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v2/clusters/%s/control-plane-logging", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateControlPlaneLoggingV2Request calls the generic UpdateControlPlaneLoggingV2 builder with application/json body
+func NewUpdateControlPlaneLoggingV2Request(server string, clusterId ClusterId, body UpdateControlPlaneLoggingV2JSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateControlPlaneLoggingV2RequestWithBody(server, clusterId, "application/json", bodyReader)
+}
+
+// NewUpdateControlPlaneLoggingV2RequestWithBody generates requests for UpdateControlPlaneLoggingV2 with any type of body
+func NewUpdateControlPlaneLoggingV2RequestWithBody(server string, clusterId ClusterId, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "cluster_id", clusterId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v2/clusters/%s/control-plane-logging", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PUT", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -1130,19 +1451,73 @@ func NewGetNodegroupV2Request(server string, clusterId ClusterId, nodegroupId No
 	return req, nil
 }
 
-// NewUpdateNodegroupV2Request calls the generic UpdateNodegroupV2 builder with application/json body
-func NewUpdateNodegroupV2Request(server string, clusterId ClusterId, nodegroupId NodegroupId, body UpdateNodegroupV2JSONRequestBody) (*http.Request, error) {
+// NewPatchNodegroupV2Request calls the generic PatchNodegroupV2 builder with application/json body
+func NewPatchNodegroupV2Request(server string, clusterId ClusterId, nodegroupId NodegroupId, body PatchNodegroupV2JSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewUpdateNodegroupV2RequestWithBody(server, clusterId, nodegroupId, "application/json", bodyReader)
+	return NewPatchNodegroupV2RequestWithBody(server, clusterId, nodegroupId, "application/json", bodyReader)
 }
 
-// NewUpdateNodegroupV2RequestWithBody generates requests for UpdateNodegroupV2 with any type of body
-func NewUpdateNodegroupV2RequestWithBody(server string, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader) (*http.Request, error) {
+// NewPatchNodegroupV2RequestWithBody generates requests for PatchNodegroupV2 with any type of body
+func NewPatchNodegroupV2RequestWithBody(server string, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "cluster_id", clusterId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "nodegroup_id", nodegroupId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v2/clusters/%s/nodegroups/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewPutNodegroupV2Request calls the generic PutNodegroupV2 builder with application/json body
+func NewPutNodegroupV2Request(server string, clusterId ClusterId, nodegroupId NodegroupId, body PutNodegroupV2JSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPutNodegroupV2RequestWithBody(server, clusterId, nodegroupId, "application/json", bodyReader)
+}
+
+// NewPutNodegroupV2RequestWithBody generates requests for PutNodegroupV2 with any type of body
+func NewPutNodegroupV2RequestWithBody(server string, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2031,6 +2406,55 @@ func NewListKubeVersionsV2Request(server string) (*http.Request, error) {
 	return req, nil
 }
 
+// NewListLogComponentsV2Request generates requests for ListLogComponentsV2
+func NewListLogComponentsV2Request(server string, params *ListLogComponentsV2Params) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v2/log-components")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.Lang != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "lang", *params.Lang, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 func (c *Client) applyEditors(ctx context.Context, req *http.Request, additionalEditors []RequestEditorFn) error {
 	for _, r := range c.RequestEditors {
 		if err := r(ctx, req); err != nil {
@@ -2091,6 +2515,11 @@ type ClientWithResponsesInterface interface {
 	// GetClusterV2WithResponse request
 	GetClusterV2WithResponse(ctx context.Context, clusterId ClusterId, reqEditors ...RequestEditorFn) (*GetClusterV2Response, error)
 
+	// PatchClusterV2WithBodyWithResponse request with any body
+	PatchClusterV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchClusterV2Response, error)
+
+	PatchClusterV2WithResponse(ctx context.Context, clusterId ClusterId, body PatchClusterV2JSONRequestBody, reqEditors ...RequestEditorFn) (*PatchClusterV2Response, error)
+
 	// UpdateClusterV2WithBodyWithResponse request with any body
 	UpdateClusterV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClusterV2Response, error)
 
@@ -2098,6 +2527,19 @@ type ClientWithResponsesInterface interface {
 
 	// GetClusterActionsV2WithResponse request
 	GetClusterActionsV2WithResponse(ctx context.Context, clusterId ClusterId, params *GetClusterActionsV2Params, reqEditors ...RequestEditorFn) (*GetClusterActionsV2Response, error)
+
+	// GetControlPlaneLoggingV2WithResponse request
+	GetControlPlaneLoggingV2WithResponse(ctx context.Context, clusterId ClusterId, reqEditors ...RequestEditorFn) (*GetControlPlaneLoggingV2Response, error)
+
+	// InitControlPlaneLoggingV2WithBodyWithResponse request with any body
+	InitControlPlaneLoggingV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*InitControlPlaneLoggingV2Response, error)
+
+	InitControlPlaneLoggingV2WithResponse(ctx context.Context, clusterId ClusterId, body InitControlPlaneLoggingV2JSONRequestBody, reqEditors ...RequestEditorFn) (*InitControlPlaneLoggingV2Response, error)
+
+	// UpdateControlPlaneLoggingV2WithBodyWithResponse request with any body
+	UpdateControlPlaneLoggingV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateControlPlaneLoggingV2Response, error)
+
+	UpdateControlPlaneLoggingV2WithResponse(ctx context.Context, clusterId ClusterId, body UpdateControlPlaneLoggingV2JSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateControlPlaneLoggingV2Response, error)
 
 	// GetClusterKubeconfigV2WithResponse request
 	GetClusterKubeconfigV2WithResponse(ctx context.Context, clusterId ClusterId, reqEditors ...RequestEditorFn) (*GetClusterKubeconfigV2Response, error)
@@ -2116,10 +2558,15 @@ type ClientWithResponsesInterface interface {
 	// GetNodegroupV2WithResponse request
 	GetNodegroupV2WithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, reqEditors ...RequestEditorFn) (*GetNodegroupV2Response, error)
 
-	// UpdateNodegroupV2WithBodyWithResponse request with any body
-	UpdateNodegroupV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateNodegroupV2Response, error)
+	// PatchNodegroupV2WithBodyWithResponse request with any body
+	PatchNodegroupV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchNodegroupV2Response, error)
 
-	UpdateNodegroupV2WithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, body UpdateNodegroupV2JSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateNodegroupV2Response, error)
+	PatchNodegroupV2WithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, body PatchNodegroupV2JSONRequestBody, reqEditors ...RequestEditorFn) (*PatchNodegroupV2Response, error)
+
+	// PutNodegroupV2WithBodyWithResponse request with any body
+	PutNodegroupV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PutNodegroupV2Response, error)
+
+	PutNodegroupV2WithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, body PutNodegroupV2JSONRequestBody, reqEditors ...RequestEditorFn) (*PutNodegroupV2Response, error)
 
 	// GetNodegroupActionsV2WithResponse request
 	GetNodegroupActionsV2WithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, params *GetNodegroupActionsV2Params, reqEditors ...RequestEditorFn) (*GetNodegroupActionsV2Response, error)
@@ -2183,6 +2630,9 @@ type ClientWithResponsesInterface interface {
 
 	// ListKubeVersionsV2WithResponse request
 	ListKubeVersionsV2WithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListKubeVersionsV2Response, error)
+
+	// ListLogComponentsV2WithResponse request
+	ListLogComponentsV2WithResponse(ctx context.Context, params *ListLogComponentsV2Params, reqEditors ...RequestEditorFn) (*ListLogComponentsV2Response, error)
 }
 
 type ListAdmissionControllersV2Response struct {
@@ -2257,7 +2707,6 @@ func (r CreateClusterV2Response) StatusCode() int {
 type DeleteClusterV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON204      *GenericNoContent
 	JSON404      *GenericNotFoundError
 	JSON500      *GenericError
 }
@@ -2302,10 +2751,37 @@ func (r GetClusterV2Response) StatusCode() int {
 	return 0
 }
 
+type PatchClusterV2Response struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *ClusterResp
+	JSON400      *GenericError
+	JSON404      *GenericNotFoundError
+	JSON409      *GenericError
+	JSON500      *GenericError
+}
+
+// Status returns HTTPResponse.Status
+func (r PatchClusterV2Response) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PatchClusterV2Response) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type UpdateClusterV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ClusterResp
+	JSON404      *GenericNotFoundError
 	JSON500      *GenericError
 }
 
@@ -2349,9 +2825,86 @@ func (r GetClusterActionsV2Response) StatusCode() int {
 	return 0
 }
 
+type GetControlPlaneLoggingV2Response struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *ControlPlaneLogging
+	JSON403      *GenericError
+	JSON404      *GenericNotFoundError
+	JSON500      *GenericError
+}
+
+// Status returns HTTPResponse.Status
+func (r GetControlPlaneLoggingV2Response) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetControlPlaneLoggingV2Response) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type InitControlPlaneLoggingV2Response struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON201      *ControlPlaneLogging
+	JSON403      *GenericError
+	JSON404      *GenericNotFoundError
+	JSON409      *GenericError
+	JSON500      *GenericError
+}
+
+// Status returns HTTPResponse.Status
+func (r InitControlPlaneLoggingV2Response) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r InitControlPlaneLoggingV2Response) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type UpdateControlPlaneLoggingV2Response struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON403      *GenericError
+	JSON404      *GenericNotFoundError
+	JSON409      *GenericError
+	JSON500      *GenericError
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateControlPlaneLoggingV2Response) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateControlPlaneLoggingV2Response) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type GetClusterKubeconfigV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON403      *GenericError
 	JSON404      *GenericNotFoundError
 	JSON500      *GenericError
 }
@@ -2400,7 +2953,6 @@ func (r ListNodegroupsV2Response) StatusCode() int {
 type CreateNodegroupsV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON204      *GenericNoContent
 	JSON400      *GenericError
 	JSON404      *GenericError
 	JSON409      *GenericError
@@ -2426,7 +2978,6 @@ func (r CreateNodegroupsV2Response) StatusCode() int {
 type DeleteNodegroupV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON204      *GenericNoContent
 	JSON400      *GenericError
 	JSON404      *GenericError
 	JSON409      *GenericError
@@ -2474,10 +3025,9 @@ func (r GetNodegroupV2Response) StatusCode() int {
 	return 0
 }
 
-type UpdateNodegroupV2Response struct {
+type PatchNodegroupV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON204      *GenericNoContent
 	JSON400      *GenericError
 	JSON404      *GenericError
 	JSON409      *GenericError
@@ -2485,7 +3035,7 @@ type UpdateNodegroupV2Response struct {
 }
 
 // Status returns HTTPResponse.Status
-func (r UpdateNodegroupV2Response) Status() string {
+func (r PatchNodegroupV2Response) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -2493,7 +3043,32 @@ func (r UpdateNodegroupV2Response) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r UpdateNodegroupV2Response) StatusCode() int {
+func (r PatchNodegroupV2Response) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type PutNodegroupV2Response struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON400      *GenericError
+	JSON404      *GenericError
+	JSON409      *GenericError
+	JSON500      *GenericError
+}
+
+// Status returns HTTPResponse.Status
+func (r PutNodegroupV2Response) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PutNodegroupV2Response) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -2529,7 +3104,6 @@ func (r GetNodegroupActionsV2Response) StatusCode() int {
 type DeleteNodeV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON204      *GenericNoContent
 	JSON400      *GenericError
 	JSON404      *GenericError
 	JSON409      *GenericError
@@ -2579,7 +3153,6 @@ func (r GetNodeV2Response) StatusCode() int {
 type ReinstallNodeV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON204      *GenericNoContent
 	JSON400      *GenericError
 	JSON404      *GenericError
 	JSON409      *GenericError
@@ -2605,7 +3178,6 @@ func (r ReinstallNodeV2Response) StatusCode() int {
 type ResizeNodegroupV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON204      *GenericNoContent
 	JSON400      *GenericError
 	JSON404      *GenericError
 	JSON409      *GenericError
@@ -2631,7 +3203,6 @@ func (r ResizeNodegroupV2Response) StatusCode() int {
 type DeleteRegistriesV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON204      *GenericNoContent
 	JSON400      *GenericError
 	JSON404      *GenericError
 	JSON500      *GenericError
@@ -2731,7 +3302,6 @@ func (r UpdateRegistriesV2Response) StatusCode() int {
 type DeleteRegistryV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON204      *GenericNoContent
 	JSON400      *GenericError
 	JSON404      *GenericError
 	JSON500      *GenericError
@@ -2756,7 +3326,7 @@ func (r DeleteRegistryV2Response) StatusCode() int {
 type RotateClusterCertsV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON204      *GenericNoContent
+	JSON403      *GenericError
 	JSON404      *GenericNotFoundError
 	JSON500      *GenericError
 }
@@ -2965,6 +3535,30 @@ func (r ListKubeVersionsV2Response) StatusCode() int {
 	return 0
 }
 
+type ListLogComponentsV2Response struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *LogComponentsList
+	JSON403      *GenericError
+	JSON500      *GenericError
+}
+
+// Status returns HTTPResponse.Status
+func (r ListLogComponentsV2Response) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListLogComponentsV2Response) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 // ListAdmissionControllersV2WithResponse request returning *ListAdmissionControllersV2Response
 func (c *ClientWithResponses) ListAdmissionControllersV2WithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAdmissionControllersV2Response, error) {
 	rsp, err := c.ListAdmissionControllersV2(ctx, reqEditors...)
@@ -3018,6 +3612,23 @@ func (c *ClientWithResponses) GetClusterV2WithResponse(ctx context.Context, clus
 	return ParseGetClusterV2Response(rsp)
 }
 
+// PatchClusterV2WithBodyWithResponse request with arbitrary body returning *PatchClusterV2Response
+func (c *ClientWithResponses) PatchClusterV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchClusterV2Response, error) {
+	rsp, err := c.PatchClusterV2WithBody(ctx, clusterId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePatchClusterV2Response(rsp)
+}
+
+func (c *ClientWithResponses) PatchClusterV2WithResponse(ctx context.Context, clusterId ClusterId, body PatchClusterV2JSONRequestBody, reqEditors ...RequestEditorFn) (*PatchClusterV2Response, error) {
+	rsp, err := c.PatchClusterV2(ctx, clusterId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePatchClusterV2Response(rsp)
+}
+
 // UpdateClusterV2WithBodyWithResponse request with arbitrary body returning *UpdateClusterV2Response
 func (c *ClientWithResponses) UpdateClusterV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClusterV2Response, error) {
 	rsp, err := c.UpdateClusterV2WithBody(ctx, clusterId, contentType, body, reqEditors...)
@@ -3042,6 +3653,49 @@ func (c *ClientWithResponses) GetClusterActionsV2WithResponse(ctx context.Contex
 		return nil, err
 	}
 	return ParseGetClusterActionsV2Response(rsp)
+}
+
+// GetControlPlaneLoggingV2WithResponse request returning *GetControlPlaneLoggingV2Response
+func (c *ClientWithResponses) GetControlPlaneLoggingV2WithResponse(ctx context.Context, clusterId ClusterId, reqEditors ...RequestEditorFn) (*GetControlPlaneLoggingV2Response, error) {
+	rsp, err := c.GetControlPlaneLoggingV2(ctx, clusterId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetControlPlaneLoggingV2Response(rsp)
+}
+
+// InitControlPlaneLoggingV2WithBodyWithResponse request with arbitrary body returning *InitControlPlaneLoggingV2Response
+func (c *ClientWithResponses) InitControlPlaneLoggingV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*InitControlPlaneLoggingV2Response, error) {
+	rsp, err := c.InitControlPlaneLoggingV2WithBody(ctx, clusterId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseInitControlPlaneLoggingV2Response(rsp)
+}
+
+func (c *ClientWithResponses) InitControlPlaneLoggingV2WithResponse(ctx context.Context, clusterId ClusterId, body InitControlPlaneLoggingV2JSONRequestBody, reqEditors ...RequestEditorFn) (*InitControlPlaneLoggingV2Response, error) {
+	rsp, err := c.InitControlPlaneLoggingV2(ctx, clusterId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseInitControlPlaneLoggingV2Response(rsp)
+}
+
+// UpdateControlPlaneLoggingV2WithBodyWithResponse request with arbitrary body returning *UpdateControlPlaneLoggingV2Response
+func (c *ClientWithResponses) UpdateControlPlaneLoggingV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateControlPlaneLoggingV2Response, error) {
+	rsp, err := c.UpdateControlPlaneLoggingV2WithBody(ctx, clusterId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateControlPlaneLoggingV2Response(rsp)
+}
+
+func (c *ClientWithResponses) UpdateControlPlaneLoggingV2WithResponse(ctx context.Context, clusterId ClusterId, body UpdateControlPlaneLoggingV2JSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateControlPlaneLoggingV2Response, error) {
+	rsp, err := c.UpdateControlPlaneLoggingV2(ctx, clusterId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateControlPlaneLoggingV2Response(rsp)
 }
 
 // GetClusterKubeconfigV2WithResponse request returning *GetClusterKubeconfigV2Response
@@ -3097,21 +3751,38 @@ func (c *ClientWithResponses) GetNodegroupV2WithResponse(ctx context.Context, cl
 	return ParseGetNodegroupV2Response(rsp)
 }
 
-// UpdateNodegroupV2WithBodyWithResponse request with arbitrary body returning *UpdateNodegroupV2Response
-func (c *ClientWithResponses) UpdateNodegroupV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateNodegroupV2Response, error) {
-	rsp, err := c.UpdateNodegroupV2WithBody(ctx, clusterId, nodegroupId, contentType, body, reqEditors...)
+// PatchNodegroupV2WithBodyWithResponse request with arbitrary body returning *PatchNodegroupV2Response
+func (c *ClientWithResponses) PatchNodegroupV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchNodegroupV2Response, error) {
+	rsp, err := c.PatchNodegroupV2WithBody(ctx, clusterId, nodegroupId, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateNodegroupV2Response(rsp)
+	return ParsePatchNodegroupV2Response(rsp)
 }
 
-func (c *ClientWithResponses) UpdateNodegroupV2WithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, body UpdateNodegroupV2JSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateNodegroupV2Response, error) {
-	rsp, err := c.UpdateNodegroupV2(ctx, clusterId, nodegroupId, body, reqEditors...)
+func (c *ClientWithResponses) PatchNodegroupV2WithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, body PatchNodegroupV2JSONRequestBody, reqEditors ...RequestEditorFn) (*PatchNodegroupV2Response, error) {
+	rsp, err := c.PatchNodegroupV2(ctx, clusterId, nodegroupId, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateNodegroupV2Response(rsp)
+	return ParsePatchNodegroupV2Response(rsp)
+}
+
+// PutNodegroupV2WithBodyWithResponse request with arbitrary body returning *PutNodegroupV2Response
+func (c *ClientWithResponses) PutNodegroupV2WithBodyWithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PutNodegroupV2Response, error) {
+	rsp, err := c.PutNodegroupV2WithBody(ctx, clusterId, nodegroupId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePutNodegroupV2Response(rsp)
+}
+
+func (c *ClientWithResponses) PutNodegroupV2WithResponse(ctx context.Context, clusterId ClusterId, nodegroupId NodegroupId, body PutNodegroupV2JSONRequestBody, reqEditors ...RequestEditorFn) (*PutNodegroupV2Response, error) {
+	rsp, err := c.PutNodegroupV2(ctx, clusterId, nodegroupId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePutNodegroupV2Response(rsp)
 }
 
 // GetNodegroupActionsV2WithResponse request returning *GetNodegroupActionsV2Response
@@ -3309,6 +3980,15 @@ func (c *ClientWithResponses) ListKubeVersionsV2WithResponse(ctx context.Context
 	return ParseListKubeVersionsV2Response(rsp)
 }
 
+// ListLogComponentsV2WithResponse request returning *ListLogComponentsV2Response
+func (c *ClientWithResponses) ListLogComponentsV2WithResponse(ctx context.Context, params *ListLogComponentsV2Params, reqEditors ...RequestEditorFn) (*ListLogComponentsV2Response, error) {
+	rsp, err := c.ListLogComponentsV2(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListLogComponentsV2Response(rsp)
+}
+
 // ParseListAdmissionControllersV2Response parses an HTTP response from a ListAdmissionControllersV2WithResponse call
 func ParseListAdmissionControllersV2Response(rsp *http.Response) (*ListAdmissionControllersV2Response, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -3422,13 +4102,6 @@ func ParseDeleteClusterV2Response(rsp *http.Response) (*DeleteClusterV2Response,
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 204:
-		var dest GenericNoContent
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON204 = &dest
-
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest GenericNotFoundError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -3488,6 +4161,60 @@ func ParseGetClusterV2Response(rsp *http.Response) (*GetClusterV2Response, error
 	return response, nil
 }
 
+// ParsePatchClusterV2Response parses an HTTP response from a PatchClusterV2WithResponse call
+func ParsePatchClusterV2Response(rsp *http.Response) (*PatchClusterV2Response, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PatchClusterV2Response{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClusterResp
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest GenericNotFoundError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseUpdateClusterV2Response parses an HTTP response from a UpdateClusterV2WithResponse call
 func ParseUpdateClusterV2Response(rsp *http.Response) (*UpdateClusterV2Response, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -3508,6 +4235,13 @@ func ParseUpdateClusterV2Response(rsp *http.Response) (*UpdateClusterV2Response,
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest GenericNotFoundError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
 		var dest GenericError
@@ -3561,6 +4295,154 @@ func ParseGetClusterActionsV2Response(rsp *http.Response) (*GetClusterActionsV2R
 	return response, nil
 }
 
+// ParseGetControlPlaneLoggingV2Response parses an HTTP response from a GetControlPlaneLoggingV2WithResponse call
+func ParseGetControlPlaneLoggingV2Response(rsp *http.Response) (*GetControlPlaneLoggingV2Response, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetControlPlaneLoggingV2Response{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ControlPlaneLogging
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest GenericNotFoundError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseInitControlPlaneLoggingV2Response parses an HTTP response from a InitControlPlaneLoggingV2WithResponse call
+func ParseInitControlPlaneLoggingV2Response(rsp *http.Response) (*InitControlPlaneLoggingV2Response, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &InitControlPlaneLoggingV2Response{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest ControlPlaneLogging
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest GenericNotFoundError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateControlPlaneLoggingV2Response parses an HTTP response from a UpdateControlPlaneLoggingV2WithResponse call
+func ParseUpdateControlPlaneLoggingV2Response(rsp *http.Response) (*UpdateControlPlaneLoggingV2Response, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateControlPlaneLoggingV2Response{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest GenericNotFoundError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetClusterKubeconfigV2Response parses an HTTP response from a GetClusterKubeconfigV2WithResponse call
 func ParseGetClusterKubeconfigV2Response(rsp *http.Response) (*GetClusterKubeconfigV2Response, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -3575,6 +4457,13 @@ func ParseGetClusterKubeconfigV2Response(rsp *http.Response) (*GetClusterKubecon
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest GenericNotFoundError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -3655,13 +4544,6 @@ func ParseCreateNodegroupsV2Response(rsp *http.Response) (*CreateNodegroupsV2Res
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 204:
-		var dest GenericNoContent
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON204 = &dest
-
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest GenericError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -3709,13 +4591,6 @@ func ParseDeleteNodegroupV2Response(rsp *http.Response) (*DeleteNodegroupV2Respo
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 204:
-		var dest GenericNoContent
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON204 = &dest
-
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest GenericError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -3796,27 +4671,67 @@ func ParseGetNodegroupV2Response(rsp *http.Response) (*GetNodegroupV2Response, e
 	return response, nil
 }
 
-// ParseUpdateNodegroupV2Response parses an HTTP response from a UpdateNodegroupV2WithResponse call
-func ParseUpdateNodegroupV2Response(rsp *http.Response) (*UpdateNodegroupV2Response, error) {
+// ParsePatchNodegroupV2Response parses an HTTP response from a PatchNodegroupV2WithResponse call
+func ParsePatchNodegroupV2Response(rsp *http.Response) (*PatchNodegroupV2Response, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &UpdateNodegroupV2Response{
+	response := &PatchNodegroupV2Response{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 204:
-		var dest GenericNoContent
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest GenericError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON204 = &dest
+		response.JSON400 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePutNodegroupV2Response parses an HTTP response from a PutNodegroupV2WithResponse call
+func ParsePutNodegroupV2Response(rsp *http.Response) (*PutNodegroupV2Response, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PutNodegroupV2Response{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest GenericError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -3918,13 +4833,6 @@ func ParseDeleteNodeV2Response(rsp *http.Response) (*DeleteNodeV2Response, error
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 204:
-		var dest GenericNoContent
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON204 = &dest
-
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest GenericError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -4012,13 +4920,6 @@ func ParseReinstallNodeV2Response(rsp *http.Response) (*ReinstallNodeV2Response,
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 204:
-		var dest GenericNoContent
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON204 = &dest
-
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest GenericError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -4066,13 +4967,6 @@ func ParseResizeNodegroupV2Response(rsp *http.Response) (*ResizeNodegroupV2Respo
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 204:
-		var dest GenericNoContent
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON204 = &dest
-
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest GenericError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -4120,13 +5014,6 @@ func ParseDeleteRegistriesV2Response(rsp *http.Response) (*DeleteRegistriesV2Res
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 204:
-		var dest GenericNoContent
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON204 = &dest
-
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest GenericError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -4308,13 +5195,6 @@ func ParseDeleteRegistryV2Response(rsp *http.Response) (*DeleteRegistryV2Respons
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 204:
-		var dest GenericNoContent
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON204 = &dest
-
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest GenericError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -4355,12 +5235,12 @@ func ParseRotateClusterCertsV2Response(rsp *http.Response) (*RotateClusterCertsV
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 204:
-		var dest GenericNoContent
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest GenericError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON204 = &dest
+		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest GenericNotFoundError
@@ -4660,6 +5540,46 @@ func ParseListKubeVersionsV2Response(rsp *http.Response) (*ListKubeVersionsV2Res
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListLogComponentsV2Response parses an HTTP response from a ListLogComponentsV2WithResponse call
+func ParseListLogComponentsV2Response(rsp *http.Response) (*ListLogComponentsV2Response, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListLogComponentsV2Response{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest LogComponentsList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
 		var dest GenericError
