@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/selectel/mks-go/v2/internal/common"
-
 	mks "github.com/selectel/mks-go/v2/pkg"
 	"github.com/selectel/mks-go/v2/pkg/mksclient"
 )

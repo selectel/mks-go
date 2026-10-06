@@ -81,4 +81,4 @@ formatters:
       sections:
         - standard
         - default
-        - prefix(github.com/selectel/mks-go/v2/pkg)
+        - prefix(github.com/selectel/mks-go/v2)
