@@ -59,6 +59,7 @@ import (
 	"github.com/selectel/mks-go/v2/pkg/cluster"
 	"github.com/selectel/mks-go/v2/pkg/kubeversion"
 	"github.com/selectel/mks-go/v2/pkg/mksclient"
+	"github.com/selectel/mks-go/v2/pkg/nodegroup"
 	"github.com/selectel/mks-go/v2/pkg/task"
 )
 
@@ -94,6 +95,9 @@ func main() {
 	createOpts := &mksclient.ClusterCreateStruct{
 		Name:        "test-cluster",
 		KubeVersion: *kubeVersion.Version,
+		Pool:        "ru-3",
+		Basic:       true,
+		NetworkType: "standard",
 	}
 
 	// Create a cluster.
@@ -104,6 +108,36 @@ func main() {
 
 	// Print cluster fields.
 	fmt.Printf("Created cluster: %+v\n", newCluster)
+
+	// Nodegroup with nodes based on network volumes for root partition.
+	firstNodegroup := mksclient.NodegroupCreateStruct{
+		Count:   3,
+		Segment: "ru-3a",
+		CloudNodegroupConfig: &mksclient.CloudNodegroupConfig{
+			Cpus:       1,
+			RamMb:      2048,
+			VolumeGb:   50,
+			VolumeType: "fast.ru-3a",
+		},
+	}
+
+	// Nodegroup with nodes based on local volumes for root partition.
+	secondNodegroup := mksclient.NodegroupCreateStruct{
+		Count:   2,
+		Segment: "ru-3a",
+		CloudNodegroupConfig: &mksclient.CloudNodegroupConfig{
+			Cpus:        2,
+			RamMb:       4096,
+			VolumeGb:    20,
+			LocalVolume: true,
+		},
+	}
+
+	// Create node groups for the new cluster.
+	err = nodegroup.Create(ctx, mksClient, newCluster.Id, []mksclient.NodegroupCreateStruct{firstNodegroup, secondNodegroup})
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Get cluster tasks.
 	tasks, err := task.List(ctx, mksClient, newCluster.Id, 10, 0)
