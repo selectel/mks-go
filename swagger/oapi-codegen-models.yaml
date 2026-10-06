@@ -1,0 +1,6 @@
+package: mksclient
+output: ../pkg/mksclient/models.gen.go
+generate:
+  models: true
+output-options:
+  skip-prune: true

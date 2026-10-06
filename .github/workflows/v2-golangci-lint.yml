@@ -2,7 +2,7 @@ name: Golangci-lint v2
 on:
   push:
     branches:
-      - master
+      - sdk-v2
   pull_request:
 
 jobs:
@@ -22,4 +22,3 @@ jobs:
         uses: golangci/golangci-lint-action@v9.2.0
         with:
           version: v2.11.4
-          working-directory: pkg/v2

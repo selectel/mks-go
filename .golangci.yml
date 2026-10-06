@@ -1,59 +1,34 @@
+version: "2"
+
 run:
   timeout: 5m
-  skip-files:
-    - "fixtures.go"
-
-linters-settings:
-  nlreturn:
-    block-size: 3
-  funlen:
-    statements: 65
-
-  cyclop:
-    # the maximal code complexity to report, 8 by default
-    max-complexity: 9
-
-  godot:
-    scope: declarations
-
-  gci:
-    # put imports beginning with prefix after 3rd-party packages;
-    # only support one prefix
-    # if not set, use goimports.local-prefixes
-    local-prefixes: github.com/selectel
-
-  nestif:
-    # minimal complexity of if statements to report, 5 by default
-    min-complexity: 5
+  tests: true
 
 linters:
-  fast: false
-  disable-all: true
+  default: "none"
+  exclusions:
+    paths:
+      - ".*\\.gen\\.go"
+      - "fixtures\\.go"
+
   enable:
     - asciicheck
     - cyclop
-    - depguard
     - dogsled
     - durationcheck
     - errcheck
     - errname
     - errorlint
     - exhaustive
-    - exportloopref
     - forbidigo
     - forcetypeassert
-    - gci
     - goconst
     - gocritic
     - godot
-    - gofmt
-    - gofumpt
     - goheader
-    - goimports
     - gomoddirectives
     - gomodguard
     - goprintffuncname
-    - gosimple
     - govet
     - importas
     - ineffassign
@@ -72,11 +47,38 @@ linters:
     - rowserrcheck
     - sqlclosecheck
     - staticcheck
-    - stylecheck
     - tparallel
-    - typecheck
     - unconvert
     - unparam
     - unused
     - wastedassign
     - whitespace
+
+  settings:
+    cyclop:
+      max-complexity: 9
+    funlen:
+      statements: 65
+    nestif:
+      min-complexity: 5
+    nlreturn:
+      block-size: 3
+
+formatters:
+  exclusions:
+    paths:
+      - ".*\\.gen\\.go"
+      - "fixtures\\.go"
+
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - prefix(github.com/selectel/mks-go/v2)

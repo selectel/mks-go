@@ -1,20 +1,14 @@
 #!/usr/bin/env bash
 
 echo "==> Running go test and creating a coverage profile..."
-i=0
-failed=0
-for testingpkg in $(go list ./pkg/.../testing ./pkg/v1); do
-  coverpkg=${testingpkg::-8}
-  go test -v -covermode count -coverprofile "./${i}.coverprofile" -coverpkg $coverpkg $testingpkg
-  if [ $? -eq 1 ]; then
-     failed+=1
-  fi
-  ((i++))
-done
-gocovmerge $(ls ./*.coverprofile) > coverage.out
-rm *.coverprofile
 
-if ((failed>0)); then
+go test ./... -v -race -cover -coverprofile "coverage.all.out"
+
+if [ $? -eq 1 ]; then
 	exit 1
 fi
+
+cat coverage.all.out | grep -v '\.gen\.go' | grep -v 'mock_' > coverage.out
+rm -f coverage.all.out
+
 exit 0

@@ -1,6 +1,0 @@
-package: mksclient
-output: ../mksclient/client.gen.go
-generate:
-  client: true
-output-options:
-  skip-prune: true
