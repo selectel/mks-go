@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/selectel/mks-go/v2/internal/common"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
+	"github.com/selectel/mks-go/v2/internal/common"
 	mks "github.com/selectel/mks-go/v2/pkg"
 	"github.com/selectel/mks-go/v2/pkg/mksclient"
 	mksmock "github.com/selectel/mks-go/v2/pkg/mksclient/mocks"

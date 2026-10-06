@@ -40,7 +40,7 @@ const (
 	defaultExpectContinueTimeout = 1
 
 	// selfPath represents the package self path.
-	selfPath = "github.com/selectel/mks-go/v2/pkg"
+	selfPath = "github.com/selectel/mks-go/v2"
 
 	// defaultVersion represents the default version.
 	defaultVersion = "0.0.0"
