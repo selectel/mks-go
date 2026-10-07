@@ -124,3 +124,23 @@ func Update(ctx context.Context, client *mks.ServiceClient, clusterID, nodegroup
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON409, responseResult.JSON500,
 	)
 }
+
+// Patch requests a partial update (method PATCH) of a cluster nodegroup by its id.
+func Patch(ctx context.Context, client *mks.ServiceClient, clusterID, nodegroupID string, nodegroup mksclient.NodegroupUpdateStruct) error {
+	responseResult, err := client.MKSClient.PatchNodegroupV2WithResponse(
+		ctx, clusterID, nodegroupID,
+		mksclient.PatchNodegroupV2JSONRequestBody{Nodegroup: nodegroup},
+	)
+	if err != nil {
+		return err
+	}
+
+	if responseResult.StatusCode() == http.StatusNoContent {
+		return nil
+	}
+
+	return mksclient.HandleAPIErrors(
+		responseResult.StatusCode(), responseResult.Status(),
+		responseResult.JSON400, responseResult.JSON404, responseResult.JSON409, responseResult.JSON500,
+	)
+}

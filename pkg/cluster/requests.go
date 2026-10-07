@@ -59,6 +59,23 @@ func Update(ctx context.Context, client *mks.ServiceClient, clusterID string, op
 	)
 }
 
+// Patch requests a partial update of an existing cluster.
+func Patch(ctx context.Context, client *mks.ServiceClient, clusterID string, opts *mksclient.ClusterUpdateStruct) (*mksclient.ClusterDetailed, error) {
+	responseResult, err := client.MKSClient.PatchClusterV2WithResponse(ctx, clusterID, mksclient.PatchClusterV2JSONRequestBody{Cluster: opts})
+	if err != nil {
+		return nil, err
+	}
+
+	if responseResult.JSON200 != nil {
+		return responseResult.JSON200.Cluster, nil
+	}
+
+	return nil, mksclient.HandleAPIErrors(
+		responseResult.StatusCode(), responseResult.Status(),
+		responseResult.JSON400, responseResult.JSON404, responseResult.JSON409, responseResult.JSON500,
+	)
+}
+
 // Delete deletes a single cluster by its id.
 func Delete(ctx context.Context, client *mks.ServiceClient, clusterID string) error {
 	responseResult, err := client.MKSClient.DeleteClusterV2WithResponse(ctx, clusterID)

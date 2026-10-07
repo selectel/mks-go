@@ -989,3 +989,155 @@ func TestUpdate(t *testing.T) {
 		})
 	}
 }
+
+func TestPatch(t *testing.T) {
+	const (
+		clusterID   = "test-cluster-id"
+		nodegroupID = "test-nodegroup-id"
+	)
+
+	httpError := errors.New("error")
+
+	tests := []struct {
+		name           string
+		clientResponse *mksclient.PatchNodegroupV2Response
+		clientError    error
+		errExpected    error
+	}{
+		{
+			name: common.NameSuccess,
+			clientResponse: &mksclient.PatchNodegroupV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusNoContent,
+					Status:     http.StatusText(http.StatusNoContent),
+				},
+			},
+		},
+		{
+			name: common.NameNotFound,
+			clientResponse: &mksclient.PatchNodegroupV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusNotFound,
+					Status:     http.StatusText(http.StatusNotFound),
+				},
+				JSON404: &mksclient.GenericError{
+					Error: struct {
+						Message string `json:"message"`
+					}{
+						Message: common.MsgNodegroupNotFound,
+					},
+				},
+			},
+			errExpected: &mksclient.MKSError{
+				StatusCode: http.StatusNotFound,
+				Message:    common.MsgNodegroupNotFound,
+			},
+		},
+		{
+			name: common.NameBadRequest,
+			clientResponse: &mksclient.PatchNodegroupV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusBadRequest,
+					Status:     http.StatusText(http.StatusBadRequest),
+				},
+				JSON400: &mksclient.GenericError{
+					Error: struct {
+						Message string `json:"message"`
+					}{
+						Message: common.MsgBadRequest,
+					},
+				},
+			},
+			errExpected: &mksclient.MKSError{
+				StatusCode: http.StatusBadRequest,
+				Message:    common.MsgBadRequest,
+			},
+		},
+		{
+			name: common.NameConflict,
+			clientResponse: &mksclient.PatchNodegroupV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusConflict,
+					Status:     http.StatusText(http.StatusConflict),
+				},
+				JSON409: &mksclient.GenericError{
+					Error: struct {
+						Message string `json:"message"`
+					}{
+						Message: common.MsgConflict,
+					},
+				},
+			},
+			errExpected: &mksclient.MKSError{
+				StatusCode: http.StatusConflict,
+				Message:    common.MsgConflict,
+			},
+		},
+		{
+			name: common.NameInternalError,
+			clientResponse: &mksclient.PatchNodegroupV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusInternalServerError,
+					Status:     http.StatusText(http.StatusInternalServerError),
+				},
+				JSON500: &mksclient.GenericError{
+					Error: struct {
+						Message string `json:"message"`
+					}{
+						Message: common.MsgInternalError,
+					},
+				},
+			},
+			errExpected: &mksclient.MKSError{
+				StatusCode: http.StatusInternalServerError,
+				Message:    common.MsgInternalError,
+			},
+		},
+		{
+			name: common.NameUnknownStatus,
+			clientResponse: &mksclient.PatchNodegroupV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusServiceUnavailable,
+					Status:     http.StatusText(http.StatusServiceUnavailable),
+				},
+			},
+			errExpected: &mksclient.MKSError{
+				StatusCode: http.StatusServiceUnavailable,
+				Message:    http.StatusText(http.StatusServiceUnavailable),
+			},
+		},
+		{
+			name:        common.NameHTTPError,
+			clientError: httpError,
+			errExpected: httpError,
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			mksClient := mksmock.NewMockClientWithResponsesInterface(t)
+			mksClient.EXPECT().PatchNodegroupV2WithResponse(mock.Anything, clusterID, nodegroupID, mock.Anything).Return(test.clientResponse, test.clientError)
+
+			err := Patch(context.Background(), &mks.ServiceClient{MKSClient: mksClient}, clusterID, nodegroupID, mksclient.NodegroupUpdateStruct{})
+
+			if test.errExpected != nil {
+				require.Error(t, err)
+
+				var mksErrExp *mksclient.MKSError
+				if !errors.As(test.errExpected, &mksErrExp) {
+					assert.ErrorIs(t, err, test.errExpected)
+
+					return
+				}
+
+				var mksErr *mksclient.MKSError
+				require.ErrorAs(t, err, &mksErr)
+				assert.Equal(t, mksErrExp, mksErr)
+
+				return
+			}
+
+			require.NoError(t, err)
+		})
+	}
+}
