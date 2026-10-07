@@ -997,6 +997,14 @@ func TestPatch(t *testing.T) {
 	)
 
 	httpError := errors.New("error")
+	ng := mksclient.NodegroupUpdateStruct{
+		Labels: &map[string]string{"key": "value"},
+		Taints: &[]mksclient.NodegroupTaint{{
+			Key:    "key",
+			Value:  "value",
+			Effect: mksclient.NoSchedule,
+		}},
+	}
 
 	tests := []struct {
 		name           string
@@ -1116,9 +1124,11 @@ func TestPatch(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			mksClient := mksmock.NewMockClientWithResponsesInterface(t)
-			mksClient.EXPECT().PatchNodegroupV2WithResponse(mock.Anything, clusterID, nodegroupID, mock.Anything).Return(test.clientResponse, test.clientError)
+			mksClient.EXPECT().
+				PatchNodegroupV2WithResponse(mock.Anything, clusterID, nodegroupID, mksclient.PatchNodegroupV2JSONRequestBody{Nodegroup: ng}).
+				Return(test.clientResponse, test.clientError)
 
-			err := Patch(context.Background(), &mks.ServiceClient{MKSClient: mksClient}, clusterID, nodegroupID, mksclient.NodegroupUpdateStruct{})
+			err := Patch(context.Background(), &mks.ServiceClient{MKSClient: mksClient}, clusterID, nodegroupID, ng)
 
 			if test.errExpected != nil {
 				require.Error(t, err)

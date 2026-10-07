@@ -1023,6 +1023,14 @@ func TestPatch(t *testing.T) {
 	const clusterID = "test-cluster-id"
 
 	httpError := errors.New("error")
+	enablePatchVersionAutoUpgrade := false
+	opts := &mksclient.ClusterUpdateStruct{
+		EnablePatchVersionAutoUpgrade: &enablePatchVersionAutoUpgrade,
+		KubernetesOptions: &mksclient.KubernetesOptions{
+			FeatureGates: []string{"TTLAfterFinished"},
+			AuditLogs:    mksclient.AuditLogs{Enabled: true},
+		},
+	}
 
 	tests := []struct {
 		name           string
@@ -1159,9 +1167,11 @@ func TestPatch(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			mksClient := mksmock.NewMockClientWithResponsesInterface(t)
-			mksClient.EXPECT().PatchClusterV2WithResponse(mock.Anything, clusterID, mock.Anything).Return(test.clientResponse, test.clientError)
+			mksClient.EXPECT().
+				PatchClusterV2WithResponse(mock.Anything, clusterID, mksclient.PatchClusterV2JSONRequestBody{Cluster: opts}).
+				Return(test.clientResponse, test.clientError)
 
-			cluster, err := Patch(context.Background(), &mks.ServiceClient{MKSClient: mksClient}, clusterID, nil)
+			cluster, err := Patch(context.Background(), &mks.ServiceClient{MKSClient: mksClient}, clusterID, opts)
 
 			if test.errExpected != nil {
 				assert.Nil(t, cluster)
