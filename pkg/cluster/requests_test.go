@@ -563,6 +563,46 @@ func TestGetKubeconfig(t *testing.T) {
 			},
 		},
 		{
+			name: common.NameBadRequest,
+			clientResponse: &mksclient.GetClusterKubeconfigV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusBadRequest,
+					Status:     http.StatusText(http.StatusBadRequest),
+				},
+				JSON400: &mksclient.GenericError{
+					Error: struct {
+						Message string `json:"message"`
+					}{
+						Message: common.MsgBadRequest,
+					},
+				},
+			},
+			errExpected: &mksclient.MKSError{
+				StatusCode: http.StatusBadRequest,
+				Message:    common.MsgBadRequest,
+			},
+		},
+		{
+			name: common.NameConflict,
+			clientResponse: &mksclient.GetClusterKubeconfigV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusConflict,
+					Status:     http.StatusText(http.StatusConflict),
+				},
+				JSON409: &mksclient.GenericError{
+					Error: struct {
+						Message string `json:"message"`
+					}{
+						Message: common.MsgConflict,
+					},
+				},
+			},
+			errExpected: &mksclient.MKSError{
+				StatusCode: http.StatusConflict,
+				Message:    common.MsgConflict,
+			},
+		},
+		{
 			name: common.NameInternalError,
 			clientResponse: &mksclient.GetClusterKubeconfigV2Response{
 				HTTPResponse: &http.Response{

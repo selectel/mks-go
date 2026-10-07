@@ -106,7 +106,7 @@ func GetKubeconfig(ctx context.Context, client *mks.ServiceClient, clusterID str
 
 	return nil, mksclient.HandleAPIErrors(
 		responseResult.StatusCode(), responseResult.Status(),
-		responseResult.JSON403, responseResult.JSON404, responseResult.JSON500,
+		responseResult.JSON400, responseResult.JSON403, responseResult.JSON404, responseResult.JSON409, responseResult.JSON500,
 	)
 }
 

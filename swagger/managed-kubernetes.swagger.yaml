@@ -245,6 +245,12 @@ paths:
       responses:
         '200':
           description: Cluster kubeconfig has been returned.
+        '400':
+          description: Invalid path parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_error'
         '403':
           description: Access denied. The user does not have the required member role.
           content:
@@ -257,6 +263,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/generic_not_found_error'
+        '409':
+          description: Cluster has invalid status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic_error'
         '500':
           description: Internal server error.
           content:

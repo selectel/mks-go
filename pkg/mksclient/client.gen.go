@@ -2904,8 +2904,10 @@ func (r UpdateControlPlaneLoggingV2Response) StatusCode() int {
 type GetClusterKubeconfigV2Response struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON400      *GenericError
 	JSON403      *GenericError
 	JSON404      *GenericNotFoundError
+	JSON409      *GenericError
 	JSON500      *GenericError
 }
 
@@ -4457,6 +4459,13 @@ func ParseGetClusterKubeconfigV2Response(rsp *http.Response) (*GetClusterKubecon
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest GenericError
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -4470,6 +4479,13 @@ func ParseGetClusterKubeconfigV2Response(rsp *http.Response) (*GetClusterKubecon
 			return nil, err
 		}
 		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest GenericError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON409 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
 		var dest GenericError
