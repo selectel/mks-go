@@ -43,7 +43,7 @@ To work with the Selectel Managed Kubernetes Service API you first need to:
 * Selectel Managed Kubernetes Service currently has the following API endpoints: [URLs](https://docs.selectel.ru/en/api/urls/#managed-kubernetes)
 
 > [!NOTE]
-> mks-go/v2 designed to work with Managed Kubernetes API v2
+> mks-go/v2 is designed to work with Managed Kubernetes API v2
 
 ### Usage example
 
