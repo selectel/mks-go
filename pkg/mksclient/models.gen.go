@@ -1269,6 +1269,9 @@ type NodegroupDetailed struct {
 	// AutoscaleMinNodes Minimum number of worker nodes in the node group.
 	AutoscaleMinNodes *int64 `json:"autoscale_min_nodes,omitempty"`
 
+	// AvailabilityZone Deprecated name of `segment` returned by some API versions; read `segment` first.
+	AvailabilityZone *string `json:"availability_zone,omitempty"`
+
 	// Cidr A CIDR for node group specified by client.
 	Cidr *string `json:"cidr,omitempty"`
 

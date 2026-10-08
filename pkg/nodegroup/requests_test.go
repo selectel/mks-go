@@ -2,6 +2,7 @@ package nodegroup
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"net/http"
 	"testing"
@@ -25,11 +26,17 @@ func TestGet(t *testing.T) {
 
 	httpError := errors.New("error")
 
+	var azOnlyResp mksclient.NodegroupResp
+
+	err := json.Unmarshal([]byte(`{"nodegroup":{"availability_zone":"ru-9a"}}`), &azOnlyResp)
+	require.NoError(t, err)
+
 	tests := []struct {
-		name           string
-		clientResponse *mksclient.GetNodegroupV2Response
-		clientError    error
-		errExpected    error
+		name             string
+		clientResponse   *mksclient.GetNodegroupV2Response
+		clientError      error
+		errExpected      error
+		availabilityZone *string
 	}{
 		{
 			name: common.NameSuccess,
@@ -79,6 +86,17 @@ func TestGet(t *testing.T) {
 					},
 				},
 			},
+		},
+		{
+			name: "availability_zone without segment",
+			clientResponse: &mksclient.GetNodegroupV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusOK,
+					Status:     http.StatusText(http.StatusOK),
+				},
+				JSON200: &azOnlyResp,
+			},
+			availabilityZone: common.Ptr("ru-9a"),
 		},
 		{
 			name: common.NameBadRequest,
@@ -191,6 +209,7 @@ func TestGet(t *testing.T) {
 
 			assert.Equal(t, test.clientResponse.JSON200.Nodegroup.Id, nodegroup.Id)
 			assert.Equal(t, test.clientResponse.JSON200.Nodegroup.ClusterId, nodegroup.ClusterId)
+			assert.Equal(t, test.availabilityZone, nodegroup.AvailabilityZone)
 		})
 	}
 }
