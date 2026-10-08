@@ -583,17 +583,11 @@ func TestGetKubeconfig(t *testing.T) {
 					StatusCode: http.StatusBadRequest,
 					Status:     http.StatusText(http.StatusBadRequest),
 				},
-				JSON400: &mksclient.GenericError{
-					Error: struct {
-						Message string `json:"message"`
-					}{
-						Message: common.MsgBadRequest,
-					},
-				},
+				Body: []byte(`{"error": {"message": "` + common.MsgBadRequest + `"}}`),
 			},
 			errExpected: &mksclient.MKSError{
 				StatusCode: http.StatusBadRequest,
-				Message:    common.MsgBadRequest,
+				Message:    http.StatusText(http.StatusBadRequest) + ": " + common.MsgBadRequest,
 			},
 		},
 		{
@@ -603,17 +597,11 @@ func TestGetKubeconfig(t *testing.T) {
 					StatusCode: http.StatusConflict,
 					Status:     http.StatusText(http.StatusConflict),
 				},
-				JSON409: &mksclient.GenericError{
-					Error: struct {
-						Message string `json:"message"`
-					}{
-						Message: common.MsgConflict,
-					},
-				},
+				Body: []byte(`{"error": {"message": "` + common.MsgConflict + `"}}`),
 			},
 			errExpected: &mksclient.MKSError{
 				StatusCode: http.StatusConflict,
-				Message:    common.MsgConflict,
+				Message:    http.StatusText(http.StatusConflict) + ": " + common.MsgConflict,
 			},
 		},
 		{
