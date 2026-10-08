@@ -221,6 +221,20 @@ func TestCreate(t *testing.T) {
 			},
 		},
 		{
+			name: common.NameAccessDenied,
+			clientResponse: &mksclient.CreateClusterV2Response{
+				Body: []byte(`{"error": {"message": "` + common.MsgAccessDenied + `"}}`),
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusForbidden,
+					Status:     http.StatusText(http.StatusForbidden),
+				},
+			},
+			errExpected: &mksclient.MKSError{
+				StatusCode: http.StatusForbidden,
+				Message:    http.StatusText(http.StatusForbidden) + ": " + common.MsgAccessDenied,
+			},
+		},
+		{
 			name:        common.NameHTTPError,
 			clientError: httpError,
 			errExpected: httpError,

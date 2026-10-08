@@ -19,8 +19,8 @@ func Get(ctx context.Context, client *mks.ServiceClient, clusterID string) (*mks
 		return responseResult.JSON200.Cluster, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -36,8 +36,8 @@ func Create(ctx context.Context, client *mks.ServiceClient, opts *mksclient.Clus
 		return responseResult.JSON201.Cluster, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON500,
 	)
 }
@@ -53,8 +53,8 @@ func Update(ctx context.Context, client *mks.ServiceClient, clusterID string, op
 		return responseResult.JSON200.Cluster, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -70,8 +70,8 @@ func Patch(ctx context.Context, client *mks.ServiceClient, clusterID string, opt
 		return responseResult.JSON200.Cluster, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON409, responseResult.JSON500,
 	)
 }
@@ -87,8 +87,8 @@ func Delete(ctx context.Context, client *mks.ServiceClient, clusterID string) er
 		return nil
 	}
 
-	return mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -104,8 +104,8 @@ func GetKubeconfig(ctx context.Context, client *mks.ServiceClient, clusterID str
 		return responseResult.Body, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON403, responseResult.JSON404, responseResult.JSON409, responseResult.JSON500,
 	)
 }
@@ -121,8 +121,8 @@ func RotateCerts(ctx context.Context, client *mks.ServiceClient, clusterID strin
 		return nil
 	}
 
-	return mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON403, responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -138,8 +138,8 @@ func UpgradePatchVersion(ctx context.Context, client *mks.ServiceClient, cluster
 		return responseResult.JSON200.Cluster, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -155,8 +155,8 @@ func UpgradeMinorVersion(ctx context.Context, client *mks.ServiceClient, cluster
 		return responseResult.JSON200.Cluster, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON404, responseResult.JSON500,
 	)
 }

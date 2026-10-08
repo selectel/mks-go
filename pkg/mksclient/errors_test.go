@@ -2,6 +2,8 @@ package mksclient
 
 import (
 	"net/http"
+	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -105,4 +107,102 @@ func TestHandleAPIErrors(t *testing.T) {
 		assert.Equal(t, messageGenericError, mksErr.Error())
 		assert.Equal(t, code, mksErr.Status())
 	})
+}
+
+func TestHandleAPIErrorsWithBody(t *testing.T) {
+	const (
+		messageGenericError = "message generic"
+		messageBody         = "reason from body"
+	)
+
+	genericBody := []byte(`{"error": {"message": "` + messageBody + `"}}`)
+
+	typedErr := &GenericError{}
+	typedErr.Error.Message = messageGenericError
+
+	type testCase struct {
+		name        string
+		code        int
+		body        []byte
+		errors      []APIError
+		msgExpected string
+	}
+
+	tests := make([]testCase, 0, 18)
+	tests = append(tests, []testCase{
+		{
+			name:        "typed error wins over body",
+			code:        http.StatusInternalServerError,
+			body:        genericBody,
+			errors:      []APIError{(*GenericNotFoundError)(nil), typedErr},
+			msgExpected: messageGenericError,
+		},
+		{
+			name:        "plain text body",
+			code:        http.StatusForbidden,
+			body:        []byte("  access\n\tdenied  "),
+			msgExpected: http.StatusText(http.StatusForbidden) + ": access denied",
+		},
+		{
+			name:        "html body",
+			code:        http.StatusBadGateway,
+			body:        []byte("<html>\n<body>Bad Gateway</body>\n</html>\n"),
+			msgExpected: http.StatusText(http.StatusBadGateway) + ": <html> <body>Bad Gateway</body> </html>",
+		},
+		{
+			name:        "json body without message",
+			code:        http.StatusForbidden,
+			body:        []byte(`{"error": {}}`),
+			msgExpected: http.StatusText(http.StatusForbidden) + `: {"error": {}}`,
+		},
+		{
+			name:        "empty body",
+			code:        http.StatusServiceUnavailable,
+			msgExpected: http.StatusText(http.StatusServiceUnavailable),
+		},
+		{
+			name:        "whitespace body",
+			code:        http.StatusServiceUnavailable,
+			body:        []byte(" \n\t "),
+			msgExpected: http.StatusText(http.StatusServiceUnavailable),
+		},
+		{
+			name:        "long body is cut",
+			code:        http.StatusInternalServerError,
+			body:        []byte(strings.Repeat("a", maxErrorBodyLen+100)),
+			msgExpected: http.StatusText(http.StatusInternalServerError) + ": " + strings.Repeat("a", maxErrorBodyLen) + "...",
+		},
+		{
+			name:        "long body is cut on a rune boundary",
+			code:        http.StatusInternalServerError,
+			body:        []byte("a" + strings.Repeat("я", maxErrorBodyLen)),
+			msgExpected: http.StatusText(http.StatusInternalServerError) + ": a" + strings.Repeat("я", (maxErrorBodyLen-1)/2) + "...",
+		},
+	}...)
+
+	for _, code := range []int{
+		http.StatusBadRequest, http.StatusUnauthorized, http.StatusForbidden, http.StatusNotFound,
+		http.StatusConflict, http.StatusUnprocessableEntity, http.StatusTooManyRequests,
+		http.StatusInternalServerError, http.StatusBadGateway, http.StatusServiceUnavailable,
+	} {
+		tests = append(tests, testCase{
+			name:        "generic json body " + strconv.Itoa(code),
+			code:        code,
+			body:        genericBody,
+			msgExpected: http.StatusText(code) + ": " + messageBody,
+		})
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			err := HandleAPIErrorsWithBody(test.code, http.StatusText(test.code), test.body, test.errors...)
+			require.Error(t, err)
+
+			var mksErr *MKSError
+			require.ErrorAs(t, err, &mksErr)
+
+			assert.Equal(t, test.msgExpected, mksErr.Error())
+			assert.Equal(t, test.code, mksErr.Status())
+		})
+	}
 }
