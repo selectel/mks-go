@@ -2436,10 +2436,6 @@ components:
               type: string
               readOnly: true
               x-go-type-skip-optional-pointer: true
-            availability_zone:
-              description: Deprecated name of `segment` returned by some API versions; read `segment` first.
-              type: string
-              readOnly: true
     NodegroupResp:
       description: Node group response.
       type: object
