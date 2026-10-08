@@ -1,25 +1,24 @@
 # mks-go: Go SDK for Managed Kubernetes Service
-[![Go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/selectel/mks-go/)
-[![Go Report Card](https://goreportcard.com/badge/github.com/selectel/mks-go)](https://goreportcard.com/report/github.com/selectel/mks-go)
-![Build Status](https://github.com/selectel/mks-go/actions/workflows/unit-tests.yml/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/selectel/mks-go/badge.svg?branch=master)](https://coveralls.io/github/selectel/mks-go?branch=master)
+[![Go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/selectel/mks-go/v2)
+![Build Status](https://github.com/selectel/mks-go/actions/workflows/v2-unit-tests.yml/badge.svg?branch=sdk-v2)
 
 Package mks-go provides Go SDK to work with the Selectel Managed Kubernetes Service.
 
 ## Documentation
 
-The Go library documentation is available at [go.dev](https://pkg.go.dev/github.com/selectel/mks-go/).
+The Go library documentation is available at [go.dev](https://pkg.go.dev/github.com/selectel/mks-go/v2/).
 
 ## What this library is capable of
 
 You can use this library to work with the following objects of the Selectel Managed Kubernetes Service:
 
-* [cluster](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/cluster)
-* [nodegroup](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/nodegroup)
-* [node](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/node)
-* [task](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/task)
-* [kubeversion](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/kubeversion)
-* [kubeoptions](https://pkg.go.dev/github.com/selectel/mks-go/pkg/v1/kubeoptions)
+* [cluster](https://pkg.go.dev/github.com/selectel/mks-go/v2/pkg/cluster)
+* [nodegroup](https://pkg.go.dev/github.com/selectel/mks-go/v2/pkg/nodegroup)
+* [node](https://pkg.go.dev/github.com/selectel/mks-go/v2/pkg/node)
+* [task](https://pkg.go.dev/github.com/selectel/mks-go/v2/pkg/task)
+* [kubeversion](https://pkg.go.dev/github.com/selectel/mks-go/v2/pkg/kubeversion)
+* [kubeoptions](https://pkg.go.dev/github.com/selectel/mks-go/v2/pkg/kubeoptions)
+* [registries](https://pkg.go.dev/github.com/selectel/mks-go/v2/pkg/registries)
 
 ## Getting started
 
@@ -28,7 +27,7 @@ You can use this library to work with the following objects of the Selectel Mana
 You can install needed `mks-go` packages via `go get` command:
 
 ```bash
-go get github.com/selectel/mks-go/pkg/v1/cluster github.com/selectel/mks-go/pkg/v1/task
+go get github.com/selectel/mks-go/v2/pkg/cluster github.com/selectel/mks-go/v2/pkg/task
 ```
 
 ### Authentication
@@ -36,24 +35,15 @@ go get github.com/selectel/mks-go/pkg/v1/cluster github.com/selectel/mks-go/pkg/
 To work with the Selectel Managed Kubernetes Service API you first need to:
 
 * Create a Selectel account: [registration page](https://my.selectel.ru/registration).
-* Create a project in Selectel Cloud Platform [projects](https://my.selectel.ru/vpc/projects).
+* Create a project in Selectel Cloud Platform [projects](https://my.selectel.ru/iam/projects).
 * Retrieve a token for your project via API or [go-selvpcclient](https://github.com/selectel/go-selvpcclient).
 
 ### Endpoints
 
-Selectel Managed Kubernetes Service currently has the following API endpoints:
+* Selectel Managed Kubernetes Service currently has the following API endpoints: [URLs](https://docs.selectel.ru/en/api/urls/#managed-kubernetes)
 
-| URL                             | Region |
-|---------------------------------|--------|
-| https://ru-1.mks.selcloud.ru/v1 | ru-1   |
-| https://ru-2.mks.selcloud.ru/v1 | ru-2   |
-| https://ru-3.mks.selcloud.ru/v1 | ru-3   |
-| https://ru-7.mks.selcloud.ru/v1 | ru-7   |
-| https://ru-8.mks.selcloud.ru/v1 | ru-8   |
-| https://ru-9.mks.selcloud.ru/v1 | ru-9   |
-| https://uz-1.mks.selcloud.ru/v1 | uz-1   |
-
-You can also retrieve all available API endpoints from the Identity catalog.
+> [!NOTE]
+> mks-go/v2 is designed to work with Managed Kubernetes API v2
 
 ### Usage example
 
@@ -65,11 +55,12 @@ import (
 	"fmt"
 	"log"
 
-	v1 "github.com/selectel/mks-go/pkg/v1"
-	"github.com/selectel/mks-go/pkg/v1/cluster"
-	"github.com/selectel/mks-go/pkg/v1/kubeversion"
-	"github.com/selectel/mks-go/pkg/v1/nodegroup"
-	"github.com/selectel/mks-go/pkg/v1/task"
+	mks "github.com/selectel/mks-go/v2/pkg"
+	"github.com/selectel/mks-go/v2/pkg/cluster"
+	"github.com/selectel/mks-go/v2/pkg/kubeversion"
+	"github.com/selectel/mks-go/v2/pkg/mksclient"
+	"github.com/selectel/mks-go/v2/pkg/nodegroup"
+	"github.com/selectel/mks-go/v2/pkg/task"
 )
 
 func main() {
@@ -77,16 +68,19 @@ func main() {
 	token := "gAAAAABeVNzu-..."
 
 	// MKS endpoint to work with.
-	endpoint := "https://ru-3.mks.selcloud.ru/v1"
+	endpoint := "https://ru-3.mks.selcloud.ru/v2"
 
-	// Initialize the MKS V1 client.
-	mksClient := v1.NewMKSClientV1(token, endpoint)
+	// Initialize the MKS V2 client.
+	mksClient, err := mks.NewMKSClientV2(token, endpoint)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Prepare empty context.
 	ctx := context.Background()
 
 	// Get supported Kubernetes versions.
-	kubeVersions, _, err := kubeversion.List(ctx, mksClient)
+	kubeVersions, err := kubeversion.List(ctx, mksClient)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -97,39 +91,17 @@ func main() {
 	// Use the first version in list.
 	kubeVersion := kubeVersions[0]
 
-	// Nodegroup with nodes based on network volumes for root partition.
-	firstNodegroup := &nodegroup.CreateOpts{
-		Count:            3,
-		CPUs:             1,
-		RAMMB:            2048,
-		VolumeGB:         50,
-		VolumeType:       "fast.ru-3a",
-		AvailabilityZone: "ru-3a",
-	}
-
-	// Nodegroup with nodes based on local volumes for root partition.
-	secondNodegroup := &nodegroup.CreateOpts{
-		Count:            2,
-		CPUs:             2,
-		RAMMB:            4096,
-		VolumeGB:         20,
-		LocalVolume:      true,
-		AvailabilityZone: "ru-3a",
-	}
-
 	// Build final options for a new cluster.
-	createOpts := &cluster.CreateOpts{
+	createOpts := &mksclient.ClusterCreateStruct{
 		Name:        "test-cluster",
-		KubeVersion: kubeVersion.Version,
-		Region:      "ru-3",
-		Nodegroups: []*nodegroup.CreateOpts{
-			firstNodegroup,
-			secondNodegroup,
-		},
+		KubeVersion: *kubeVersion.Version,
+		Pool:        "ru-3",
+		Basic:       true,
+		NetworkType: "standard",
 	}
 
 	// Create a cluster.
-	newCluster, _, err := cluster.Create(ctx, mksClient, createOpts)
+	newCluster, err := cluster.Create(ctx, mksClient, createOpts)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -137,8 +109,38 @@ func main() {
 	// Print cluster fields.
 	fmt.Printf("Created cluster: %+v\n", newCluster)
 
+	// Nodegroup with nodes based on network volumes for root partition.
+	firstNodegroup := mksclient.NodegroupCreateStruct{
+		Count:   3,
+		Segment: "ru-3a",
+		CloudNodegroupConfig: &mksclient.CloudNodegroupConfig{
+			Cpus:       1,
+			RamMb:      2048,
+			VolumeGb:   50,
+			VolumeType: "fast.ru-3a",
+		},
+	}
+
+	// Nodegroup with nodes based on local volumes for root partition.
+	secondNodegroup := mksclient.NodegroupCreateStruct{
+		Count:   2,
+		Segment: "ru-3a",
+		CloudNodegroupConfig: &mksclient.CloudNodegroupConfig{
+			Cpus:        2,
+			RamMb:       4096,
+			VolumeGb:    20,
+			LocalVolume: true,
+		},
+	}
+
+	// Create node groups for the new cluster.
+	err = nodegroup.Create(ctx, mksClient, newCluster.Id, []mksclient.NodegroupCreateStruct{firstNodegroup, secondNodegroup})
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// Get cluster tasks.
-	tasks, _, err := task.List(ctx, mksClient, newCluster.ID)
+	tasks, err := task.List(ctx, mksClient, newCluster.Id, 10, 0)
 	if err != nil {
 		log.Fatal(err)
 	}
