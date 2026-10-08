@@ -19,8 +19,8 @@ func Get(ctx context.Context, client *mks.ServiceClient, clusterID, nodegroupID,
 		return &responseResult.JSON200.Node, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -36,8 +36,8 @@ func Reinstall(ctx context.Context, client *mks.ServiceClient, clusterID, nodegr
 		return nil
 	}
 
-	return mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404,
 		responseResult.JSON409, responseResult.JSON500,
 	)
@@ -54,8 +54,8 @@ func Delete(ctx context.Context, client *mks.ServiceClient, clusterID, nodegroup
 		return nil
 	}
 
-	return mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404,
 		responseResult.JSON409, responseResult.JSON500,
 	)

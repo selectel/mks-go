@@ -19,8 +19,8 @@ func Get(ctx context.Context, client *mks.ServiceClient, clusterID string) (*mks
 		return responseResult.JSON200, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -40,8 +40,8 @@ func Create(
 		return responseResult.JSON201, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -61,8 +61,8 @@ func Update(
 		return responseResult.JSON200, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -80,8 +80,8 @@ func Delete(
 		return nil
 	}
 
-	return mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -99,8 +99,8 @@ func DeleteAll(
 		return nil
 	}
 
-	return mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON500,
 	)
 }

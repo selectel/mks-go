@@ -22,8 +22,8 @@ func Get(ctx context.Context, client *mks.ServiceClient, clusterID, taskID strin
 		return &responseResult.JSON200.Task, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -48,8 +48,8 @@ func List(ctx context.Context, client *mks.ServiceClient, clusterID string, limi
 		return responseResult.JSON200.Tasks, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON404, responseResult.JSON500,
 	)
 }

@@ -1,5 +1,10 @@
 package mksclient
 
+import (
+	"encoding/json"
+	"strings"
+)
+
 // MKSError is the custom error type for mks-go API errors.
 type MKSError struct {
 	StatusCode int
@@ -48,6 +53,11 @@ func (e *GenericNotFoundError) ToMKSError(statusCode int) *MKSError {
 // HandleAPIErrors processes a list of possible API errors and returns the first one found.
 // If no API error is found, it returns a generic MKSError using the provided status code and message.
 func HandleAPIErrors(statusCode int, statusMsg string, errors ...APIError) error {
+	return HandleAPIErrorsWithBody(statusCode, statusMsg, nil, errors...)
+}
+
+// HandleAPIErrorsWithBody is HandleAPIErrors that adds the API message from the response body to the status message.
+func HandleAPIErrorsWithBody(statusCode int, statusMsg string, body []byte, errors ...APIError) error {
 	for _, err := range errors {
 		if err != nil {
 			mksErr := err.ToMKSError(statusCode)
@@ -61,6 +71,23 @@ func HandleAPIErrors(statusCode int, statusMsg string, errors ...APIError) error
 
 	return &MKSError{
 		StatusCode: statusCode,
-		Message:    statusMsg,
+		Message:    withBodyReason(statusMsg, body),
 	}
+}
+
+// withBodyReason appends the message of a GenericError-shaped body to the status message.
+func withBodyReason(statusMsg string, body []byte) string {
+	var genericErr GenericError
+
+	err := json.Unmarshal(body, &genericErr)
+	if err != nil {
+		return statusMsg
+	}
+
+	message := strings.TrimSpace(genericErr.Error.Message)
+	if message == "" {
+		return statusMsg
+	}
+
+	return statusMsg + ": " + message
 }
