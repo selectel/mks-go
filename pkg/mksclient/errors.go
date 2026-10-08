@@ -3,7 +3,6 @@ package mksclient
 import (
 	"encoding/json"
 	"strings"
-	"unicode/utf8"
 )
 
 // MKSError is the custom error type for mks-go API errors.
@@ -51,17 +50,13 @@ func (e *GenericNotFoundError) ToMKSError(statusCode int) *MKSError {
 	}
 }
 
-// maxErrorBodyLen limits the body text kept in MKSError.Message.
-const maxErrorBodyLen = 512
-
 // HandleAPIErrors processes a list of possible API errors and returns the first one found.
 // If no API error is found, it returns a generic MKSError using the provided status code and message.
 func HandleAPIErrors(statusCode int, statusMsg string, errors ...APIError) error {
 	return HandleAPIErrorsWithBody(statusCode, statusMsg, nil, errors...)
 }
 
-// HandleAPIErrorsWithBody is HandleAPIErrors that, if no API error is found,
-// adds the reason from the response body to the status message.
+// HandleAPIErrorsWithBody is HandleAPIErrors that adds the API message from the response body to the status message.
 func HandleAPIErrorsWithBody(statusCode int, statusMsg string, body []byte, errors ...APIError) error {
 	for _, err := range errors {
 		if err != nil {
@@ -80,31 +75,19 @@ func HandleAPIErrorsWithBody(statusCode int, statusMsg string, body []byte, erro
 	}
 }
 
-// withBodyReason appends the reason from an error response body to the status message.
+// withBodyReason appends the message of a GenericError-shaped body to the status message.
 func withBodyReason(statusMsg string, body []byte) string {
 	var genericErr GenericError
 
 	err := json.Unmarshal(body, &genericErr)
-	if err == nil {
-		message := strings.TrimSpace(genericErr.Error.Message)
-		if message != "" {
-			return statusMsg + ": " + message
-		}
-	}
-
-	text := strings.Join(strings.Fields(string(body)), " ")
-	if text == "" {
+	if err != nil {
 		return statusMsg
 	}
 
-	if len(text) > maxErrorBodyLen {
-		cut := maxErrorBodyLen
-		for cut > 0 && !utf8.RuneStart(text[cut]) {
-			cut--
-		}
-
-		text = text[:cut] + "..."
+	message := strings.TrimSpace(genericErr.Error.Message)
+	if message == "" {
+		return statusMsg
 	}
 
-	return statusMsg + ": " + text
+	return statusMsg + ": " + message
 }

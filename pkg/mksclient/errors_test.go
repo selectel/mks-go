@@ -3,7 +3,6 @@ package mksclient
 import (
 	"net/http"
 	"strconv"
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -128,7 +127,7 @@ func TestHandleAPIErrorsWithBody(t *testing.T) {
 		msgExpected string
 	}
 
-	tests := make([]testCase, 0, 18)
+	tests := make([]testCase, 0, 14)
 	tests = append(tests, []testCase{
 		{
 			name:        "typed error wins over body",
@@ -138,45 +137,21 @@ func TestHandleAPIErrorsWithBody(t *testing.T) {
 			msgExpected: messageGenericError,
 		},
 		{
-			name:        "plain text body",
-			code:        http.StatusForbidden,
-			body:        []byte("  access\n\tdenied  "),
-			msgExpected: http.StatusText(http.StatusForbidden) + ": access denied",
-		},
-		{
-			name:        "html body",
+			name:        "non-json body",
 			code:        http.StatusBadGateway,
 			body:        []byte("<html>\n<body>Bad Gateway</body>\n</html>\n"),
-			msgExpected: http.StatusText(http.StatusBadGateway) + ": <html> <body>Bad Gateway</body> </html>",
+			msgExpected: http.StatusText(http.StatusBadGateway),
 		},
 		{
 			name:        "json body without message",
 			code:        http.StatusForbidden,
 			body:        []byte(`{"error": {}}`),
-			msgExpected: http.StatusText(http.StatusForbidden) + `: {"error": {}}`,
+			msgExpected: http.StatusText(http.StatusForbidden),
 		},
 		{
 			name:        "empty body",
 			code:        http.StatusServiceUnavailable,
 			msgExpected: http.StatusText(http.StatusServiceUnavailable),
-		},
-		{
-			name:        "whitespace body",
-			code:        http.StatusServiceUnavailable,
-			body:        []byte(" \n\t "),
-			msgExpected: http.StatusText(http.StatusServiceUnavailable),
-		},
-		{
-			name:        "long body is cut",
-			code:        http.StatusInternalServerError,
-			body:        []byte(strings.Repeat("a", maxErrorBodyLen+100)),
-			msgExpected: http.StatusText(http.StatusInternalServerError) + ": " + strings.Repeat("a", maxErrorBodyLen) + "...",
-		},
-		{
-			name:        "long body is cut on a rune boundary",
-			code:        http.StatusInternalServerError,
-			body:        []byte("a" + strings.Repeat("я", maxErrorBodyLen)),
-			msgExpected: http.StatusText(http.StatusInternalServerError) + ": a" + strings.Repeat("я", (maxErrorBodyLen-1)/2) + "...",
 		},
 	}...)
 
