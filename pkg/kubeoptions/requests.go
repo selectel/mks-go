@@ -22,8 +22,8 @@ func ListFeatureGates(ctx context.Context, client *mks.ServiceClient) ([]mksclie
 		return *responseResult.JSON200.FeatureGates, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON500,
 	)
 }
@@ -43,8 +43,8 @@ func ListAdmissionControllers(ctx context.Context, client *mks.ServiceClient) ([
 		return *responseResult.JSON200.AdmissionControllers, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON500,
 	)
 }

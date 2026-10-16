@@ -2,6 +2,7 @@ package mksclient
 
 import (
 	"net/http"
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -105,4 +106,78 @@ func TestHandleAPIErrors(t *testing.T) {
 		assert.Equal(t, messageGenericError, mksErr.Error())
 		assert.Equal(t, code, mksErr.Status())
 	})
+}
+
+func TestHandleAPIErrorsWithBody(t *testing.T) {
+	const (
+		messageGenericError = "message generic"
+		messageBody         = "reason from body"
+	)
+
+	genericBody := []byte(`{"error": {"message": "` + messageBody + `"}}`)
+
+	typedErr := &GenericError{}
+	typedErr.Error.Message = messageGenericError
+
+	type testCase struct {
+		name        string
+		code        int
+		body        []byte
+		errors      []APIError
+		msgExpected string
+	}
+
+	tests := make([]testCase, 0, 14)
+	tests = append(tests, []testCase{
+		{
+			name:        "typed error wins over body",
+			code:        http.StatusInternalServerError,
+			body:        genericBody,
+			errors:      []APIError{(*GenericNotFoundError)(nil), typedErr},
+			msgExpected: messageGenericError,
+		},
+		{
+			name:        "non-json body",
+			code:        http.StatusBadGateway,
+			body:        []byte("<html>\n<body>Bad Gateway</body>\n</html>\n"),
+			msgExpected: http.StatusText(http.StatusBadGateway),
+		},
+		{
+			name:        "json body without message",
+			code:        http.StatusForbidden,
+			body:        []byte(`{"error": {}}`),
+			msgExpected: http.StatusText(http.StatusForbidden),
+		},
+		{
+			name:        "empty body",
+			code:        http.StatusServiceUnavailable,
+			msgExpected: http.StatusText(http.StatusServiceUnavailable),
+		},
+	}...)
+
+	for _, code := range []int{
+		http.StatusBadRequest, http.StatusUnauthorized, http.StatusForbidden, http.StatusNotFound,
+		http.StatusConflict, http.StatusUnprocessableEntity, http.StatusTooManyRequests,
+		http.StatusInternalServerError, http.StatusBadGateway, http.StatusServiceUnavailable,
+	} {
+		tests = append(tests, testCase{
+			name:        "generic json body " + strconv.Itoa(code),
+			code:        code,
+			body:        genericBody,
+			msgExpected: http.StatusText(code) + ": " + messageBody,
+		})
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			err := HandleAPIErrorsWithBody(test.code, http.StatusText(test.code), test.body, test.errors...)
+			require.Error(t, err)
+
+			var mksErr *MKSError
+			require.ErrorAs(t, err, &mksErr)
+
+			assert.Equal(t, test.msgExpected, mksErr.Error())
+			assert.Equal(t, test.code, mksErr.Status())
+		})
+	}
 }

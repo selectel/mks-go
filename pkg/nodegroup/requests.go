@@ -19,8 +19,8 @@ func Get(ctx context.Context, client *mks.ServiceClient, clusterID, nodegroupID 
 		return &responseResult.JSON200.Nodegroup, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -40,8 +40,8 @@ func List(ctx context.Context, client *mks.ServiceClient, clusterID string) ([]m
 		return responseResult.JSON200.Nodegroups, nil
 	}
 
-	return nil, mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return nil, mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON500,
 	)
 }
@@ -60,8 +60,8 @@ func Create(ctx context.Context, client *mks.ServiceClient, clusterID string, no
 		return nil
 	}
 
-	return mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON409, responseResult.JSON500,
 	)
 }
@@ -77,8 +77,8 @@ func Delete(ctx context.Context, client *mks.ServiceClient, clusterID, nodegroup
 		return nil
 	}
 
-	return mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON409, responseResult.JSON500,
 	)
 }
@@ -99,8 +99,8 @@ func Resize(ctx context.Context, client *mks.ServiceClient, clusterID, nodegroup
 		return nil
 	}
 
-	return mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON409, responseResult.JSON500,
 	)
 }
@@ -119,8 +119,28 @@ func Update(ctx context.Context, client *mks.ServiceClient, clusterID, nodegroup
 		return nil
 	}
 
-	return mksclient.HandleAPIErrors(
-		responseResult.StatusCode(), responseResult.Status(),
+	return mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
+		responseResult.JSON400, responseResult.JSON404, responseResult.JSON409, responseResult.JSON500,
+	)
+}
+
+// Patch requests a partial update (method PATCH) of a cluster nodegroup by its id.
+func Patch(ctx context.Context, client *mks.ServiceClient, clusterID, nodegroupID string, nodegroup mksclient.NodegroupUpdateStruct) error {
+	responseResult, err := client.MKSClient.PatchNodegroupV2WithResponse(
+		ctx, clusterID, nodegroupID,
+		mksclient.PatchNodegroupV2JSONRequestBody{Nodegroup: nodegroup},
+	)
+	if err != nil {
+		return err
+	}
+
+	if responseResult.StatusCode() == http.StatusNoContent {
+		return nil
+	}
+
+	return mksclient.HandleAPIErrorsWithBody(
+		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON400, responseResult.JSON404, responseResult.JSON409, responseResult.JSON500,
 	)
 }
