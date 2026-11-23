@@ -16,6 +16,7 @@ const (
 	NameEmptyKubeVersions         = "empty kube_versions"
 	NameEmptyNodegroups           = "empty nodegroups"
 	NameEmptyRegistries           = "empty registries"
+	NameEmptyLogComponents        = "empty log components"
 )
 
 // Error message constants.
