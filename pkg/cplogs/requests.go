@@ -28,9 +28,9 @@ func Get(ctx context.Context, client *mks.ServiceClient, clusterID string) (*mks
 // Init initializes control plane logs collection for provided cluster.
 func Init(
 	ctx context.Context, client *mks.ServiceClient,
-	clusterID string, opts *mksclient.ControlPlaneLogging,
+	clusterID string, opts mksclient.ControlPlaneLogging,
 ) (*mksclient.ControlPlaneLogging, error) {
-	responseResult, err := client.MKSClient.InitControlPlaneLoggingV2WithResponse(ctx, clusterID, *opts)
+	responseResult, err := client.MKSClient.InitControlPlaneLoggingV2WithResponse(ctx, clusterID, opts)
 	if err != nil {
 		return nil, err
 	}
@@ -48,9 +48,9 @@ func Init(
 // Update updates control plane logs collection settings for provided cluster.
 func Update(
 	ctx context.Context, client *mks.ServiceClient,
-	clusterID string, opts *mksclient.ControlPlaneLoggingUpdateBody,
+	clusterID string, opts mksclient.ControlPlaneLoggingUpdateBody,
 ) error {
-	responseResult, err := client.MKSClient.UpdateControlPlaneLoggingV2WithResponse(ctx, clusterID, *opts)
+	responseResult, err := client.MKSClient.UpdateControlPlaneLoggingV2WithResponse(ctx, clusterID, opts)
 	if err != nil {
 		return err
 	}

@@ -176,14 +176,14 @@ func TestInit(t *testing.T) {
 
 	tests := []struct {
 		name           string
-		requestBody    *mksclient.ControlPlaneLogging
+		requestBody    mksclient.ControlPlaneLogging
 		clientResponse *mksclient.InitControlPlaneLoggingV2Response
 		clientError    error
 		errExpected    error
 	}{
 		{
 			name: common.NameSuccess,
-			requestBody: &mksclient.ControlPlaneLogging{
+			requestBody: mksclient.ControlPlaneLogging{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 				Group:      common.Ptr("test-group"),
 			},
@@ -200,7 +200,7 @@ func TestInit(t *testing.T) {
 		},
 		{
 			name: common.NameAccessDenied,
-			requestBody: &mksclient.ControlPlaneLogging{
+			requestBody: mksclient.ControlPlaneLogging{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 				Group:      common.Ptr("test-group"),
 			},
@@ -224,7 +224,7 @@ func TestInit(t *testing.T) {
 		},
 		{
 			name: common.NameNotFound,
-			requestBody: &mksclient.ControlPlaneLogging{
+			requestBody: mksclient.ControlPlaneLogging{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 				Group:      common.Ptr("test-group"),
 			},
@@ -250,7 +250,7 @@ func TestInit(t *testing.T) {
 		},
 		{
 			name: common.NameConflict,
-			requestBody: &mksclient.ControlPlaneLogging{
+			requestBody: mksclient.ControlPlaneLogging{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 				Group:      common.Ptr("test-group"),
 			},
@@ -274,7 +274,7 @@ func TestInit(t *testing.T) {
 		},
 		{
 			name: common.NameInternalError,
-			requestBody: &mksclient.ControlPlaneLogging{
+			requestBody: mksclient.ControlPlaneLogging{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 				Group:      common.Ptr("test-group"),
 			},
@@ -298,7 +298,7 @@ func TestInit(t *testing.T) {
 		},
 		{
 			name: common.NameUnknownStatus,
-			requestBody: &mksclient.ControlPlaneLogging{
+			requestBody: mksclient.ControlPlaneLogging{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 				Group:      common.Ptr("test-group"),
 			},
@@ -315,7 +315,7 @@ func TestInit(t *testing.T) {
 		},
 		{
 			name: common.NameHTTPError,
-			requestBody: &mksclient.ControlPlaneLogging{
+			requestBody: mksclient.ControlPlaneLogging{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 				Group:      common.Ptr("test-group"),
 			},
@@ -328,7 +328,7 @@ func TestInit(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			mksClient := mksmock.NewMockClientWithResponsesInterface(t)
 			mksClient.EXPECT().InitControlPlaneLoggingV2WithResponse(
-				mock.Anything, clusterID, *test.requestBody,
+				mock.Anything, clusterID, test.requestBody,
 			).Return(test.clientResponse, test.clientError)
 
 			logging, err := Init(
@@ -371,14 +371,14 @@ func TestUpdate(t *testing.T) {
 
 	tests := []struct {
 		name           string
-		requestBody    *mksclient.ControlPlaneLoggingUpdateBody
+		requestBody    mksclient.ControlPlaneLoggingUpdateBody
 		clientResponse *mksclient.UpdateControlPlaneLoggingV2Response
 		clientError    error
 		errExpected    error
 	}{
 		{
 			name: common.NameSuccess,
-			requestBody: &mksclient.ControlPlaneLoggingUpdateBody{
+			requestBody: mksclient.ControlPlaneLoggingUpdateBody{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 			},
 			clientResponse: &mksclient.UpdateControlPlaneLoggingV2Response{
@@ -390,7 +390,7 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameAccessDenied,
-			requestBody: &mksclient.ControlPlaneLoggingUpdateBody{
+			requestBody: mksclient.ControlPlaneLoggingUpdateBody{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 			},
 			clientResponse: &mksclient.UpdateControlPlaneLoggingV2Response{
@@ -413,7 +413,7 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameNotFound,
-			requestBody: &mksclient.ControlPlaneLoggingUpdateBody{
+			requestBody: mksclient.ControlPlaneLoggingUpdateBody{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 			},
 			clientResponse: &mksclient.UpdateControlPlaneLoggingV2Response{
@@ -438,7 +438,7 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameConflict,
-			requestBody: &mksclient.ControlPlaneLoggingUpdateBody{
+			requestBody: mksclient.ControlPlaneLoggingUpdateBody{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 			},
 			clientResponse: &mksclient.UpdateControlPlaneLoggingV2Response{
@@ -461,7 +461,7 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameInternalError,
-			requestBody: &mksclient.ControlPlaneLoggingUpdateBody{
+			requestBody: mksclient.ControlPlaneLoggingUpdateBody{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 			},
 			clientResponse: &mksclient.UpdateControlPlaneLoggingV2Response{
@@ -484,7 +484,7 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameUnknownStatus,
-			requestBody: &mksclient.ControlPlaneLoggingUpdateBody{
+			requestBody: mksclient.ControlPlaneLoggingUpdateBody{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 			},
 			clientResponse: &mksclient.UpdateControlPlaneLoggingV2Response{
@@ -500,7 +500,7 @@ func TestUpdate(t *testing.T) {
 		},
 		{
 			name: common.NameHTTPError,
-			requestBody: &mksclient.ControlPlaneLoggingUpdateBody{
+			requestBody: mksclient.ControlPlaneLoggingUpdateBody{
 				Components: common.Ptr([]string{"APISERVER", "AUTOSCALER"}),
 			},
 			clientError: httpError,
@@ -512,7 +512,7 @@ func TestUpdate(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			mksClient := mksmock.NewMockClientWithResponsesInterface(t)
 			mksClient.EXPECT().UpdateControlPlaneLoggingV2WithResponse(
-				mock.Anything, clusterID, *test.requestBody,
+				mock.Anything, clusterID, test.requestBody,
 			).Return(test.clientResponse, test.clientError)
 
 			err := Update(

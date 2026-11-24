@@ -6,3 +6,8 @@ actions:
   - target: $.components.schemas.KubeVersion
     update:
       x-go-name: KubeVersionInfo
+  - target: $.components.schemas.NodegroupUpdateStrategyCreate.properties.method
+    update:
+      x-enum-varnames:
+      - NodegroupUpdateStrategyCreateMethodInPlace
+      - NodegroupUpdateStrategyCreateMethodReplace

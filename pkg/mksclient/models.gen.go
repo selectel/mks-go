@@ -466,16 +466,16 @@ func (e NodegroupTaintEffect) Valid() bool {
 
 // Defines values for NodegroupUpdateStrategyMethod.
 const (
-	NodegroupUpdateStrategyMethodInPlace NodegroupUpdateStrategyMethod = "in_place"
-	NodegroupUpdateStrategyMethodReplace NodegroupUpdateStrategyMethod = "replace"
+	InPlace NodegroupUpdateStrategyMethod = "in_place"
+	Replace NodegroupUpdateStrategyMethod = "replace"
 )
 
 // Valid indicates whether the value is a known member of the NodegroupUpdateStrategyMethod enum.
 func (e NodegroupUpdateStrategyMethod) Valid() bool {
 	switch e {
-	case NodegroupUpdateStrategyMethodInPlace:
+	case InPlace:
 		return true
-	case NodegroupUpdateStrategyMethodReplace:
+	case Replace:
 		return true
 	default:
 		return false
