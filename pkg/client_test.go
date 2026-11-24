@@ -3,6 +3,7 @@ package mks
 import (
 	"context"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 	"time"
 
@@ -46,6 +47,27 @@ func TestNewMKSClientV2WithCustomHTTP(t *testing.T) {
 	assert.Equal(t, endpoint, client.Endpoint)
 	assert.Equal(t, tokenID, client.TokenID)
 	assert.Equal(t, userAgent, client.UserAgent)
+}
+
+func TestNewMKSClientV2RequestPath(t *testing.T) {
+	for _, suffix := range []string{"", "/", "/v2", "/v2/"} {
+		t.Run("suffix "+suffix, func(t *testing.T) {
+			var requestPath string
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				requestPath = r.URL.Path
+				w.WriteHeader(http.StatusNotFound)
+			}))
+			defer server.Close()
+
+			client, err := NewMKSClientV2("token-id", server.URL+"/ru-3"+suffix)
+			require.NoError(t, err)
+
+			_, err = client.MKSClient.ListClustersV2WithResponse(context.Background())
+			require.NoError(t, err)
+
+			assert.Equal(t, "/ru-3/v2/clusters", requestPath)
+		})
+	}
 }
 
 func TestNewHTTPClient(t *testing.T) {
