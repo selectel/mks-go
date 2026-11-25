@@ -125,8 +125,11 @@ func newHTTPClient() *http.Client {
 
 // newMKSClient returns a reference to an initialized and configured MKS client.
 func (s *ServiceClient) newMKSClient(httpClient *http.Client, endpoint string) (*mksclient.ClientWithResponses, error) {
+	// The generated request paths already start with /v2/.
+	server := strings.TrimSuffix(strings.TrimSuffix(endpoint, "/"), "/v2")
+
 	client, err := mksclient.NewClientWithResponses(
-		endpoint,
+		server,
 		mksclient.WithHTTPClient(httpClient),
 		mksclient.WithRequestEditorFn(s.withUserAgent),
 		mksclient.WithRequestEditorFn(s.withAuthToken),
