@@ -482,6 +482,24 @@ func (e NodegroupUpdateStrategyMethod) Valid() bool {
 	}
 }
 
+// Defines values for NodegroupUpdateStrategyCreateMethod.
+const (
+	NodegroupUpdateStrategyCreateMethodInPlace NodegroupUpdateStrategyCreateMethod = "in_place"
+	NodegroupUpdateStrategyCreateMethodReplace NodegroupUpdateStrategyCreateMethod = "replace"
+)
+
+// Valid indicates whether the value is a known member of the NodegroupUpdateStrategyCreateMethod enum.
+func (e NodegroupUpdateStrategyCreateMethod) Valid() bool {
+	switch e {
+	case NodegroupUpdateStrategyCreateMethodInPlace:
+		return true
+	case NodegroupUpdateStrategyCreateMethodReplace:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for RegistriesIntegrationStatus.
 const (
 	RegistriesIntegrationStatusACTIVE        RegistriesIntegrationStatus = "ACTIVE"
@@ -731,6 +749,10 @@ type Cluster struct {
 	// Basic Specifies that cluster has only a single master and that control plane is not in highly available mode.
 	Basic bool `json:"basic"`
 
+	// CloudSubnetCidr The IPv4 range of the cloud subnet to which the master nodes are connected.
+	// Set only for clusters with the `L3VPN` network type.
+	CloudSubnetCidr *string `json:"cloud_subnet_cidr,omitempty"`
+
 	// ClusterType The type of the cluster.
 	ClusterType ClusterClusterType `json:"cluster_type"`
 
@@ -752,12 +774,21 @@ type Cluster struct {
 	// KubeApiIp The IP of the Kubernetes API.
 	KubeApiIp string `json:"kube_api_ip"`
 
+	// KubePodsCidr The IPv4 range from which the pods of the cluster receive their IP addresses.
+	KubePodsCidr *string `json:"kube_pods_cidr,omitempty"`
+
+	// KubeServiceCidr The IPv4 range from which Kubernetes services receive cluster IP addresses.
+	KubeServiceCidr *string `json:"kube_service_cidr,omitempty"`
+
 	// KubeVersion The current Kubernetes version of the cluster.
 	KubeVersion string `json:"kube_version"`
 
 	// KubernetesOptions Additional k8s options such as pod security policy,
 	// feature gates, etc.
 	KubernetesOptions KubernetesOptions `json:"kubernetes_options"`
+
+	// L3vpnRouterId Identifier of the global router that connects the master nodes subnet and the dedicated node groups. Set only for clusters with the `L3VPN` network type.
+	L3vpnRouterId string `json:"l3vpn_router_id,omitempty"`
 
 	// Name The name of the cluster.
 	Name string `json:"name"`
@@ -776,6 +807,13 @@ type Cluster struct {
 
 	// ProjectId Contains reference to the project of the cluster.
 	ProjectId string `json:"project_id"`
+
+	// RouterHa Indicates that a highly available (failover) router is used for the cluster networking. Computed at cluster creation.
+	RouterHa *bool `json:"router_ha,omitempty"`
+
+	// RouterId Identifier of the router that was created for the cluster subnet.
+	// Absent when the cluster uses a pre-created network and subnet.
+	RouterId string `json:"router_id,omitempty"`
 
 	// Status Current status of the cluster.
 	Status ClusterStatus `json:"status"`
@@ -807,6 +845,7 @@ type ClusterActions struct {
 	RotateCertificates          Action `json:"rotate_certificates"`
 	UpdateAuditLogs             Action `json:"update_audit_logs"`
 	UpdateAutoRepair            Action `json:"update_auto_repair"`
+	UpdateControlPlaneLogs      Action `json:"update_control_plane_logs"`
 	UpdateMaintenanceStart      Action `json:"update_maintenance_start"`
 	UpdateOidc                  Action `json:"update_oidc"`
 	UpdatePatchAutoUpgrade      Action `json:"update_patch_auto_upgrade"`
@@ -856,6 +895,15 @@ type ClusterCreateStruct struct {
 	// Enabled by default for regional clusters and disabled for zonal clusters.
 	EnablePatchVersionAutoUpgrade *bool `json:"enable_patch_version_auto_upgrade,omitempty"`
 
+	// KubePodsCidr The private IPv4 range for pod addresses. The allowed prefix length is from `/12` to `/16`. The default value is `10.10.0.0/16`. The value must not overlap the other cluster CIDR ranges and cannot be changed after the cluster is created.
+	KubePodsCidr *string `json:"kube_pods_cidr,omitempty"`
+
+	// KubeServiceCidr The private IPv4 range from which Kubernetes services receive their IP addresses.
+	// The allowed prefix length is from `/12` to `/24`. The default value is `10.96.0.0/12`.
+	// The value must not overlap the other cluster CIDR ranges and cannot be changed
+	// after the cluster is created.
+	KubeServiceCidr *string `json:"kube_service_cidr,omitempty"`
+
 	// KubeVersion KubeVersion represents the needed Kubernetes version of the cluster.
 	// It should be in x.y.z format.
 	KubeVersion string `json:"kube_version"`
@@ -871,6 +919,7 @@ type ClusterCreateStruct struct {
 	// Name Name represents the desired name of the cluster.
 	// It must not exceed 32 characters and can contain Latin letters,
 	// with digits and hyphens. Must start with a letter or a digit.
+	// For dedicated clusters the name must start with a latin letter.
 	Name string `json:"name"`
 
 	// NetworkId NetworkID contains a reference to the network of the cluster.
@@ -888,6 +937,13 @@ type ClusterCreateStruct struct {
 	// False by default.
 	PrivateKubeApi bool `json:"private_kube_api"`
 
+	// SubnetCidr The private IPv4 range of the node subnet that the service creates for the cluster.
+	// The allowed prefix length is from `/16` to `/24`. The default value is `10.222.0.0/16`.
+	// Use only for clusters with the `STANDARD` network type and if `network_id` and
+	// `subnet_id` are not specified. The value must not overlap the other cluster CIDR
+	// ranges and cannot be changed after the cluster is created.
+	SubnetCidr *string `json:"subnet_cidr,omitempty"`
+
 	// SubnetId SubnetID contains a reference to the subnet of the cluster.
 	// It can be set in cases where the subnet is pre-created.
 	SubnetId string `json:"subnet_id"`
@@ -903,6 +959,10 @@ type ClusterCreateStructClusterType string
 type ClusterDetailed struct {
 	// Basic Specifies that cluster has only a single master and that control plane is not in highly available mode.
 	Basic bool `json:"basic"`
+
+	// CloudSubnetCidr The IPv4 range of the cloud subnet to which the master nodes are connected.
+	// Set only for clusters with the `L3VPN` network type.
+	CloudSubnetCidr *string `json:"cloud_subnet_cidr,omitempty"`
 
 	// ClusterType The type of the cluster.
 	ClusterType ClusterDetailedClusterType `json:"cluster_type"`
@@ -929,12 +989,21 @@ type ClusterDetailed struct {
 	// KubeApiIp The IP of the Kubernetes API.
 	KubeApiIp string `json:"kube_api_ip"`
 
+	// KubePodsCidr The IPv4 range from which the pods of the cluster receive their IP addresses.
+	KubePodsCidr *string `json:"kube_pods_cidr,omitempty"`
+
+	// KubeServiceCidr The IPv4 range from which Kubernetes services receive cluster IP addresses.
+	KubeServiceCidr *string `json:"kube_service_cidr,omitempty"`
+
 	// KubeVersion The current Kubernetes version of the cluster.
 	KubeVersion string `json:"kube_version"`
 
 	// KubernetesOptions Additional k8s options such as pod security policy,
 	// feature gates, etc.
 	KubernetesOptions KubernetesOptions `json:"kubernetes_options"`
+
+	// L3vpnRouterId Identifier of the global router that connects the master nodes subnet and the dedicated node groups. Set only for clusters with the `L3VPN` network type.
+	L3vpnRouterId string `json:"l3vpn_router_id,omitempty"`
 
 	// MaintenanceLastStart MaintenanceLastStart is the timestamp in UTC timezone of the last cluster maintenance start.
 	MaintenanceLastStart time.Time `json:"maintenance_last_start"`
@@ -965,6 +1034,13 @@ type ClusterDetailed struct {
 
 	// ProjectId Contains reference to the project of the cluster.
 	ProjectId string `json:"project_id"`
+
+	// RouterHa Indicates that a highly available (failover) router is used for the cluster networking. Computed at cluster creation.
+	RouterHa *bool `json:"router_ha,omitempty"`
+
+	// RouterId Identifier of the router that was created for the cluster subnet.
+	// Absent when the cluster uses a pre-created network and subnet.
+	RouterId string `json:"router_id,omitempty"`
 
 	// Status Current status of the cluster.
 	Status ClusterDetailedStatus `json:"status"`
@@ -1158,7 +1234,10 @@ type LogComponent struct {
 	// Description Reason explains the purpose of the component.
 	Description string `json:"description"`
 
-	// Name Component name.
+	// DisplayName Pretty name of the component.
+	DisplayName string `json:"display_name"`
+
+	// Name Component identifier.
 	Name string `json:"name"`
 }
 
@@ -1181,6 +1260,9 @@ type Node struct {
 	// Ip IP address of the node.
 	Ip string `json:"ip"`
 
+	// KubeVersion Current Kubernetes version of the node. Null when the version is unknown (for example, the node was created before per-node version tracking).
+	KubeVersion *string `json:"kube_version"`
+
 	// NodegroupId Contains node group identifier.
 	NodegroupId string `json:"nodegroup_id"`
 
@@ -1199,13 +1281,14 @@ type NodeResp struct {
 
 // NodegroupActions defines model for NodegroupActions.
 type NodegroupActions struct {
-	Delete                  Action `json:"delete"`
-	DeleteNode              Action `json:"delete_node"`
-	ReinstallNode           Action `json:"reinstall_node"`
-	Resize                  Action `json:"resize"`
-	UpdateAutoscalingMinMax Action `json:"update_autoscaling_min_max"`
-	UpdateLabels            Action `json:"update_labels"`
-	UpdateTaints            Action `json:"update_taints"`
+	Delete                    Action `json:"delete"`
+	DeleteNode                Action `json:"delete_node"`
+	ReinstallNode             Action `json:"reinstall_node"`
+	Resize                    Action `json:"resize"`
+	UpdateAutoscalingMinMax   Action `json:"update_autoscaling_min_max"`
+	UpdateLabels              Action `json:"update_labels"`
+	UpdateRollingUpdateParams Action `json:"update_rolling_update_params"`
+	UpdateTaints              Action `json:"update_taints"`
 }
 
 // NodegroupActionsResp Available actions of the nodegroup.
@@ -1256,6 +1339,9 @@ type NodegroupCreateStruct struct {
 
 	// Taints List of node group taints.
 	Taints *[]NodegroupTaint `json:"taints,omitempty"`
+
+	// UpdateStrategy Update strategy for worker nodes on node group creation.
+	UpdateStrategy *NodegroupUpdateStrategyCreate `json:"update_strategy,omitempty"`
 
 	// UserData Base64 data which is used to pass a script that worker nodes run on boot.
 	UserData string `json:"user_data,omitempty"`
@@ -1524,12 +1610,42 @@ type NodegroupUpdateBody struct {
 
 // NodegroupUpdateStrategy Update strategy for worker nodes in the node group.
 type NodegroupUpdateStrategy struct {
+	// MaxSurge Maximum number of temporary surge nodes that can be created during a rolling update.
+	MaxSurge int64 `json:"max_surge"`
+
+	// MaxUnavailable Maximum number of nodes that can be simultaneously unavailable during a rolling update.
+	MaxUnavailable int64 `json:"max_unavailable"`
+
 	// Method Mechanism used to update worker nodes.
 	Method NodegroupUpdateStrategyMethod `json:"method"`
 }
 
 // NodegroupUpdateStrategyMethod Mechanism used to update worker nodes.
 type NodegroupUpdateStrategyMethod string
+
+// NodegroupUpdateStrategyCreate Update strategy for worker nodes on node group creation.
+type NodegroupUpdateStrategyCreate struct {
+	// MaxSurge Maximum number of temporary surge nodes that can be created during a rolling update. Defaults to 0. At least one of max_unavailable or max_surge must be greater than 0.
+	MaxSurge *int64 `json:"max_surge,omitempty"`
+
+	// MaxUnavailable Maximum number of nodes that can be simultaneously unavailable during a rolling update. Defaults to 1. At least one of max_unavailable or max_surge must be greater than 0.
+	MaxUnavailable *int64 `json:"max_unavailable,omitempty"`
+
+	// Method Mechanism used to update worker nodes. When omitted, the default update policy for the region is used.
+	Method *NodegroupUpdateStrategyCreateMethod `json:"method,omitempty"`
+}
+
+// NodegroupUpdateStrategyCreateMethod Mechanism used to update worker nodes. When omitted, the default update policy for the region is used.
+type NodegroupUpdateStrategyCreateMethod string
+
+// NodegroupUpdateStrategyUpdate Update strategy parameters for worker nodes.
+type NodegroupUpdateStrategyUpdate struct {
+	// MaxSurge Maximum number of temporary surge nodes that can be created during a rolling update. When omitted, the current node group value is kept. At least one of max_unavailable or max_surge must be greater than 0.
+	MaxSurge *int64 `json:"max_surge,omitempty"`
+
+	// MaxUnavailable Maximum number of nodes that can be simultaneously unavailable during a rolling update. When omitted, the current node group value is kept. At least one of max_unavailable or max_surge must be greater than 0.
+	MaxUnavailable *int64 `json:"max_unavailable,omitempty"`
+}
 
 // NodegroupUpdateStruct defines model for NodegroupUpdateStruct.
 type NodegroupUpdateStruct struct {
@@ -1547,6 +1663,9 @@ type NodegroupUpdateStruct struct {
 
 	// Taints List of node group taints.
 	Taints *[]NodegroupTaint `json:"taints,omitempty"`
+
+	// UpdateStrategy Update strategy parameters for worker nodes.
+	UpdateStrategy *NodegroupUpdateStrategyUpdate `json:"update_strategy,omitempty"`
 }
 
 // NodegroupsCreateBody Request Body schema for creating multiple node groups.

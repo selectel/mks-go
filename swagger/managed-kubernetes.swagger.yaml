@@ -1469,6 +1469,42 @@ components:
             - BASIC
             - HIGH_AVAILABILITY
             - HIGH_AVAILABILITY_MULTI_AZ
+        kube_pods_cidr:
+          description: The IPv4 range from which the pods of the cluster receive their IP addresses.
+          type: string
+          example: 10.10.0.0/16
+        kube_service_cidr:
+          description: The IPv4 range from which Kubernetes services receive cluster IP addresses.
+          type: string
+          example: 10.96.0.0/12
+        router_id:
+          description: |-
+            Identifier of the router that was created for the cluster subnet.
+            Absent when the cluster uses a pre-created network and subnet.
+          x-omitempty: true
+          x-go-type-skip-optional-pointer: true
+          format: uuid4
+          type: string
+          example: 5D4C3B2A-1F0E-4D9C-8B7A-6E5F4D3C2B1A
+        cloud_subnet_cidr:
+          description: |-
+            The IPv4 range of the cloud subnet to which the master nodes are connected.
+            Set only for clusters with the `L3VPN` network type.
+          x-omitempty: true
+          type: string
+          example: 10.20.0.0/24
+        l3vpn_router_id:
+          description: Identifier of the global router that connects the master nodes subnet and the dedicated node groups. Set only for clusters with the `L3VPN` network type.
+          x-omitempty: true
+          x-go-type-skip-optional-pointer: true
+          format: uuid4
+          type: string
+          example: 9A8B7C6D-5E4F-4A3B-9C2D-1E0F9A8B7C6D
+        router_ha:
+          description: Indicates that a highly available (failover) router is used for the cluster networking. Computed at cluster creation.
+          type: boolean
+          readOnly: true
+          example: false
     ClusterList:
       description: List of clusters.
       type: object
@@ -1527,6 +1563,20 @@ components:
           description: EnableAutorepair reflects whether worker nodes are allowed to be reinstalled  automatically in case of their unavailability or unhealthiness.
           type: boolean
           default: true
+        kube_pods_cidr:
+          description: The private IPv4 range for pod addresses. The allowed prefix length is from `/12` to `/16`. The default value is `10.10.0.0/16`. The value must not overlap the other cluster CIDR ranges and cannot be changed after the cluster is created.
+          x-omitempty: true
+          type: string
+          example: 10.20.0.0/16
+        kube_service_cidr:
+          description: |-
+            The private IPv4 range from which Kubernetes services receive their IP addresses.
+            The allowed prefix length is from `/12` to `/24`. The default value is `10.96.0.0/12`.
+            The value must not overlap the other cluster CIDR ranges and cannot be changed
+            after the cluster is created.
+          x-omitempty: true
+          type: string
+          example: 172.16.0.0/16
         kube_version:
           description: |-
             KubeVersion represents the needed Kubernetes version of the cluster.
@@ -1544,6 +1594,7 @@ components:
             Name represents the desired name of the cluster.
             It must not exceed 32 characters and can contain Latin letters,
             with digits and hyphens. Must start with a letter or a digit.
+            For dedicated clusters the name must start with a latin letter.
           type: string
         network_id:
           description: |-
@@ -1564,6 +1615,16 @@ components:
             PrivateKubeAPI specifies whether kube API should be available from the Internet or not.
             False by default.
           type: boolean
+        subnet_cidr:
+          description: |-
+            The private IPv4 range of the node subnet that the service creates for the cluster.
+            The allowed prefix length is from `/16` to `/24`. The default value is `10.222.0.0/16`.
+            Use only for clusters with the `STANDARD` network type and if `network_id` and
+            `subnet_id` are not specified. The value must not overlap the other cluster CIDR
+            ranges and cannot be changed after the cluster is created.
+          x-omitempty: true
+          type: string
+          example: 10.121.0.0/16
         subnet_id:
           description: |-
             SubnetID contains a reference to the subnet of the cluster.
@@ -1754,6 +1815,42 @@ components:
             - BASIC
             - HIGH_AVAILABILITY
             - HIGH_AVAILABILITY_MULTI_AZ
+        kube_pods_cidr:
+          description: The IPv4 range from which the pods of the cluster receive their IP addresses.
+          type: string
+          example: 10.10.0.0/16
+        kube_service_cidr:
+          description: The IPv4 range from which Kubernetes services receive cluster IP addresses.
+          type: string
+          example: 10.96.0.0/12
+        router_id:
+          description: |-
+            Identifier of the router that was created for the cluster subnet.
+            Absent when the cluster uses a pre-created network and subnet.
+          x-omitempty: true
+          x-go-type-skip-optional-pointer: true
+          format: uuid4
+          type: string
+          example: 5D4C3B2A-1F0E-4D9C-8B7A-6E5F4D3C2B1A
+        cloud_subnet_cidr:
+          description: |-
+            The IPv4 range of the cloud subnet to which the master nodes are connected.
+            Set only for clusters with the `L3VPN` network type.
+          x-omitempty: true
+          type: string
+          example: 10.20.0.0/24
+        l3vpn_router_id:
+          description: Identifier of the global router that connects the master nodes subnet and the dedicated node groups. Set only for clusters with the `L3VPN` network type.
+          x-omitempty: true
+          x-go-type-skip-optional-pointer: true
+          format: uuid4
+          type: string
+          example: 9A8B7C6D-5E4F-4A3B-9C2D-1E0F9A8B7C6D
+        router_ha:
+          description: Indicates that a highly available (failover) router is used for the cluster networking. Computed at cluster creation.
+          type: boolean
+          readOnly: true
+          example: false
         cni_cilium_settings:
           $ref: '#/components/schemas/CNICiliumSettings'
     ClusterResp:
@@ -1834,6 +1931,7 @@ components:
         - rotate_certificates
         - update_audit_logs
         - update_auto_repair
+        - update_control_plane_logs
         - update_maintenance_start
         - update_oidc
         - update_patch_auto_upgrade
@@ -1852,6 +1950,8 @@ components:
         update_audit_logs:
           $ref: '#/components/schemas/Action'
         update_auto_repair:
+          $ref: '#/components/schemas/Action'
+        update_control_plane_logs:
           $ref: '#/components/schemas/Action'
         update_maintenance_start:
           $ref: '#/components/schemas/Action'
@@ -2110,11 +2210,19 @@ components:
           format: uuid4
           type: string
           example: 1620AC2D-7667-42F0-9F6D-A3A0ECA6E654
+        kube_version:
+          description: Current Kubernetes version of the node. Null when the version is unknown (for example, the node was created before per-node version tracking).
+          type: string
+          nullable: true
+          x-omitempty: false
+          example: 1.30.1
     NodegroupUpdateStrategy:
       description: Update strategy for worker nodes in the node group.
       type: object
       required:
         - method
+        - max_unavailable
+        - max_surge
       properties:
         method:
           description: Mechanism used to update worker nodes.
@@ -2123,6 +2231,20 @@ components:
             - in_place
             - replace
           example: in_place
+        max_unavailable:
+          description: Maximum number of nodes that can be simultaneously unavailable during a rolling update.
+          type: integer
+          format: int64
+          minimum: 0
+          default: 1
+          example: 1
+        max_surge:
+          description: Maximum number of temporary surge nodes that can be created during a rolling update.
+          type: integer
+          format: int64
+          minimum: 0
+          default: 0
+          example: 0
     NodegroupInfo:
       description: Provides detailed information about node group.
       type: object
@@ -2332,6 +2454,31 @@ components:
           example: universal.ru-9a
           x-go-type-skip-optional-pointer: true
       type: object
+    NodegroupUpdateStrategyCreate:
+      description: Update strategy for worker nodes on node group creation.
+      type: object
+      properties:
+        method:
+          description: Mechanism used to update worker nodes. When omitted, the default update policy for the region is used.
+          type: string
+          enum:
+            - in_place
+            - replace
+          example: replace
+        max_unavailable:
+          description: Maximum number of nodes that can be simultaneously unavailable during a rolling update. Defaults to 1. At least one of max_unavailable or max_surge must be greater than 0.
+          type: integer
+          format: int64
+          minimum: 0
+          default: 1
+          example: 1
+        max_surge:
+          description: Maximum number of temporary surge nodes that can be created during a rolling update. Defaults to 0. At least one of max_unavailable or max_surge must be greater than 0.
+          type: integer
+          format: int64
+          minimum: 0
+          default: 0
+          example: 0
     NodegroupCreateStruct:
       required:
         - segment
@@ -2390,6 +2537,8 @@ components:
           description: Indicates whether nodes in the node group are preemptible.
           type: boolean
           x-go-type-skip-optional-pointer: true
+        update_strategy:
+          $ref: '#/components/schemas/NodegroupUpdateStrategyCreate'
     NodegroupsCreateBody:
       description: Request Body schema for creating multiple node groups.
       required:
@@ -2432,6 +2581,22 @@ components:
       properties:
         nodegroup:
           $ref: '#/components/schemas/NodegroupDetailed'
+    NodegroupUpdateStrategyUpdate:
+      description: Update strategy parameters for worker nodes.
+      type: object
+      properties:
+        max_unavailable:
+          description: Maximum number of nodes that can be simultaneously unavailable during a rolling update. When omitted, the current node group value is kept. At least one of max_unavailable or max_surge must be greater than 0.
+          type: integer
+          format: int64
+          minimum: 0
+          example: 1
+        max_surge:
+          description: Maximum number of temporary surge nodes that can be created during a rolling update. When omitted, the current node group value is kept. At least one of max_unavailable or max_surge must be greater than 0.
+          type: integer
+          format: int64
+          minimum: 0
+          example: 0
     NodegroupUpdateStruct:
       properties:
         labels:
@@ -2458,6 +2623,8 @@ components:
           description: Maximum number of worker nodes in the cloud-based node group.
           format: int
           type: integer
+        update_strategy:
+          $ref: '#/components/schemas/NodegroupUpdateStrategyUpdate'
     NodegroupUpdateBody:
       description: Request Body schema.
       required:
@@ -2488,6 +2655,7 @@ components:
         - update_labels
         - update_taints
         - update_autoscaling_min_max
+        - update_rolling_update_params
         - reinstall_node
         - delete_node
       properties:
@@ -2500,6 +2668,8 @@ components:
         update_taints:
           $ref: '#/components/schemas/Action'
         update_autoscaling_min_max:
+          $ref: '#/components/schemas/Action'
+        update_rolling_update_params:
           $ref: '#/components/schemas/Action'
         reinstall_node:
           $ref: '#/components/schemas/Action'
@@ -2632,12 +2802,16 @@ components:
       required:
         - name
         - description
+        - display_name
       properties:
         name:
-          description: Component name.
+          description: Component identifier.
           type: string
         description:
           description: Reason explains the purpose of the component.
+          type: string
+        display_name:
+          description: Pretty name of the component.
           type: string
     LogComponentsList:
       description: List of available log components.
@@ -2679,7 +2853,6 @@ components:
     KubeVersion:
       description: Kubernetes version information.
       title: Version view.
-      x-go-name: KubeVersionInfo
       type: object
       properties:
         version:
