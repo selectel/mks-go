@@ -2,11 +2,15 @@ package cluster
 
 import (
 	"context"
+	"errors"
 	"net/http"
 
 	mks "github.com/selectel/mks-go/v2/pkg"
 	"github.com/selectel/mks-go/v2/pkg/mksclient"
 )
+
+// ErrNoCluster is returned when a successful response has no cluster in its body.
+var ErrNoCluster = errors.New("the response has no cluster")
 
 // Get returns a single cluster by its id.
 func Get(ctx context.Context, client *mks.ServiceClient, clusterID string) (*mksclient.ClusterDetailed, error) {
@@ -16,7 +20,7 @@ func Get(ctx context.Context, client *mks.ServiceClient, clusterID string) (*mks
 	}
 
 	if responseResult.JSON200 != nil {
-		return responseResult.JSON200.Cluster, nil
+		return clusterOrError(responseResult.JSON200.Cluster)
 	}
 
 	return nil, mksclient.HandleAPIErrorsWithBody(
@@ -33,7 +37,7 @@ func Create(ctx context.Context, client *mks.ServiceClient, opts *mksclient.Clus
 	}
 
 	if responseResult.JSON201 != nil {
-		return responseResult.JSON201.Cluster, nil
+		return clusterOrError(responseResult.JSON201.Cluster)
 	}
 
 	return nil, mksclient.HandleAPIErrorsWithBody(
@@ -50,7 +54,7 @@ func Update(ctx context.Context, client *mks.ServiceClient, clusterID string, op
 	}
 
 	if responseResult.JSON200 != nil {
-		return responseResult.JSON200.Cluster, nil
+		return clusterOrError(responseResult.JSON200.Cluster)
 	}
 
 	return nil, mksclient.HandleAPIErrorsWithBody(
@@ -67,7 +71,7 @@ func Patch(ctx context.Context, client *mks.ServiceClient, clusterID string, opt
 	}
 
 	if responseResult.JSON200 != nil {
-		return responseResult.JSON200.Cluster, nil
+		return clusterOrError(responseResult.JSON200.Cluster)
 	}
 
 	return nil, mksclient.HandleAPIErrorsWithBody(
@@ -135,7 +139,7 @@ func UpgradePatchVersion(ctx context.Context, client *mks.ServiceClient, cluster
 	}
 
 	if responseResult.JSON200 != nil {
-		return responseResult.JSON200.Cluster, nil
+		return clusterOrError(responseResult.JSON200.Cluster)
 	}
 
 	return nil, mksclient.HandleAPIErrorsWithBody(
@@ -152,11 +156,19 @@ func UpgradeMinorVersion(ctx context.Context, client *mks.ServiceClient, cluster
 	}
 
 	if responseResult.JSON200 != nil {
-		return responseResult.JSON200.Cluster, nil
+		return clusterOrError(responseResult.JSON200.Cluster)
 	}
 
 	return nil, mksclient.HandleAPIErrorsWithBody(
 		responseResult.StatusCode(), responseResult.Status(), responseResult.Body,
 		responseResult.JSON404, responseResult.JSON500,
 	)
+}
+
+func clusterOrError(cluster *mksclient.ClusterDetailed) (*mksclient.ClusterDetailed, error) {
+	if cluster == nil {
+		return nil, ErrNoCluster
+	}
+
+	return cluster, nil
 }
