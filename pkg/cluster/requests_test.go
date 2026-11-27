@@ -114,6 +114,17 @@ func TestGet(t *testing.T) {
 			},
 		},
 		{
+			name: common.NameNoCluster,
+			clientResponse: &mksclient.GetClusterV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusOK,
+					Status:     http.StatusText(http.StatusOK),
+				},
+				JSON200: &mksclient.ClusterResp{},
+			},
+			errExpected: ErrNoCluster,
+		},
+		{
 			name:        common.NameHTTPError,
 			clientError: httpError,
 			errExpected: httpError,
@@ -233,6 +244,17 @@ func TestCreate(t *testing.T) {
 				StatusCode: http.StatusForbidden,
 				Message:    http.StatusText(http.StatusForbidden) + ": " + common.MsgAccessDenied,
 			},
+		},
+		{
+			name: common.NameNoCluster,
+			clientResponse: &mksclient.CreateClusterV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusCreated,
+					Status:     http.StatusText(http.StatusCreated),
+				},
+				JSON201: &mksclient.ClusterResp{},
+			},
+			errExpected: ErrNoCluster,
 		},
 		{
 			name:        common.NameHTTPError,
@@ -361,6 +383,17 @@ func TestUpdate(t *testing.T) {
 				StatusCode: http.StatusServiceUnavailable,
 				Message:    http.StatusText(http.StatusServiceUnavailable),
 			},
+		},
+		{
+			name: common.NameNoCluster,
+			clientResponse: &mksclient.UpdateClusterV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusOK,
+					Status:     http.StatusText(http.StatusOK),
+				},
+				JSON200: &mksclient.ClusterResp{},
+			},
+			errExpected: ErrNoCluster,
 		},
 		{
 			name:        common.NameHTTPError,
@@ -896,6 +929,17 @@ func TestUpgradePatchVersion(t *testing.T) {
 			},
 		},
 		{
+			name: common.NameNoCluster,
+			clientResponse: &mksclient.UpgradePatchVersionV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusOK,
+					Status:     http.StatusText(http.StatusOK),
+				},
+				JSON200: &mksclient.ClusterResp{},
+			},
+			errExpected: ErrNoCluster,
+		},
+		{
 			name:        common.NameHTTPError,
 			clientError: httpError,
 			errExpected: httpError,
@@ -1022,6 +1066,17 @@ func TestUpgradeMinorVersion(t *testing.T) {
 				StatusCode: http.StatusServiceUnavailable,
 				Message:    http.StatusText(http.StatusServiceUnavailable),
 			},
+		},
+		{
+			name: common.NameNoCluster,
+			clientResponse: &mksclient.UpgradeMinorVersionV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusOK,
+					Status:     http.StatusText(http.StatusOK),
+				},
+				JSON200: &mksclient.ClusterResp{},
+			},
+			errExpected: ErrNoCluster,
 		},
 		{
 			name:        common.NameHTTPError,
@@ -1198,6 +1253,17 @@ func TestPatch(t *testing.T) {
 				StatusCode: http.StatusServiceUnavailable,
 				Message:    http.StatusText(http.StatusServiceUnavailable),
 			},
+		},
+		{
+			name: common.NameNoCluster,
+			clientResponse: &mksclient.PatchClusterV2Response{
+				HTTPResponse: &http.Response{
+					StatusCode: http.StatusOK,
+					Status:     http.StatusText(http.StatusOK),
+				},
+				JSON200: &mksclient.ClusterResp{},
+			},
+			errExpected: ErrNoCluster,
 		},
 		{
 			name:        common.NameHTTPError,

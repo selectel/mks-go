@@ -17,6 +17,7 @@ const (
 	NameEmptyNodegroups           = "empty nodegroups"
 	NameEmptyRegistries           = "empty registries"
 	NameEmptyLogComponents        = "empty log components"
+	NameNoCluster                 = "no cluster in the body"
 )
 
 // Error message constants.
